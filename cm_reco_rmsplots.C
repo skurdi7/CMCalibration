@@ -106,7 +106,7 @@ float run_sim(int nRefreshes, float fluctWidth){
 
 
 
-void cm_reco_take3(){
+void cm_reco_rmsplots(){
   
   const float fluctWidth=0.3;//cm fluctuation per cm of drift -- width of that distribution
   const int nRefreshes=500;//how many times do we completely cycle a new distortion through the model region
@@ -123,10 +123,10 @@ void cm_reco_take3(){
   TH1F *rmsSim2=new TH1F("rmsSim2","RMS/fluctWidth vs fluctWidth",100*fluctWidth,0.1*fluctWidth,100*fluctWidth);
   for (int j=0;j<30;j++){
     rmsval[j]=run_sim(nRefreshes,j);
-    rmsSim2->Fill(j,rmsval[j]/fluctWidth);
+    rmsSim2->Fill(j,rmsval[j]/j);
   } 
 
-  TCanvas *c=new TCanvas("b","cm_reco_take3.C",900,400);
+  TCanvas *c=new TCanvas("b","cm_reco_rmsplots.C",900,400);
   c->Divide(2,1);
   c->cd(1);
   rmsSim1->Draw();
