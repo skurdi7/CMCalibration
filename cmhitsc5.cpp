@@ -431,7 +431,7 @@ int cmhitsc5() {
   const double end_R1 = 408.0; // arbitrary radius between R1 and R2
   const double end_R2 = 580.0; // arbitrary radius between R2 and R3
 
-  int result0, result1, result2, result3, nbins;
+  int result, nbins;
   double r, phi, x, y, xmod, ymod, phimod;
 
   nbins = 1000;
@@ -451,16 +451,16 @@ int cmhitsc5() {
       
       //build histogram from search
       if (r <= end_R1_e){
-	result0 = stripesR1_e.getSearchResult(xmod, ymod, 0);
+	result = stripesR1_e.getSearchResult(xmod, ymod, 0);
       } else if ((r > end_R1_e) && (r <= end_R1)){
-	result1 = stripesR1.getSearchResult(xmod, ymod, 1);
+	result = stripesR1.getSearchResult(xmod, ymod, 1);
       } else if ((r > end_R1) && (r <= end_R2)){
-	result2 = stripesR2.getSearchResult(xmod, ymod, 2);
+	result = stripesR2.getSearchResult(xmod, ymod, 2);
       } else if ((r > end_R2) && (r <= end_CM)){
-	result3 = stripesR3.getSearchResult(xmod, ymod, 3);
+	result = stripesR3.getSearchResult(xmod, ymod, 3);
       }
       
-      if((result0 == 1) || (result1 == 1) || (result2 == 1) || (result3 == 1))
+      if(result == 1)
   	Pattern1->Fill(x,y); 
     }
   }
@@ -475,26 +475,21 @@ int cmhitsc5() {
   Pattern2->SetMarkerColor(kRed);
 
   //build histogram from dummy hits
-  if (r <= end_R1_e){
-    for (int i = 0; i < Hits_R1_e.size(); i++){
-      Pattern2->Fill(Hits_R1_e[i].x0, Hits_R1_e[i].y0);
-      Pattern2->Fill(Hits_R1_e[i].x1, Hits_R1_e[i].y1);
-    }
-  } else if ((r > end_R1_e) && (r <= end_R1)){
-    for (int i = 0; i < Hits_R1.size(); i++){
-      Pattern2->Fill(Hits_R1[i].x0, Hits_R1[i].y0);
-      Pattern2->Fill(Hits_R1[i].x1, Hits_R1[i].y1);
-    }
-  } else if ((r > end_R1) && (r <= end_R2)){
-    for (int i = 0; i < Hits_R2.size(); i++){
-      Pattern2->Fill(Hits_R2[i].x0, Hits_R2[i].y0);
-      Pattern2->Fill(Hits_R2[i].x1, Hits_R2[i].y1);
-    }
-  } else if ((r > end_R2) && (r <= end_CM)){
-    for (int i = 0; i < Hits_R3.size(); i++){
-      Pattern2->Fill(Hits_R3[i].x0, Hits_R3[i].y0);
-      Pattern2->Fill(Hits_R3[i].x1, Hits_R3[i].y1);
-    }
+  for (int i = 0; i < Hits_R1_e.size(); i++){
+    Pattern2->Fill(Hits_R1_e[i].x0, Hits_R1_e[i].y0);
+    Pattern2->Fill(Hits_R1_e[i].x1, Hits_R1_e[i].y1);
+  }
+  for (int i = 0; i < Hits_R1.size(); i++){
+    Pattern2->Fill(Hits_R1[i].x0, Hits_R1[i].y0);
+    Pattern2->Fill(Hits_R1[i].x1, Hits_R1[i].y1);
+  }
+  for (int i = 0; i < Hits_R2.size(); i++){
+    Pattern2->Fill(Hits_R2[i].x0, Hits_R2[i].y0);
+    Pattern2->Fill(Hits_R2[i].x1, Hits_R2[i].y1);
+  }
+  for (int i = 0; i < Hits_R3.size(); i++){
+    Pattern2->Fill(Hits_R3[i].x0, Hits_R3[i].y0);
+    Pattern2->Fill(Hits_R3[i].x1, Hits_R3[i].y1);
   }
   
   
@@ -502,7 +497,7 @@ int cmhitsc5() {
   TCanvas *c=new TCanvas("a","cmhitsc5.cpp",500,500);
   Pattern1->Draw();
   Pattern2->Draw("same");
-  c->SaveAs("cmhitsc5-1.pdf");
+  c->SaveAs("cmhitsc5.pdf");
 
   
   return 0;
