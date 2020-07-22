@@ -10,11 +10,12 @@
 
 using namespace std;
 
-class Stripes {
+class StripesClass {
 public:
-  Stripes(); //default constructor
-  Stripes(int ModuleID); //constructor
-  int getSearchResult(double x, double y, int ModuleID); // check if coords are in a stripe
+  StripesClass(); //default constructor
+  int getSearchResult(double xcheck, double ycheck); // check if coords are in a stripe
+
+  double begin_CM, end_CM; // inner and outer radii of central membrane
   
   struct Container{
     double x0,y0,z0;
@@ -103,11 +104,7 @@ private:
   Container GetPHG4HitFromStripe(int petalID, int moduleID, int radiusID, int stripeID);
 };
 
-Stripes::Stripes() {
- return;
-}
-
-Stripes::Stripes(int ModuleID)
+StripesClass::StripesClass()
   : R1_e {227.0902789, 238.4100043, 249.7297296, 261.049455, 272.3691804, 283.6889058, 295.0086312, 306.3283566},
     R1 {317.648082, 328.9678074, 340.2875328, 351.6072582, 362.9269836, 374.246709,  385.5664344, 396.8861597},
     R2 {421.705532, 442.119258, 462.532984, 482.9467608, 503.36069, 523.774416, 544.188015, 564.601868},
@@ -118,6 +115,9 @@ Stripes::Stripes(int ModuleID)
     keepUntil_R2 {7,7,8,7,8,8,8,8},
     keepUntil_R3 {11,10,11,11,11,11,12,11}
 {
+  begin_CM = 221.4019814; // inner radius of CM
+  end_CM = 759.2138; // outer radius of CM
+  
   nPads_R1 = 6*16;
   nPads_R2 = 8*16;
   nPads_R3 = 12*16;
@@ -128,51 +128,34 @@ Stripes::Stripes(int ModuleID)
   
   str_width = 1.0;
   arc_r = 0.5; 
-  
-  if(ModuleID == 0){
-    CalculateVertices(nStripes_R1, nPads_R1, R1_e, spacing_R1_e, x1a_R1_e, y1a_R1_e, x1b_R1_e, y1b_R1_e, x2a_R1_e, y2a_R1_e, x2b_R1_e, y2b_R1_e, x3a_R1_e, y3a_R1_e, x3b_R1_e, y3b_R1_e, padfrac_R1, nGoodStripes_R1_e, keepUntil_R1_e);
-    for (int i = 0; i < 18; i++){ // loop over petalID
-      for (int j = 0; j < 8; j++){ // loop over radiusID
-    	for (int k = 0; k < nGoodStripes_R1_e[j]; k++){ // loop over stripeID
-    	  dummyHits.push_back(GetPHG4HitFromStripe(i, ModuleID, j, k));
-    	}
-      }
-    }
-    
-  } else if(ModuleID == 1){
-    CalculateVertices(nStripes_R1, nPads_R1, R1, spacing_R1, x1a_R1, y1a_R1, x1b_R1, y1b_R1, x2a_R1, y2a_R1, x2b_R1, y2b_R1, x3a_R1, y3a_R1, x3b_R1, y3b_R1, padfrac_R1, nGoodStripes_R1, keepUntil_R1);
-    for (int i = 0; i < 18; i++){ // loop over petalID
-      for (int j = 0; j < 8; j++){ // loop over radiusID
-	for (int k = 0; k < nGoodStripes_R1[j]; k++){ // loop over stripeID
-	  dummyHits.push_back(GetPHG4HitFromStripe(i, ModuleID, j, k));
-	}
-      }
-    }
-     
-  } else if(ModuleID == 2){
-    CalculateVertices(nStripes_R2, nPads_R2, R2, spacing_R2, x1a_R2, y1a_R2, x1b_R2, y1b_R2, x2a_R2, y2a_R2, x2b_R2, y2b_R2, x3a_R2, y3a_R2, x3b_R2, y3b_R2, padfrac_R2, nGoodStripes_R2, keepUntil_R2);
-    for (int i = 0; i < 18; i++){ // loop over petalID
-      for (int j = 0; j < 8; j++){ // loop over radiusID
-	for (int k = 0; k < nGoodStripes_R2[j]; k++){ // loop over stripeID
-	  dummyHits.push_back(GetPHG4HitFromStripe(i, ModuleID, j, k));
-	}
-      }
-    }
+
+  CalculateVertices(nStripes_R1, nPads_R1, R1_e, spacing_R1_e, x1a_R1_e, y1a_R1_e, x1b_R1_e, y1b_R1_e, x2a_R1_e, y2a_R1_e, x2b_R1_e, y2b_R1_e, x3a_R1_e, y3a_R1_e, x3b_R1_e, y3b_R1_e, padfrac_R1, nGoodStripes_R1_e, keepUntil_R1_e);
+  CalculateVertices(nStripes_R1, nPads_R1, R1, spacing_R1, x1a_R1, y1a_R1, x1b_R1, y1b_R1, x2a_R1, y2a_R1, x2b_R1, y2b_R1, x3a_R1, y3a_R1, x3b_R1, y3b_R1, padfrac_R1, nGoodStripes_R1, keepUntil_R1);
+  CalculateVertices(nStripes_R2, nPads_R2, R2, spacing_R2, x1a_R2, y1a_R2, x1b_R2, y1b_R2, x2a_R2, y2a_R2, x2b_R2, y2b_R2, x3a_R2, y3a_R2, x3b_R2, y3b_R2, padfrac_R2, nGoodStripes_R2, keepUntil_R2);
+  CalculateVertices(nStripes_R3, nPads_R3, R3, spacing_R3, x1a_R3, y1a_R3, x1b_R3, y1b_R3, x2a_R3, y2a_R3, x2b_R3, y2b_R3, x3a_R3, y3a_R3, x3b_R3, y3b_R3, padfrac_R3, nGoodStripes_R3, keepUntil_R3);
    
-  } else if(ModuleID == 3){
-    CalculateVertices(nStripes_R3, nPads_R3, R3, spacing_R3, x1a_R3, y1a_R3, x1b_R3, y1b_R3, x2a_R3, y2a_R3, x2b_R3, y2b_R3, x3a_R3, y3a_R3, x3b_R3, y3b_R3, padfrac_R3, nGoodStripes_R3, keepUntil_R3);
-    for (int i = 0; i < 18; i++){ // loop over petalID
-      for (int j = 0; j < 8; j++){ // loop over radiusID
-	for (int k = 0; k < nGoodStripes_R3[j]; k++){ // loop over stripeID
-	  dummyHits.push_back(GetPHG4HitFromStripe(i, ModuleID, j, k));
-	}
+  for (int i = 0; i < 18; i++){ // loop over petalID
+    for (int j = 0; j < 8; j++){ // loop over radiusID
+      for (int k = keepThisAndAfter[j]; k < nGoodStripes_R1_e[j]; k++){ // loop over stripeID
+	dummyHits.push_back(GetPHG4HitFromStripe(i, 0, j, k));
+      }
+      for (int k = keepThisAndAfter[j]; k < nGoodStripes_R1[j]; k++){ // loop over stripeID
+	dummyHits.push_back(GetPHG4HitFromStripe(i, 1, j, k));
+      }
+      for (int k = keepThisAndAfter[j]; k < nGoodStripes_R2[j]; k++){ // loop over stripeID
+	dummyHits.push_back(GetPHG4HitFromStripe(i, 2, j, k));
+      }
+      for (int k = keepThisAndAfter[j]; k < nGoodStripes_R3[j]; k++){ // loop over stripeID
+	dummyHits.push_back(GetPHG4HitFromStripe(i, 3, j, k));
       }
     }
   }
   
+ return;
 }
 
-void Stripes::CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, int nGoodStripes[],  int keepUntil[]) {
+
+void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, int nGoodStripes[],  int keepUntil[]) {
   const double phi_module = TMath::Pi()/6.0; // angle span of a module
   const int pr_mult = 3; // multiples of intrinsic resolution of pads
   const int dw_mult = 8; // multiples of diffusion width
@@ -309,7 +292,7 @@ void Stripes::CalculateVertices(int nStripes, int nPads, double R[], double spac
 }
 
 
-int Stripes::SearchModule(int nStripes, double x1a[][nRadii], double x1b[][nRadii], double x2a[][nRadii], double x2b[][nRadii], double y1a[][nRadii], double y1b[][nRadii], double y2a[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double x, double y, int nGoodStripes[]){
+int StripesClass::SearchModule(int nStripes, double x1a[][nRadii], double x1b[][nRadii], double x2a[][nRadii], double x2b[][nRadii], double y1a[][nRadii], double y1b[][nRadii], double y2a[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double x, double y, int nGoodStripes[]){
   int c = 0;
   
   for(int j=0; j<nRadii; j++){
@@ -336,27 +319,46 @@ int Stripes::SearchModule(int nStripes, double x1a[][nRadii], double x1b[][nRadi
   return c;
 }
 
-int Stripes::getSearchResult(double x, double y, int ModuleID){
-  if(ModuleID == 0){
-    result = SearchModule(nStripes_R1, x1a_R1_e, x1b_R1_e, x2a_R1_e, x2b_R1_e, y1a_R1_e, y1b_R1_e, y2a_R1_e, y2b_R1_e, x3a_R1_e, y3a_R1_e, x3b_R1_e, y3b_R1_e, x, y, nGoodStripes_R1_e);
-  } else if(ModuleID == 1){
-    result = SearchModule(nStripes_R1, x1a_R1, x1b_R1, x2a_R1, x2b_R1, y1a_R1, y1b_R1, y2a_R1, y2b_R1, x3a_R1, y3a_R1, x3b_R1, y3b_R1, x, y, nGoodStripes_R1);
-  } else if(ModuleID == 2){
-    result = SearchModule(nStripes_R2, x1a_R2, x1b_R2, x2a_R2, x2b_R2, y1a_R2, y1b_R2, y2a_R2, y2b_R2, x3a_R2, y3a_R2, x3b_R2, y3b_R2, x, y, nGoodStripes_R2);
-  } else if(ModuleID == 3){
-    result = SearchModule(nStripes_R3, x1a_R3, x1b_R3, x2a_R3, x2b_R3, y1a_R3, y1b_R3, y2a_R3, y2b_R3, x3a_R3, y3a_R3, x3b_R3, y3b_R3, x, y, nGoodStripes_R3);
+int StripesClass::getSearchResult(double xcheck, double ycheck){
+  const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
+  const double end_R1_e = 312.0; // arbitrary radius between R1_e and R1
+  const double end_R1 = 408.0; // arbitrary radius between R1 and R2
+  const double end_R2 = 580.0; // arbitrary radius between R2 and R3
+
+  double r, phi, phimod, xmod, ymod;
+  
+  r = sqrt(xcheck*xcheck + ycheck*ycheck);
+  phi = atan(ycheck/xcheck);
+  if((xcheck < 0.0) && (ycheck > 0.0)){
+    phi = phi + TMath::Pi();
+  } else if ((xcheck > 0.0) && (ycheck < 0.0)){
+    phi = phi + 2.0*TMath::Pi();
+  }
+  
+  phimod = fmod(phi,phi_petal);
+  xmod = r*cos(phimod);
+  ymod = r*sin(phimod); 
+  
+  if (r <= end_R1_e){ 
+    result = SearchModule(nStripes_R1, x1a_R1_e, x1b_R1_e, x2a_R1_e, x2b_R1_e, y1a_R1_e, y1b_R1_e, y2a_R1_e, y2b_R1_e, x3a_R1_e, y3a_R1_e, x3b_R1_e, y3b_R1_e, xmod, ymod, nGoodStripes_R1_e);
+  } else if ((r > end_R1_e) && (r <= end_R1)){
+    result = SearchModule(nStripes_R1, x1a_R1, x1b_R1, x2a_R1, x2b_R1, y1a_R1, y1b_R1, y2a_R1, y2b_R1, x3a_R1, y3a_R1, x3b_R1, y3b_R1, xmod, ymod, nGoodStripes_R1);
+  } else if ((r > end_R1) && (r <= end_R2)){
+    result = SearchModule(nStripes_R2, x1a_R2, x1b_R2, x2a_R2, x2b_R2, y1a_R2, y1b_R2, y2a_R2, y2b_R2, x3a_R2, y3a_R2, x3b_R2, y3b_R2, xmod, ymod, nGoodStripes_R2);
+  } else if ((r > end_R2) && (r <= end_CM)){
+    result = SearchModule(nStripes_R3, x1a_R3, x1b_R3, x2a_R3, x2b_R3, y1a_R3, y1b_R3, y2a_R3, y2b_R3, x3a_R3, y3a_R3, x3b_R3, y3b_R3, xmod, ymod, nGoodStripes_R3);
   }
   
   return result;
 }
 
-Stripes::Container Stripes::GetPHG4HitFromStripe(int petalID, int moduleID, int radiusID, int stripeID){
+StripesClass::Container StripesClass::GetPHG4HitFromStripe(int petalID, int moduleID, int radiusID, int stripeID){
   const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
   Container dummyHit;
   TVector3 dummyPos0, dummyPos1;
 
-  
-  // petalID ranges 0-17, module ID 0-3, stripeID varies - nGoodStripes for each module
+  //could put in some sanity checks here but probably not necessary since this is only really used within the class
+  //petalID ranges 0-17, module ID 0-3, stripeID varies - nGoodStripes for each module
   //radiusID ranges 0-7
 
   //here we set the entrance values in mm
@@ -416,89 +418,45 @@ Stripes::Container Stripes::GetPHG4HitFromStripe(int petalID, int moduleID, int 
 
 
 
-int cmhitsc5() {
-
-  Stripes stripesR1_e(0); 
-  Stripes stripesR1(1);
-  Stripes stripesR2(2); 
-  Stripes stripesR3(3);
-  
-  const double begin_CM = 221.4019814; // inner radius of CM
-  const double end_CM = 759.2138; // outer radius of CM
-  const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
-
-  const double end_R1_e = 312.0; // arbitrary radius between R1_e and R1
-  const double end_R1 = 408.0; // arbitrary radius between R1 and R2
-  const double end_R2 = 580.0; // arbitrary radius between R2 and R3
+int cmhitsc() {
+  StripesClass stripes;
 
   int result, nbins;
   double r, phi, x, y, xmod, ymod, phimod;
-
+  
   nbins = 1000;
-
+  
   //histogram from search
   TH2F *Pattern1 = new TH2F("Pattern1","Pattern1",nbins,-770.0,770.0,nbins,-770.0,770.0); // min n max just beyond extent of CM so it's easier to see
-
-  for (r = begin_CM; r < end_CM; r = r + 0.5){ // radii spanning full CM
+  
+  for (r = stripes.begin_CM; r < stripes.end_CM; r = r + 0.5){ // radii spanning full CM
     for (phi = 0.0; phi < 2*TMath::Pi(); phi = phi + 0.00005){ // angles spanning full CM
-
+      
       x = r*cos(phi);
       y = r*sin(phi);
 
-      phimod = fmod(phi,phi_petal);
-      xmod = r*cos(phimod);
-      ymod = r*sin(phimod);
-      
-      //build histogram from search
-      if (r <= end_R1_e){
-	result = stripesR1_e.getSearchResult(xmod, ymod, 0);
-      } else if ((r > end_R1_e) && (r <= end_R1)){
-	result = stripesR1.getSearchResult(xmod, ymod, 1);
-      } else if ((r > end_R1) && (r <= end_R2)){
-	result = stripesR2.getSearchResult(xmod, ymod, 2);
-      } else if ((r > end_R2) && (r <= end_CM)){
-	result = stripesR3.getSearchResult(xmod, ymod, 3);
-      }
-      
+      result = stripes.getSearchResult(x, y);
+
       if(result == 1)
-  	Pattern1->Fill(x,y); 
+	Pattern1->Fill(x,y);
     }
   }
-   
-  //histogram from dummy hits
-  std::vector<Stripes::Container> Hits_R1_e = stripesR1_e.dummyHits;
-  std::vector<Stripes::Container> Hits_R1 = stripesR1.dummyHits;
-  std::vector<Stripes::Container> Hits_R2 = stripesR2.dummyHits;
-  std::vector<Stripes::Container> Hits_R3 = stripesR3.dummyHits;
+
+  std::vector<StripesClass::Container> Hits = stripes.dummyHits;
 
   TH2F *Pattern2 = new TH2F("Pattern2","Pattern2",nbins,-770.0,770.0,nbins,-770.0,770.0); // min n max just beyond extent of CM so it's easier to see
   Pattern2->SetMarkerColor(kRed);
-
-  //build histogram from dummy hits
-  for (int i = 0; i < Hits_R1_e.size(); i++){
-    Pattern2->Fill(Hits_R1_e[i].x0, Hits_R1_e[i].y0);
-    Pattern2->Fill(Hits_R1_e[i].x1, Hits_R1_e[i].y1);
-  }
-  for (int i = 0; i < Hits_R1.size(); i++){
-    Pattern2->Fill(Hits_R1[i].x0, Hits_R1[i].y0);
-    Pattern2->Fill(Hits_R1[i].x1, Hits_R1[i].y1);
-  }
-  for (int i = 0; i < Hits_R2.size(); i++){
-    Pattern2->Fill(Hits_R2[i].x0, Hits_R2[i].y0);
-    Pattern2->Fill(Hits_R2[i].x1, Hits_R2[i].y1);
-  }
-  for (int i = 0; i < Hits_R3.size(); i++){
-    Pattern2->Fill(Hits_R3[i].x0, Hits_R3[i].y0);
-    Pattern2->Fill(Hits_R3[i].x1, Hits_R3[i].y1);
-  }
   
+  for (int i = 0; i < Hits.size(); i++){
+    Pattern2->Fill(Hits[i].x0, Hits[i].y0);
+    Pattern2->Fill(Hits[i].x1, Hits[i].y1);
+  }
   
   gStyle->SetOptStat(0);
-  TCanvas *c=new TCanvas("a","cmhitsc5.cpp",500,500);
+  TCanvas *c=new TCanvas("a","cmhitsc.cpp",500,500);
   Pattern1->Draw();
   Pattern2->Draw("same");
-  c->SaveAs("cmhitsc5.pdf");
-
+  c->SaveAs("cmhitsc.pdf");
   
   return 0;
 }
