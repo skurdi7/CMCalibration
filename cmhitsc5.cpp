@@ -136,16 +136,16 @@ StripesClass::StripesClass()
    
   for (int i = 0; i < 18; i++){ // loop over petalID
     for (int j = 0; j < 8; j++){ // loop over radiusID
-      for (int k = keepThisAndAfter[j]; k < nGoodStripes_R1_e[j]; k++){ // loop over stripeID
+      for (int k = 0; k < nGoodStripes_R1_e[j]; k++){ // loop over stripeID
 	dummyHits.push_back(GetPHG4HitFromStripe(i, 0, j, k));
       }
-      for (int k = keepThisAndAfter[j]; k < nGoodStripes_R1[j]; k++){ // loop over stripeID
+      for (int k = 0; k < nGoodStripes_R1[j]; k++){ // loop over stripeID
 	dummyHits.push_back(GetPHG4HitFromStripe(i, 1, j, k));
       }
-      for (int k = keepThisAndAfter[j]; k < nGoodStripes_R2[j]; k++){ // loop over stripeID
+      for (int k = 0; k < nGoodStripes_R2[j]; k++){ // loop over stripeID
 	dummyHits.push_back(GetPHG4HitFromStripe(i, 2, j, k));
       }
-      for (int k = keepThisAndAfter[j]; k < nGoodStripes_R3[j]; k++){ // loop over stripeID
+      for (int k = 0; k < nGoodStripes_R3[j]; k++){ // loop over stripeID
 	dummyHits.push_back(GetPHG4HitFromStripe(i, 3, j, k));
       }
     }
@@ -182,9 +182,9 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
   
   //vertex calculation
   for (int j=0; j<(nRadii - 1); j=j+2){
-    int i_out = keepThisAndAfter[j];
-    for (int i=keepThisAndAfter[j]; i<nStripes; i++){
-      theta = i_out*spacing[j];
+    int i_out = 0;
+    for (int i=keepThisAndAfter[j]; i<keepUntil[j]; i++){
+      theta = i*spacing[j];
 
       cx[i_out][j] = R[j]*cos(theta + (spacing[j]/2) -adjust);
       cy[i_out][j] = R[j]*sin(theta + (spacing[j]/2) -adjust);
@@ -230,15 +230,15 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
       x3b[i_out][j] = (x1b[i_out][j] +  x2b[i_out][j])/ 2.0;
       y3b[i_out][j] = (y1b[i_out][j] +  y2b[i_out][j])/ 2.0;
 
-      if(i<keepUntil[j]) i_out++;
+      i_out++;
     }
     nGoodStripes[j]=i_out;
   }
 
   for (int j=1; j<nRadii; j=j+2){
-    int i_out = keepThisAndAfter[j];
-    for (int i=keepThisAndAfter[j]; i<nStripes; i++){
-      theta = (i_out+1)*spacing[j];
+    int i_out = 0;
+    for (int i=keepThisAndAfter[j]; i<keepUntil[j]; i++){
+      theta = (i+1)*spacing[j];
 
       cx[i_out][j] = R[j]*cos(theta-adjust);
       cy[i_out][j] = R[j]*sin(theta-adjust);
@@ -284,7 +284,7 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
       x3b[i_out][j] = (x1b[i_out][j] +  x2b[i_out][j])/ 2.0;
       y3b[i_out][j] = (y1b[i_out][j] +  y2b[i_out][j])/ 2.0;
 
-      if (i<keepUntil[j]) i_out++;
+      i_out++;
     }
     nGoodStripes[j]=i_out;
   }
@@ -418,19 +418,24 @@ StripesClass::Container StripesClass::GetPHG4HitFromStripe(int petalID, int modu
 
 
 
-int cmhitsc() {
+int cmhitsc5() {
   StripesClass stripes;
 
-  int result, nbins;
-  double r, phi, x, y, xmod, ymod, phimod;
+  int result, nbins, rsteps, phisteps;
+  double r, phi, x, y, xmod, ymod, phimod, rstepsize, phistepsize;
   
-  nbins = 1000;
+  nbins = 100;
+  rsteps = 100;
+  phisteps = 100;
+  
+  rstepsize = (stripes.end_CM - stripes.begin_CM)/rsteps;
+  phistepsize = 2*TMath::Pi()/phisteps;
   
   //histogram from search
   TH2F *Pattern1 = new TH2F("Pattern1","Pattern1",nbins,-770.0,770.0,nbins,-770.0,770.0); // min n max just beyond extent of CM so it's easier to see
   
-  for (r = stripes.begin_CM; r < stripes.end_CM; r = r + 0.5){ // radii spanning full CM
-    for (phi = 0.0; phi < 2*TMath::Pi(); phi = phi + 0.00005){ // angles spanning full CM
+  for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
+    for (phi = 0.0; phi < 2*TMath::Pi(); phi = phi + phistepsize){ // angles spanning full CM
       
       x = r*cos(phi);
       y = r*sin(phi);
@@ -442,21 +447,28 @@ int cmhitsc() {
     }
   }
 
+ 
   std::vector<StripesClass::Container> Hits = stripes.dummyHits;
-
-  TH2F *Pattern2 = new TH2F("Pattern2","Pattern2",nbins,-770.0,770.0,nbins,-770.0,770.0); // min n max just beyond extent of CM so it's easier to see
-  Pattern2->SetMarkerColor(kRed);
+  vector<double> xhit;
+  vector<double> yhit;
   
+  //build tgraph from dummy hits
   for (int i = 0; i < Hits.size(); i++){
-    Pattern2->Fill(Hits[i].x0, Hits[i].y0);
-    Pattern2->Fill(Hits[i].x1, Hits[i].y1);
+    xhit.push_back(Hits[i].x0);
+    yhit.push_back(Hits[i].y0);
+    xhit.push_back(Hits[i].x1);
+    yhit.push_back(Hits[i].y1);
   }
-  
+
+  int npts = 2*Hits.size();
+  TGraph *gDummyHits = new TGraph(npts, &xhit[0], &yhit[0]);
+  gDummyHits->SetMarkerColor(2);
+
   gStyle->SetOptStat(0);
-  TCanvas *c=new TCanvas("a","cmhitsc.cpp",500,500);
+  TCanvas *c=new TCanvas("a","cmhitsc5.cpp",500,500);
   Pattern1->Draw();
-  Pattern2->Draw("same");
-  c->SaveAs("cmhitsc.pdf");
+  gDummyHits->Draw("P");
+  c->SaveAs("cmhitsc5.pdf");
   
   return 0;
 }
