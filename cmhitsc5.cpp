@@ -181,67 +181,18 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
   }
   
   //vertex calculation
-  for (int j=0; j<(nRadii - 1); j=j+2){
+  for (int j=0;  j<nRadii; j++){
     int i_out = 0;
     for (int i=keepThisAndAfter[j]; i<keepUntil[j]; i++){
-      theta = i*spacing[j];
-
-      cx[i_out][j] = R[j]*cos(theta + (spacing[j]/2) -adjust);
-      cy[i_out][j] = R[j]*sin(theta + (spacing[j]/2) -adjust);
-
-      x1a[i_out][j] = cx[i_out][j] - padfrac + arc_r;
-      y1a[i_out][j] = cy[i_out][j] - str_width/2;
-      x1b[i_out][j] = cx[i_out][j] + padfrac - arc_r;
-      y1b[i_out][j] = cy[i_out][j] - str_width/2;
-      x2a[i_out][j] = cx[i_out][j] - padfrac + arc_r;
-      y2a[i_out][j] = cy[i_out][j] + str_width/2;
-      x2b[i_out][j] = cx[i_out][j] + padfrac - arc_r;
-      y2b[i_out][j] = cy[i_out][j] + str_width/2;
-      
-      tempX1a[i_out][j] = x1a[i_out][j] - cx[i_out][j];
-      tempY1a[i_out][j] = y1a[i_out][j] - cy[i_out][j];
-      tempX1b[i_out][j] = x1b[i_out][j] - cx[i_out][j];
-      tempY1b[i_out][j] = y1b[i_out][j] - cy[i_out][j];
-      tempX2a[i_out][j] = x2a[i_out][j] - cx[i_out][j];
-      tempY2a[i_out][j] = y2a[i_out][j] - cy[i_out][j];
-      tempX2b[i_out][j] = x2b[i_out][j] - cx[i_out][j];
-      tempY2b[i_out][j] = y2b[i_out][j] - cy[i_out][j];
-
-      rotatedX1a[i_out][j] = tempX1a[i_out][j]*cos(theta) - tempY1a[i_out][j]*sin(theta);
-      rotatedY1a[i_out][j] = tempX1a[i_out][j]*sin(theta) + tempY1a[i_out][j]*cos(theta);
-      rotatedX1b[i_out][j] = tempX1b[i_out][j]*cos(theta) - tempY1b[i_out][j]*sin(theta);
-      rotatedY1b[i_out][j] = tempX1b[i_out][j]*sin(theta) + tempY1b[i_out][j]*cos(theta);
-      rotatedX2a[i_out][j] = tempX2a[i_out][j]*cos(theta) - tempY2a[i_out][j]*sin(theta);
-      rotatedY2a[i_out][j] = tempX2a[i_out][j]*sin(theta) + tempY2a[i_out][j]*cos(theta);
-      rotatedX2b[i_out][j] = tempX2b[i_out][j]*cos(theta) - tempY2b[i_out][j]*sin(theta);
-      rotatedY2b[i_out][j] = tempX2b[i_out][j]*sin(theta) + tempY2b[i_out][j]*cos(theta);
-
-      x1a[i_out][j] = rotatedX1a[i_out][j] + cx[i_out][j];
-      y1a[i_out][j] = rotatedY1a[i_out][j] + cy[i_out][j];
-      x1b[i_out][j] = rotatedX1b[i_out][j] + cx[i_out][j];
-      y1b[i_out][j] = rotatedY1b[i_out][j] + cy[i_out][j];
-      x2a[i_out][j] = rotatedX2a[i_out][j] + cx[i_out][j];
-      y2a[i_out][j] = rotatedY2a[i_out][j] + cy[i_out][j];
-      x2b[i_out][j] = rotatedX2b[i_out][j] + cx[i_out][j];
-      y2b[i_out][j] = rotatedY2b[i_out][j] + cy[i_out][j];
-
-      x3a[i_out][j] = (x1a[i_out][j] +  x2a[i_out][j])/ 2.0;
-      y3a[i_out][j] = (y1a[i_out][j] +  y2a[i_out][j])/ 2.0;
-      x3b[i_out][j] = (x1b[i_out][j] +  x2b[i_out][j])/ 2.0;
-      y3b[i_out][j] = (y1b[i_out][j] +  y2b[i_out][j])/ 2.0;
-
-      i_out++;
-    }
-    nGoodStripes[j]=i_out;
-  }
-
-  for (int j=1; j<nRadii; j=j+2){
-    int i_out = 0;
-    for (int i=keepThisAndAfter[j]; i<keepUntil[j]; i++){
-      theta = (i+1)*spacing[j];
-
-      cx[i_out][j] = R[j]*cos(theta-adjust);
-      cy[i_out][j] = R[j]*sin(theta-adjust);
+      if (j % 2 == 0){
+	theta = i*spacing[j];
+	cx[i_out][j] = R[j]*cos(theta + (spacing[j]/2) -adjust);
+	cy[i_out][j] = R[j]*sin(theta + (spacing[j]/2) -adjust);
+      } else {
+	theta = theta = (i+1)*spacing[j];
+	cx[i_out][j] = R[j]*cos(theta-adjust);
+	cy[i_out][j] = R[j]*sin(theta-adjust);
+      }
       
       x1a[i_out][j] = cx[i_out][j] - padfrac + arc_r;
       y1a[i_out][j] = cy[i_out][j] - str_width/2;
@@ -288,7 +239,6 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
     }
     nGoodStripes[j]=i_out;
   }
-
 }
 
 
