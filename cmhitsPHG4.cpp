@@ -377,7 +377,9 @@ PHG4Hitv1* StripesClass::GetPHG4HitFromStripe(int petalID, int moduleID, int rad
   hit->set_pz(1, 500.0);
   
   hit->set_t(1, 1.0); // dummy number, nanosecond
-  
+
+  double edep = 1.0; // temp
+  double eion = 1.0; // temp
   //sum up the energy to get total deposited
   // calculate edep
   hit->set_edep(hit->get_edep() + edep); // dont need get edep
