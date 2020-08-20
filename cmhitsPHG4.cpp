@@ -8,6 +8,7 @@
 #include <g4main/PHG4Hit.h>
 #include <g4main/PHG4HitContainer.h>
 #include <g4main/PHG4Hitv1.h>
+#include "Acts/Utilities/Units.hpp"
 
 // all distances in mm, all angles in rad
 // class that generates stripes and dummy hit coordinates
