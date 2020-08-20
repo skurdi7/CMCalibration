@@ -446,10 +446,10 @@ int cmhitsPHG4() {
   
   //build tgraph from dummy hits
   for (int i = 0; i < Hits.size(); i++){
-    xhit.push_back(Hits[i].hit->get_x(0)); 
-    yhit.push_back(Hits[i].hit->get_y(0));
-    xhit.push_back(Hits[i].hit->get_x(1));
-    yhit.push_back(Hits[i].hit->get_y(1));
+    xhit.push_back(Hits[i]->get_x(0)); 
+    yhit.push_back(Hits[i]->get_y(0));
+    xhit.push_back(Hits[i]->get_x(1));
+    yhit.push_back(Hits[i]->get_y(1));
   }
 
   int npts = 2*Hits.size();
