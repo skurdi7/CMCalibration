@@ -5,12 +5,9 @@
 #include "TVector3.h"
 
 //from phg4tpcsteppingaction.cc
-#include "PHG4TpcSteppingAction.h"
 #include <g4main/PHG4Hit.h>
 #include <g4main/PHG4HitContainer.h>
 #include <g4main/PHG4Hitv1.h>
-#include <phparameter/PHParameters.h>
-#include <Geant4/G4SystemOfUnits.hh> //?
 
 // all distances in mm, all angles in rad
 // class that generates stripes and dummy hit coordinates
@@ -300,16 +297,8 @@ int StripesClass::getSearchResult(double xcheck, double ycheck){
 }
 
 PHG4Hitv1* StripesClass::GetPHG4HitFromStripe(int petalID, int moduleID, int radiusID, int stripeID)
-  : hits_(nullptr) //should these go here?
-  , absorberhits_(nullptr)
-  , hit(nullptr)
-  , savehitcontainer(nullptr)
-{
+{ //this function generates a PHG4 hit using coordinates from a stripe
   const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
-  PHG4HitContainer *hits_;
-  PHG4HitContainer *absorberhits_;
-  const PHParameters *params;
-  PHG4HitContainer *savehitcontainer;
   PHG4Hitv1 *hit;
   TVector3 dummyPos0, dummyPos1;
   
@@ -318,11 +307,8 @@ PHG4Hitv1* StripesClass::GetPHG4HitFromStripe(int petalID, int moduleID, int rad
   //radiusID ranges 0-7
 
   //from phg4tpcsteppingaction.cc
-  if (!hit)
-    {
-      hit = new PHG4Hitv1();
-    }
-  hit->set_layer(layer_id);
+  hit = new PHG4Hitv1();
+  hit->set_layer(-1); // dummy number 
   //here we set the entrance values in cm
   if (moduleID == 0){
     hit->set_x(0, x3a_R1_e[stripeID][radiusID] / cm);
@@ -343,33 +329,19 @@ PHG4Hitv1* StripesClass::GetPHG4HitFromStripe(int petalID, int moduleID, int rad
   if(petalID > 0){
     dummyPos0.SetXYZ(hit->get_x(0), hit->get_y(0), hit->get_z(0));
     dummyPos0.RotateZ(petalID * phi_petal);
-    hit->set_x(0, dummyPos0.X() / cm);
-    hit->set_y(0, dummyPos0.Y() / cm);
-    hit->set_z(0, dummyPos0.Z() / cm); // this one shouldnt be necessary
+    hit->set_x(0, dummyPos0.X());
+    hit->set_y(0, dummyPos0.Y());
   }
   
   // momentum
-  hit->set_px(0, 0.0 / GeV);
-  hit->set_py(0, 0.0 / GeV);
-  hit->set_pz(0, 0.0 / GeV);
+  hit->set_px(0, 0.0); // GeV
+  hit->set_py(0, 0.0);
+  hit->set_pz(0, 0.0);
   
   // time in ns
-  hit->set_t(0, 0.0 / nanosecond);
+  hit->set_t(0, 0.0); // nanosecond
   //set and save the track ID
-  hit->set_trkid(-1);
-
-  //set the initial energy deposit
-  hit->set_edep(0);
-  if (whichactive > 0)  // return of IsInTpcDetector, > 0 hit in tpc gas volume, < 0 hit in support structures
-    {
-      hit->set_eion(0);
-      // Now save the container we want to add this hit to
-      savehitcontainer = hits_;
-    }
-  else
-    {
-      savehitcontainer = absorberhits_;
-    }
+  hit->set_trkid(-1); // dummy number
 
   // here we just update the exit values, it will be overwritten
   // for every step until we leave the volume or the particle
@@ -393,68 +365,44 @@ PHG4Hitv1* StripesClass::GetPHG4HitFromStripe(int petalID, int moduleID, int rad
   if(petalID > 0){
     dummyPos1.SetXYZ(hit->get_x(1), hit->get_y(1), hit->get_z(1));
     dummyPos1.RotateZ(petalID * phi_petal);
-    hit->set_x(1, dummyPos1.X() / cm);
-    hit->set_y(1, dummyPos1.Y() / cm);
-    hit->set_z(1, dummyPos1.Z() / cm); // this one shouldnt be necessary
+    hit->set_x(1, dummyPos1.X());
+    hit->set_y(1, dummyPos1.Y());
   }
   
-  hit->set_px(1, 500.0 / GeV);
-  hit->set_py(1, 500.0 / GeV);
-  hit->set_pz(1, 500.0 / GeV);
+  hit->set_px(1, 500.0); // dummy large number, in GeV
+  hit->set_py(1, 500.0);
+  hit->set_pz(1, 500.0);
   
-  hit->set_t(1, postPoint->GetGlobalTime() / nanosecond);
+  hit->set_t(1, 1.0); // dummy number, nanosecond
   
   //sum up the energy to get total deposited
-  hit->set_edep(hit->get_edep() + edep);
-  if (whichactive > 0)
-    {
-      hit->set_eion(hit->get_eion() + eion);
-    }
+  // calculate edep
+  hit->set_edep(hit->get_edep() + edep); // dont need get edep
+  //calculate eion - make same as edep
+  hit->set_eion(hit->get_eion() + eion);// dont need get eion
 
-  if ((use_g4_steps > 0 && whichactive > 0) ||
-      postPoint->GetStepStatus() == fGeomBoundary ||
-      postPoint->GetStepStatus() == fWorldBoundary ||
-      postPoint->GetStepStatus() == fAtRestDoItProc ||
-      aTrack->GetTrackStatus() == fStopAndKill)
-    {
-      // save only hits with energy deposit (or -1 for geantino)
-      if (hit->get_edep()){
-	savehitcontainer->AddHit(layer_id, hit);
-	double rin = sqrt(hit->get_x(0) * hit->get_x(0) + hit->get_y(0) * hit->get_y(0));
-	double rout = sqrt(hit->get_x(1) * hit->get_x(1) + hit->get_y(1) * hit->get_y(1));
-	if (Verbosity() > 10)
-	  if ((rin > 69.0 && rin < 70.125) || (rout > 69.0 && rout < 70.125))
-	    {
-	      cout << "Added Tpc g4hit with rin, rout = " << rin << "  " << rout
-		   << " g4hitid " << hit->get_hit_id() << endl;
-	      cout << " xin " << hit->get_x(0)
-		   << " yin " << hit->get_y(0)
-		   << " zin " << hit->get_z(0)
-		   << " rin " << rin
-		   << endl;
-	      cout << " xout " << hit->get_x(1)
-		   << " yout " << hit->get_y(1)
-		   << " zout " << hit->get_z(1)
-		   << " rout " << rout
-		   << endl;
-	      cout << " xav " << (hit->get_x(1) + hit->get_x(0)) / 2.0
-		   << " yav " << (hit->get_y(1) + hit->get_y(0)) / 2.0
-		   << " zav " << (hit->get_z(1) + hit->get_z(0)) / 2.0
-		   << " rav " << (rout + rin) / 2.0
-		   << endl;
-	    }
-	
-	// ownership has been transferred to container, set to null
-        // so we will create a new hit for the next track
-        hit = nullptr;
-      } else {
-	// if this hit has no energy deposit, just reset it for reuse
-	// this means we have to delete it in the dtor. If this was
-	// the last hit we processed the memory is still allocated
-        hit->Reset();
-      }
-    }
-  
+  if (hit->get_edep()){ //print out hits
+    double rin = sqrt(hit->get_x(0) * hit->get_x(0) + hit->get_y(0) * hit->get_y(0));
+    double rout = sqrt(hit->get_x(1) * hit->get_x(1) + hit->get_y(1) * hit->get_y(1));
+    cout << "Added Tpc g4hit with rin, rout = " << rin << "  " << rout
+	 << " g4hitid " << hit->get_hit_id() << endl;
+    cout << " xin " << hit->get_x(0)
+	 << " yin " << hit->get_y(0)
+	 << " zin " << hit->get_z(0)
+	 << " rin " << rin
+	 << endl;
+    cout << " xout " << hit->get_x(1)
+	 << " yout " << hit->get_y(1)
+	 << " zout " << hit->get_z(1)
+	 << " rout " << rout
+	 << endl;
+    cout << " xav " << (hit->get_x(1) + hit->get_x(0)) / 2.0
+	 << " yav " << (hit->get_y(1) + hit->get_y(0)) / 2.0
+	 << " zav " << (hit->get_z(1) + hit->get_z(0)) / 2.0
+	 << " rav " << (rout + rin) / 2.0
+	 << endl;
+  }
+ 
   return hit;
 }
 
