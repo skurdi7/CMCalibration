@@ -411,6 +411,49 @@ PHG4Hitv1* StripesClass::GetPHG4HitFromStripe(int petalID, int moduleID, int rad
       hit->set_eion(hit->get_eion() + eion);
     }
 
+  if ((use_g4_steps > 0 && whichactive > 0) ||
+      postPoint->GetStepStatus() == fGeomBoundary ||
+      postPoint->GetStepStatus() == fWorldBoundary ||
+      postPoint->GetStepStatus() == fAtRestDoItProc ||
+      aTrack->GetTrackStatus() == fStopAndKill)
+    {
+      // save only hits with energy deposit (or -1 for geantino)
+      if (hit->get_edep()){
+	savehitcontainer->AddHit(layer_id, hit);
+	double rin = sqrt(hit->get_x(0) * hit->get_x(0) + hit->get_y(0) * hit->get_y(0));
+	double rout = sqrt(hit->get_x(1) * hit->get_x(1) + hit->get_y(1) * hit->get_y(1));
+	if (Verbosity() > 10)
+	  if ((rin > 69.0 && rin < 70.125) || (rout > 69.0 && rout < 70.125))
+	    {
+	      cout << "Added Tpc g4hit with rin, rout = " << rin << "  " << rout
+		   << " g4hitid " << hit->get_hit_id() << endl;
+	      cout << " xin " << hit->get_x(0)
+		   << " yin " << hit->get_y(0)
+		   << " zin " << hit->get_z(0)
+		   << " rin " << rin
+		   << endl;
+	      cout << " xout " << hit->get_x(1)
+		   << " yout " << hit->get_y(1)
+		   << " zout " << hit->get_z(1)
+		   << " rout " << rout
+		   << endl;
+	      cout << " xav " << (hit->get_x(1) + hit->get_x(0)) / 2.0
+		   << " yav " << (hit->get_y(1) + hit->get_y(0)) / 2.0
+		   << " zav " << (hit->get_z(1) + hit->get_z(0)) / 2.0
+		   << " rav " << (rout + rin) / 2.0
+		   << endl;
+	    }
+	
+	// ownership has been transferred to container, set to null
+        // so we will create a new hit for the next track
+        hit = nullptr;
+      } else {
+	// if this hit has no energy deposit, just reset it for reuse
+	// this means we have to delete it in the dtor. If this was
+	// the last hit we processed the memory is still allocated
+        hit->Reset();
+      }
+    }
   
   return hit;
 }
