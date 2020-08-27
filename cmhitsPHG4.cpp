@@ -403,6 +403,7 @@ PHG4Hitv1* StripesClass::GetPHG4HitFromStripe(int petalID, int moduleID, int rad
   //calculate eion - make same as edep
   hit->set_eion(edep);// dont need get eion
 
+  /*
   if (hit->get_edep()){ //print out hits
     double rin = sqrt(hit->get_x(0) * hit->get_x(0) + hit->get_y(0) * hit->get_y(0));
     double rout = sqrt(hit->get_x(1) * hit->get_x(1) + hit->get_y(1) * hit->get_y(1));
@@ -424,7 +425,8 @@ PHG4Hitv1* StripesClass::GetPHG4HitFromStripe(int petalID, int moduleID, int rad
 	 << " rav " << (rout + rin) / 2.0
 	 << endl;
   }
- 
+  */
+  
   return hit;
 }
 
