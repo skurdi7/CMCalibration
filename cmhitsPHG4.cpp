@@ -489,7 +489,7 @@ int cmhitsPHG4() {
   tree->Branch("pad",hit);
 
   for (int i=0;i<tree->GetEntries();i++){
-    hit=&(Hits[i]);
+    hit=(Hits[i]);
     tree->Fill();
   }
   
