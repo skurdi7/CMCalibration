@@ -489,10 +489,10 @@ int cmhitsPHG4() {
   sTree->Branch("yhit",&yhit);
 
   for (int i=0;i<sTree->GetEntries();i++){
-    xhit=(Hits[i]->get_x(0)*cm/mm);
-    yhit=(Hits[i]->get_y(0)*cm/mm);
-    xhit=(Hits[i]->get_x(1)*cm/mm);
-    yhit=(Hits[i]->get_y(1)*cm/mm);
+    xhit.push_back(Hits[i]->get_x(0)*cm/mm); 
+    yhit.push_back(Hits[i]->get_y(0)*cm/mm);
+    xhit.push_back(Hits[i]->get_x(1)*cm/mm);
+    yhit.push_back(Hits[i]->get_y(1)*cm/mm);
     tree->Fill();
   }
   
