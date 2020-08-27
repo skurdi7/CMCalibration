@@ -124,8 +124,8 @@ StripesClass::StripesClass()
   padfrac_R2 = 0.5*10.13836283 * mm;
   padfrac_R3 = 0.5*10.90189537 * mm;
   
-  str_width = 1.0;
-  arc_r = 0.5; 
+  str_width = 1.0 * mm;
+  arc_r = 0.5 * mm; 
 
   CalculateVertices(nStripes_R1, nPads_R1, R1_e, spacing_R1_e, x1a_R1_e, y1a_R1_e, x1b_R1_e, y1b_R1_e, x2a_R1_e, y2a_R1_e, x2b_R1_e, y2b_R1_e, x3a_R1_e, y3a_R1_e, x3b_R1_e, y3b_R1_e, padfrac_R1, nGoodStripes_R1_e, keepUntil_R1_e);
   CalculateVertices(nStripes_R1, nPads_R1, R1, spacing_R1, x1a_R1, y1a_R1, x1b_R1, y1b_R1, x2a_R1, y2a_R1, x2b_R1, y2b_R1, x3a_R1, y3a_R1, x3b_R1, y3b_R1, padfrac_R1, nGoodStripes_R1, keepUntil_R1);
@@ -352,16 +352,16 @@ PHG4Hitv1* StripesClass::GetPHG4HitFromStripe(int petalID, int moduleID, int rad
   // ceases to exist
   if (moduleID == 0){
     hit->set_x(1, x3b_R1_e[stripeID][radiusID] / cm);
-    hit->set_y(1, x3b_R1_e[stripeID][radiusID] / cm);
+    hit->set_y(1, y3b_R1_e[stripeID][radiusID] / cm);
   } else if (moduleID == 1){
     hit->set_x(1, x3b_R1[stripeID][radiusID] / cm);
-    hit->set_y(1, x3b_R1[stripeID][radiusID] / cm);
+    hit->set_y(1, y3b_R1[stripeID][radiusID] / cm);
   } else if (moduleID == 2){
     hit->set_x(1, x3b_R2[stripeID][radiusID] / cm);
-    hit->set_y(1, x3b_R2[stripeID][radiusID] / cm);
+    hit->set_y(1, y3b_R2[stripeID][radiusID] / cm);
   } else if (moduleID == 3){
     hit->set_x(1, x3b_R3[stripeID][radiusID] / cm);
-    hit->set_y(1, x3b_R3[stripeID][radiusID] / cm);
+    hit->set_y(1, y3b_R3[stripeID][radiusID] / cm);
   }
   hit->set_z(1, 0.0 / cm);
 
@@ -458,7 +458,7 @@ int cmhitsPHG4() {
     yhit.push_back(Hits[i]->get_y(1)*cm/mm);
   }
 
-  int npts = 2*Hits.size();
+  int npts = 4*Hits.size();
   TGraph *gDummyHits = new TGraph(npts, &xhit[0], &yhit[0]);
   gDummyHits->SetMarkerColor(2);
 
