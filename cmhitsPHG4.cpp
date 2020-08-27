@@ -484,11 +484,11 @@ int cmhitsPHG4() {
   gDummyHits->Draw("P");
   c->SaveAs("cmhitsPHG4.pdf");
 
-  TTree *tree=new TTree("tree","phg4hits");
-  tree->Branch("xhit",xhit);
-  tree->Branch("yhit",yhit);
+  TTree *sTree=new TTree("tree","phg4hits");
+  sTree->Branch("xhit",&xhit);
+  sTree->Branch("yhit",&yhit);
 
-  for (int i=0;i<tree->GetEntries();i++){
+  for (int i=0;i<sTree->GetEntries();i++){
     xhit=(Hits[i]->get_x(0)*cm/mm);
     yhit=(Hits[i]->get_y(0)*cm/mm);
     xhit=(Hits[i]->get_x(1)*cm/mm);
