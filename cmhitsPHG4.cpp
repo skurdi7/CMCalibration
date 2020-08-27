@@ -496,7 +496,7 @@ int cmhitsPHG4() {
     sTree->Fill();
   }
   
-  sTree->SaveAs("phg4hitsTree.txt");
+  sTree->SaveAs("phg4hitsTree");
 
     
   return 0;
