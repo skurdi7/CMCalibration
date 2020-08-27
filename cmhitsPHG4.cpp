@@ -94,12 +94,14 @@ private:
   int keepUntil_R2[nRadii];
   int keepUntil_R3[nRadii];
   int result;
+
+  int nElectrons;
   
   void CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, int nGoodStripes[], int keepUntil[]);
   
   int SearchModule(int nStripes, double x1a[][nRadii], double x1b[][nRadii], double x2a[][nRadii], double x2b[][nRadii], double y1a[][nRadii], double y1b[][nRadii], double y2a[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double x, double y, int nGoodStripes[]);
   
-  PHG4Hitv1* GetPHG4HitFromStripe(int petalID, int moduleID, int radiusID, int stripeID);
+  PHG4Hitv1* GetPHG4HitFromStripe(int petalID, int moduleID, int radiusID, int stripeID, int nElectrons);
 };
 
 StripesClass::StripesClass()
@@ -125,7 +127,9 @@ StripesClass::StripesClass()
   padfrac_R3 = 0.5*10.90189537 * mm;
   
   str_width = 1.0 * mm;
-  arc_r = 0.5 * mm; 
+  arc_r = 0.5 * mm;
+
+  nElectrons = 100;
 
   CalculateVertices(nStripes_R1, nPads_R1, R1_e, spacing_R1_e, x1a_R1_e, y1a_R1_e, x1b_R1_e, y1b_R1_e, x2a_R1_e, y2a_R1_e, x2b_R1_e, y2b_R1_e, x3a_R1_e, y3a_R1_e, x3b_R1_e, y3b_R1_e, padfrac_R1, nGoodStripes_R1_e, keepUntil_R1_e);
   CalculateVertices(nStripes_R1, nPads_R1, R1, spacing_R1, x1a_R1, y1a_R1, x1b_R1, y1b_R1, x2a_R1, y2a_R1, x2b_R1, y2b_R1, x3a_R1, y3a_R1, x3b_R1, y3b_R1, padfrac_R1, nGoodStripes_R1, keepUntil_R1);
@@ -135,16 +139,16 @@ StripesClass::StripesClass()
   for (int i = 0; i < 18; i++){ // loop over petalID
     for (int j = 0; j < 8; j++){ // loop over radiusID
       for (int k = 0; k < nGoodStripes_R1_e[j]; k++){ // loop over stripeID
-       PHG4Hits.push_back(GetPHG4HitFromStripe(i, 0, j, k));
+	PHG4Hits.push_back(GetPHG4HitFromStripe(i, 0, j, k, nElectrons));
       }
       for (int k = 0; k < nGoodStripes_R1[j]; k++){ // loop over stripeID
-	PHG4Hits.push_back(GetPHG4HitFromStripe(i, 1, j, k));
+	PHG4Hits.push_back(GetPHG4HitFromStripe(i, 1, j, k, nElectrons));
       }
       for (int k = 0; k < nGoodStripes_R2[j]; k++){ // loop over stripeID
-	PHG4Hits.push_back(GetPHG4HitFromStripe(i, 2, j, k));
+	PHG4Hits.push_back(GetPHG4HitFromStripe(i, 2, j, k, nElectrons));
       }
       for (int k = 0; k < nGoodStripes_R3[j]; k++){ // loop over stripeID
-	PHG4Hits.push_back(GetPHG4HitFromStripe(i, 3, j, k));
+	PHG4Hits.push_back(GetPHG4HitFromStripe(i, 3, j, k, nElectrons));
       }
     }
   }
@@ -300,7 +304,7 @@ int StripesClass::getSearchResult(double xcheck, double ycheck){
   return result;
 }
 
-PHG4Hitv1* StripesClass::GetPHG4HitFromStripe(int petalID, int moduleID, int radiusID, int stripeID)
+PHG4Hitv1* StripesClass::GetPHG4HitFromStripe(int petalID, int moduleID, int radiusID, int stripeID, int nElectrons)
 { //this function generates a PHG4 hit using coordinates from a stripe
   const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
   PHG4Hitv1 *hit;
@@ -379,13 +383,25 @@ PHG4Hitv1* StripesClass::GetPHG4HitFromStripe(int petalID, int moduleID, int rad
   
   hit->set_t(1, 1.0); // dummy number, nanosecond
 
-  double edep = 1.0; // temp
-  double eion = 1.0; // temp
-  //sum up the energy to get total deposited
-  // calculate edep
-  hit->set_edep(hit->get_edep() + edep); // dont need get edep
+  //calculate the total energy deposited
+  
+  double Ne_dEdx = 1.56;   // keV/cm
+  double CF4_dEdx = 7.00;  // keV/cm
+
+  //double Ne_NTotal = 43;    // Number/cm
+  //double CF4_NTotal = 100;  // Number/cm
+  //double Tpc_NTot = 0.90 * Ne_NTotal + 0.10 * CF4_NTotal;
+
+  double Tpc_NTot = nElectrons;
+  double Tpc_dEdx = 0.90 * Ne_dEdx + 0.10 * CF4_dEdx;
+
+  //double Tpc_ElectronsPerKeV = Tpc_NTot / Tpc_dEdx;
+  //double Tpc_ElectronsPerGeV = Tpc_NTot / Tpc_dEdx*1e6; //electrons per gev.
+
+  double edep = Tpc_dEdx*1e6 / Tpc_NTot; // GeV dep per electron
+  hit->set_edep(edep); // dont need get edep
   //calculate eion - make same as edep
-  hit->set_eion(hit->get_eion() + eion);// dont need get eion
+  hit->set_eion(edep);// dont need get eion
 
   if (hit->get_edep()){ //print out hits
     double rin = sqrt(hit->get_x(0) * hit->get_x(0) + hit->get_y(0) * hit->get_y(0));
@@ -468,6 +484,16 @@ int cmhitsPHG4() {
   gDummyHits->Draw("P");
   c->SaveAs("cmhitsPHG4.pdf");
 
+  PHG4Hitv1 *hit;
+  TTree *sTree=new TTree("tree","phg4hits");
+  tree->Branch("pad",hit);
+
+  for (int i=0;i<tree->GetEntries();i++){
+    hit=&(Hits[i]);
+    tree->Fill();
+  }
+  
+  tree->SaveAs("phg4hitsTree");
 
     
   return 0;
