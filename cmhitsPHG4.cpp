@@ -493,10 +493,10 @@ int cmhitsPHG4() {
     yhit.push_back(Hits[i]->get_y(0)*cm/mm);
     xhit.push_back(Hits[i]->get_x(1)*cm/mm);
     yhit.push_back(Hits[i]->get_y(1)*cm/mm);
-    tree->Fill();
+    sTree->Fill();
   }
   
-  tree->SaveAs("phg4hitsTree.pdf");
+  sTree->SaveAs("phg4hitsTree.pdf");
 
     
   return 0;
