@@ -493,7 +493,7 @@ int cmhitsPHG4() {
     tree->Fill();
   }
   
-  tree->SaveAs("phg4hitsTree");
+  tree->SaveAs("phg4hitsTree.pdf");
 
     
   return 0;
