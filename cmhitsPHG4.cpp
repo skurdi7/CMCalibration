@@ -485,7 +485,7 @@ int cmhitsPHG4() {
   c->SaveAs("cmhitsPHG4.pdf");
 
   PHG4Hitv1 *hit;
-  TTree *sTree=new TTree("tree","phg4hits");
+  TTree *tree=new TTree("tree","phg4hits");
   tree->Branch("pad",hit);
 
   for (int i=0;i<tree->GetEntries();i++){
