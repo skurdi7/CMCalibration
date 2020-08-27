@@ -103,26 +103,26 @@ private:
 };
 
 StripesClass::StripesClass()
-  : R1_e {227.0902789 * mm, 238.4100043, 249.7297296, 261.049455, 272.3691804, 283.6889058, 295.0086312, 306.3283566},
-    R1 {317.648082, 328.9678074, 340.2875328, 351.6072582, 362.9269836, 374.246709,  385.5664344, 396.8861597},
-    R2 {421.705532, 442.119258, 462.532984, 482.9467608, 503.36069, 523.774416, 544.188015, 564.601868},
-    R3 {594.6048725, 616.545823, 638.4867738, 660.4277246, 682.3686754, 704.3096262, 726.250577, 748.1915277},
+  : R1_e {227.0902789 * mm, 238.4100043 * mm, 249.7297296 * mm, 261.049455 * mm, 272.3691804 * mm, 283.6889058 * mm, 295.0086312 * mm, 306.3283566 * mm},
+    R1 {317.648082 * mm, 328.9678074 * mm, 340.2875328 * mm, 351.6072582 * mm, 362.9269836 * mm, 374.246709 * mm,  385.5664344 * mm, 396.8861597 * mm},
+    R2 {421.705532 * mm, 442.119258 * mm, 462.532984 * mm, 482.9467608 * mm, 503.36069 * mm, 523.774416 * mm, 544.188015 * mm, 564.601868 * mm},
+    R3 {594.6048725 * mm, 616.545823 * mm, 638.4867738 * mm, 660.4277246 * mm, 682.3686754 * mm, 704.3096262 * mm, 726.250577 * mm, 748.1915277 * mm},
     keepThisAndAfter {1,0,1,0,1,0,1,0},
     keepUntil_R1_e {4,4,5,4,5,5,5,5},
     keepUntil_R1 {5,5,6,5,6,5,6,5},
     keepUntil_R2 {7,7,8,7,8,8,8,8},
     keepUntil_R3 {11,10,11,11,11,11,12,11}
 {
-  begin_CM = 221.4019814; // inner radius of CM
-  end_CM = 759.2138; // outer radius of CM
+  begin_CM = 221.4019814 * mm; // inner radius of CM
+  end_CM = 759.2138 * mm; // outer radius of CM
   
   nPads_R1 = 6*16;
   nPads_R2 = 8*16;
   nPads_R3 = 12*16;
   
-  padfrac_R1 = 0.5*5.59106385;
-  padfrac_R2 = 0.5*10.13836283;
-  padfrac_R3 = 0.5*10.90189537;
+  padfrac_R1 = 0.5*5.59106385 * mm;
+  padfrac_R2 = 0.5*10.13836283 * mm;
+  padfrac_R3 = 0.5*10.90189537 * mm;
   
   str_width = 1.0;
   arc_r = 0.5; 
@@ -157,7 +157,7 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
   const double phi_module = TMath::Pi()/6.0; // angle span of a module
   const int pr_mult = 3; // multiples of intrinsic resolution of pads
   const int dw_mult = 8; // multiples of diffusion width
-  const double diffwidth = 0.6; // diffusion width
+  const double diffwidth = 0.6 * mm; // diffusion width
   const double adjust = 0.015; //arbitrary angle to center the pattern in a petal
 
   double theta = 0.0;
@@ -269,9 +269,9 @@ int StripesClass::SearchModule(int nStripes, double x1a[][nRadii], double x1b[][
 
 int StripesClass::getSearchResult(double xcheck, double ycheck){
   const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
-  const double end_R1_e = 312.0; // arbitrary radius between R1_e and R1
-  const double end_R1 = 408.0; // arbitrary radius between R1 and R2
-  const double end_R2 = 580.0; // arbitrary radius between R2 and R3
+  const double end_R1_e = 312.0 * mm; // arbitrary radius between R1_e and R1
+  const double end_R1 = 408.0 * mm; // arbitrary radius between R1 and R2
+  const double end_R2 = 580.0 * mm; // arbitrary radius between R2 and R3
 
   double r, phi, phimod, xmod, ymod;
   
@@ -446,13 +446,16 @@ int cmhitsPHG4() {
   vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
   vector<double> xhit;
   vector<double> yhit;
+
+  const double mm = 1.0;
+  const double cm = 10.0;
   
   //build tgraph from dummy hits
   for (int i = 0; i < Hits.size(); i++){
-    xhit.push_back(Hits[i]->get_x(0)*10); //multiply by cm / mm 
-    yhit.push_back(Hits[i]->get_y(0)*10);
-    xhit.push_back(Hits[i]->get_x(1)*10);
-    yhit.push_back(Hits[i]->get_y(1)*10);
+    xhit.push_back(Hits[i]->get_x(0)*cm/mm); 
+    yhit.push_back(Hits[i]->get_y(0)*cm/mm);
+    xhit.push_back(Hits[i]->get_x(1)*cm/mm);
+    yhit.push_back(Hits[i]->get_y(1)*cm/mm);
   }
 
   int npts = 2*Hits.size();
