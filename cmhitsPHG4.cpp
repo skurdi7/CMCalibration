@@ -458,7 +458,7 @@ int cmhitsPHG4() {
     yhit.push_back(Hits[i]->get_y(1)*cm/mm);
   }
 
-  int npts = 4*Hits.size();
+  int npts = 2*Hits.size();
   TGraph *gDummyHits = new TGraph(npts, &xhit[0], &yhit[0]);
   gDummyHits->SetMarkerColor(2);
 
