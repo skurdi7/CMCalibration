@@ -495,8 +495,8 @@ int cmhitsPHG4() {
   sTree->Branch("yhit",&yhitfortree);
 
   for (int i=0;i<2*Hits.size();i++){
-    xhit=xhitS[i];
-    yhit=yhitS[i];
+    xhitfortree=xhitS[i];
+    yhitfortree=yhitS[i];
     /* xhitS.push_back(Hits[i]->get_x(0)*cm/mm); 
     yhitS.push_back(Hits[i]->get_y(0)*cm/mm);
     xhitS.push_back(Hits[i]->get_x(1)*cm/mm);
