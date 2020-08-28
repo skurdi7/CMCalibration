@@ -513,8 +513,8 @@ int cmhitsPHG4() {
   inTree->SetBranchAddress("yhit",&yhitS);
   for (int i=0;i<inTree->GetEntries();i++){
     inTree->GetEntry(i);
-    xhit.push_back(*xhit);
-    yhit.push_back(*yhit);   
+    xhit.push_back(xhitS);
+    yhit.push_back(yhitS);   
   }
   input->Close();
 
