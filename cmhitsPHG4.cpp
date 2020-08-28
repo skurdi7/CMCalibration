@@ -509,8 +509,8 @@ int cmhitsPHG4() {
   vector<double> yhit;
 
   char const *treename="sTree";
-  //TFile *input=TFile::Open("phg4hitsTree.root");
-  TTree *inTree=sTree;
+  TFile *input=TFile::Open("phg4hitsTree.root");
+  TTree *inTree=(TTree*)input->Get("tree");
   inTree->SetBranchAddress("xhit",&xhitfortree);
   inTree->SetBranchAddress("yhit",&yhitfortree);
   for (int i=0;i<inTree->GetEntries();i++){
@@ -518,7 +518,7 @@ int cmhitsPHG4() {
     xhit.push_back(xhitfortree);
     yhit.push_back(yhitfortree);   
   }
-  //input->Close();
+  input->Close();
 
   int npts = 2*Hits.size();
   TGraph *gDummyHits = new TGraph(npts, &xhit[0], &yhit[0]);
