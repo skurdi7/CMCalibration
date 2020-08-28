@@ -462,12 +462,11 @@ int cmhitsPHG4() {
   }
 
   vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
-  vector<double> xhit;
-  vector<double> yhit;
 
   const double mm = 1.0;
   const double cm = 10.0;
   
+  /*
   //build tgraph from dummy hits
   for (int i = 0; i < Hits.size(); i++){
     xhit.push_back(Hits[i]->get_x(0)*cm/mm); 
@@ -485,21 +484,49 @@ int cmhitsPHG4() {
   Pattern1->Draw();
   gDummyHits->Draw("P");
   c->SaveAs("cmhitsPHG4.pdf");
+  */
+
+  vector<double> xhitS;
+  vector<double> yhitS;
 
   TTree *sTree=new TTree("tree","phg4hits");
-  sTree->Branch("xhit",&xhit);
-  sTree->Branch("yhit",&yhit);
+  sTree->Branch("xhit",&xhitS);
+  sTree->Branch("yhit",&yhitS);
 
   for (int i=0;i<sTree->GetEntries();i++){
-    xhit.push_back(Hits[i]->get_x(0)*cm/mm); 
-    yhit.push_back(Hits[i]->get_y(0)*cm/mm);
-    xhit.push_back(Hits[i]->get_x(1)*cm/mm);
-    yhit.push_back(Hits[i]->get_y(1)*cm/mm);
+    xhitS.push_back(Hits[i]->get_x(0)*cm/mm); 
+    yhitS.push_back(Hits[i]->get_y(0)*cm/mm);
+    xhitS.push_back(Hits[i]->get_x(1)*cm/mm);
+    yhitS.push_back(Hits[i]->get_y(1)*cm/mm);
     sTree->Fill();
   }
   
   sTree->SaveAs("phg4hitsTree");
 
+  vector<double> xhit;
+  vector<double> yhit;
+
+  char *treename="sTree";
+  TFile *input=TFile::Open(phg4hitsTree);
+  TTree *inTree=(TTree*)input->Get(sTree);
+  inTree->SetBranchAddress("xhit",&xhitS);
+  inTree->SetBranchAddress("yhit",&yhitS);
+  for (int i=0;i<inTree->GetEntries();i++){
+    inTree->GetEntry(i);
+    xhit.push_back(*xhit);
+    yhit.push_back(*yhit);   
+  }
+  input->Close();
+
+  int npts = 2*Hits.size();
+  TGraph *gDummyHits = new TGraph(npts, &xhit[0], &yhit[0]);
+  gDummyHits->SetMarkerColor(2);
+  
+  gStyle->SetOptStat(0);
+  TCanvas *c=new TCanvas("a","cmhitsPHG4.cpp",500,500);
+  Pattern1->Draw();
+  gDummyHits->Draw("P");
+  c->SaveAs("cmhitsPHG4.pdf");
     
   return 0;
 }
