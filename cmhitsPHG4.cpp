@@ -507,7 +507,7 @@ int cmhitsPHG4() {
   vector<double> yhit;
 
   char *treename="sTree";
-  TFile *input=TFile::Open(phg4hitsTree);
+  TFile *input=TFile::Open("phg4hitsTree");
   TTree *inTree=(TTree*)input->Get(sTree);
   inTree->SetBranchAddress("xhit",&xhitS);
   inTree->SetBranchAddress("yhit",&yhitS);
