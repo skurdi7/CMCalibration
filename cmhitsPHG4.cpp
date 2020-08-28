@@ -490,14 +490,18 @@ int cmhitsPHG4() {
   vector<double> yhitS;
 
   TTree *sTree=new TTree("tree","phg4hits");
-  sTree->Branch("xhit",&xhitS);
-  sTree->Branch("yhit",&yhitS);
+  double xhit_for_tree, yhit_for_tree;
+  sTree->Branch("xhit",&xhitfortree);
+  sTree->Branch("yhit",&yhitfortree);
 
-  for (int i=0;i<sTree->GetEntries();i++){
-    xhitS.push_back(Hits[i]->get_x(0)*cm/mm); 
+  for (int i=0;i<2*Hits.size();i++){
+    xhit=xhitS[i];
+    yhit=yhitS[i];
+    /* xhitS.push_back(Hits[i]->get_x(0)*cm/mm); 
     yhitS.push_back(Hits[i]->get_y(0)*cm/mm);
     xhitS.push_back(Hits[i]->get_x(1)*cm/mm);
     yhitS.push_back(Hits[i]->get_y(1)*cm/mm);
+    */
     sTree->Fill();
   }
   
