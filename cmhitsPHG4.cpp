@@ -508,7 +508,7 @@ int cmhitsPHG4() {
 
   char const *treename="sTree";
   TFile *input=TFile::Open("phg4hitsTree");
-  TTree *inTree=(TTree*)input->Get(sTree);
+  TTree *inTree=(TTree*)input->Get("tree");
   inTree->SetBranchAddress("xhit",&xhitS);
   inTree->SetBranchAddress("yhit",&yhitS);
   for (int i=0;i<inTree->GetEntries();i++){
