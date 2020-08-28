@@ -514,7 +514,7 @@ int cmhitsPHG4() {
   for (int i=0;i<inTree->GetEntries();i++){
     inTree->GetEntry(i);
     xhit.push_back(xhitS[i]);
-    yhit.push_back(yhitS[i] );   
+    yhit.push_back(yhitS[i]);   
   }
   input->Close();
 
