@@ -466,15 +466,16 @@ int cmhitsPHG4() {
   const double mm = 1.0;
   const double cm = 10.0;
   
-  /*
+  
   //build tgraph from dummy hits
   for (int i = 0; i < Hits.size(); i++){
-    xhit.push_back(Hits[i]->get_x(0)*cm/mm); 
-    yhit.push_back(Hits[i]->get_y(0)*cm/mm);
-    xhit.push_back(Hits[i]->get_x(1)*cm/mm);
-    yhit.push_back(Hits[i]->get_y(1)*cm/mm);
+    xhitS.push_back(Hits[i]->get_x(0)*cm/mm); 
+    yhitS.push_back(Hits[i]->get_y(0)*cm/mm);
+    xhitS.push_back(Hits[i]->get_x(1)*cm/mm);
+    yhitS.push_back(Hits[i]->get_y(1)*cm/mm);
+    
   }
-
+  /*
   int npts = 2*Hits.size();
   TGraph *gDummyHits = new TGraph(npts, &xhit[0], &yhit[0]);
   gDummyHits->SetMarkerColor(2);
@@ -497,11 +498,7 @@ int cmhitsPHG4() {
   for (int i=0;i<xhitS.size();i++){
     xhitfortree=xhitS[i];
     yhitfortree=yhitS[i];
-    /* xhitS.push_back(Hits[i]->get_x(0)*cm/mm); 
-    yhitS.push_back(Hits[i]->get_y(0)*cm/mm);
-    xhitS.push_back(Hits[i]->get_x(1)*cm/mm);
-    yhitS.push_back(Hits[i]->get_y(1)*cm/mm);
-    */
+   
     sTree->Fill();
   }
   
