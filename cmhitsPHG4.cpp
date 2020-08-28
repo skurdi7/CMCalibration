@@ -505,13 +505,13 @@ int cmhitsPHG4() {
     sTree->Fill();
   }
   
-  //sTree->SaveAs("phg4hitsTree");
+  sTree->SaveAs("phg4hitsTree.root");
 
   vector<double> xhit;
   vector<double> yhit;
 
   char const *treename="sTree";
-  //TFile *input=TFile::Open("phg4hitsTree");
+  //TFile *input=TFile::Open("phg4hitsTree.root");
   TTree *inTree=sTree;
   inTree->SetBranchAddress("xhit",&xhitfortree);
   inTree->SetBranchAddress("yhit",&yhitfortree);
