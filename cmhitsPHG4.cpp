@@ -466,6 +466,8 @@ int cmhitsPHG4() {
   const double mm = 1.0;
   const double cm = 10.0;
   
+    vector<double> xhitS;
+  vector<double> yhitS;
   
   //build tgraph from dummy hits
   for (int i = 0; i < Hits.size(); i++){
@@ -487,8 +489,7 @@ int cmhitsPHG4() {
   c->SaveAs("cmhitsPHG4.pdf");
   */
 
-  vector<double> xhitS;
-  vector<double> yhitS;
+
 
   TTree *sTree=new TTree("tree","phg4hits");
   double xhitfortree, yhitfortree;
