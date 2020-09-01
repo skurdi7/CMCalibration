@@ -16,7 +16,7 @@ AM_LDFLAGS = \
   -L$(libdir) \
   -L$(OFFLINE_MAIN)/lib
 
-libg4tpc_la_LIBADD = \
+libg4tpccentralmembrane_la_LIBADD = \
   -lphool \
   -lg4detectors \
   -lphg4hit \
@@ -33,7 +33,7 @@ else
 
 endif
 
-libg4tpc_la_SOURCES = \
+libg4tpccentralmembrane_la_SOURCES = \
   $(ROOT5_DICTS) \
   PHG4TpcCentralMembrane.cc
 
