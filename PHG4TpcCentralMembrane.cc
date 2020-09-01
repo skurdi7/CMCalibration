@@ -9,7 +9,7 @@
 //from phg4tpcsteppingaction.cc
 #include <g4main/PHG4Hit.h>
 #include <g4main/PHG4Hitv1.h>
-R__LOAD_LIBRARY(libphg4hit.so)
+//R__LOAD_LIBRARY(libphg4hit.so)
 
 // all distances in mm, all angles in rad
 // class that generates stripes and dummy hit coordinates
