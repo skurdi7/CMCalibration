@@ -5,7 +5,7 @@
 #include "TVector3.h"
 #include "TTree.h"
 #include "/sphenix/u/skurdi/CMCalibration/PHG4TpcCentralMembrane.h"
-R__LOAD_LIBRARY(build/libg4tpccentralmembrane.la)
+R__LOAD_LIBRARY(build/.libs/libg4tpccentralmembrane)
 
 //from phg4tpcsteppingaction.cc
 #include <g4main/PHG4Hit.h>
