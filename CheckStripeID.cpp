@@ -79,7 +79,7 @@ for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii span
       tex->DrawLatex(x,y,Form("%d",stripeID));
       //if(stripeID == 1)
       //Pattern1->Fill(x,y);
-      //cout << stripeID << endl;
+      cout << stripeID << endl;
     }
   }
  c->SaveAs("cmStripeID.pdf");
