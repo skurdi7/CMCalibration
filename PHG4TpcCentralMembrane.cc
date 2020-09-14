@@ -350,7 +350,7 @@ PHG4Hitv1* StripesClass::GetPHG4HitFromStripe(int petalID, int moduleID, int rad
   return hit;
 }
 
-int getStripeID(double xcheck, double ycheck){
+int StripesClass::getStripeID(double xcheck, double ycheck){
   //check if point came from stripe then see which stripe it is
   //213 stripes in a petal, 18 petals, ntotstripes = 3834
   int result, rID, phiID, petalID, nStripesPerR;
