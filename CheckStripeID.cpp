@@ -33,26 +33,10 @@ int CheckStripeID() {
   rstepsize = (stripes.end_CM - stripes.begin_CM)/rsteps;
   phistepsize = 2*TMath::Pi()/phisteps;
 
-  TH2F *Pattern1 = new TH2F("Pattern1","Pattern1",nbins,-770.0,770.0,nbins,-770.0,770.0); // min n max just beyond extent of CM so it's easier to see
+  //TH2F *Pattern1 = new TH2F("Pattern1","Pattern1",nbins,-770.0,770.0,nbins,-770.0,770.0); // min n max just beyond extent of CM so it's easier to see
   
   
-  for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
-    for (phi = 0.0; phi < 2.0*TMath::Pi()/9.0; phi = phi + phistepsize){ // angles spanning full CM
-      
-      x = r*cos(phi);
-      y = r*sin(phi);
-      
-      stripeID = stripes.getStripeID(x, y);
-      
-      //TLatex tex;
-      TLatex *tex=new TLatex(x,y,"StripeID");
-      tex->SetTextSize(0.025);
-      tex->DrawLatex(x,y,Form("%d",stripeID));
-      //if(stripeID == 1)
-      //Pattern1->Fill(x,y);
-      //cout << stripeID << endl;
-    }
-  }
+  
   
   vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
 
@@ -77,11 +61,28 @@ int CheckStripeID() {
   
   gStyle->SetOptStat(0);
   TCanvas *c=new TCanvas("a","CheckStripeID.cpp",500,500);
-  Pattern1->Draw();
-  gDummyHits->Draw("P");
-  c->SaveAs("cmStripeID.pdf");
-  
+  //Pattern1->Draw();
+  gDummyHits->Draw("AP");
 
-    
+  
+for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
+    for (phi = 0.0; phi < 2.0*TMath::Pi()/9.0; phi = phi + phistepsize){ // angles spanning full CM
+      
+      x = r*cos(phi);
+      y = r*sin(phi);
+      
+      stripeID = stripes.getStripeID(x, y);
+      
+      //TLatex tex;
+      TLatex *tex=new TLatex(x,y,"StripeID");
+      tex->SetTextSize(0.025);
+      tex->DrawLatex(x,y,Form("%d",stripeID));
+      //if(stripeID == 1)
+      //Pattern1->Fill(x,y);
+      //cout << stripeID << endl;
+    }
+  }
+ c->SaveAs("cmStripeID.pdf");
+     
   return 0;
 }
