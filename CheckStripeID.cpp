@@ -44,8 +44,8 @@ int CheckStripeID() {
       
       //stripeID = stripes.getStripeID(x, y);
       // tex->SetTextSize(texshift*0.8);
-      TLatex *tex=new TLatex(x,y,"StripeID");
-      tex->DrawLatex(x,y,Form("%d",stripes.getStripeID(x,y)));
+      TLatex tex;
+      tex.DrawLatex(x,y,Form("%d",stripes.getStripeID(x,y)));
       
       //cout << stripeID << endl;
     }
