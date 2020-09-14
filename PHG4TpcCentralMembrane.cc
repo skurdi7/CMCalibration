@@ -353,9 +353,11 @@ PHG4Hitv1* StripesClass::GetPHG4HitFromStripe(int petalID, int moduleID, int rad
 int StripesClass::getStripeID(double xcheck, double ycheck){
   //check if point came from stripe then see which stripe it is
   //213 stripes in a petal, 18 petals, ntotstripes = 3834
-  int result, rID, phiID, petalID, nStripesPerR;
+  int result, rID, petalID, nStripesPerR;
+  int phiID = 0;
   int fullID = -1;
-  double theta, spacing[nRadii], angle, m, dist;
+  //double theta, spacing[nRadii], angle, m, dist;
+  double m, dist;
   const double adjust = 0.015; //arbitrary angle to center the pattern in a petal
   const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
 
@@ -388,54 +390,41 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	
 	//'angle' is to the center of a stripe
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R1_e[j]; i++){
-	  if (j % 2 == 0){
-	    theta = i*spacing[j];
-	    angle = theta + (spacing[j]/2) - adjust;
+	  //if (j % 2 == 0){
+	  //theta = i*spacing[j];
+	  //angle = theta + (spacing[j]/2) - adjust;
 	    // look at distance from center line of stripe
 	    // if distance from x,y to center line < str_width
 	    //dist = fabs((y3b[i][j] - y3a[i][j])*xcheck - (x3b[i][j] - x3a[i][j])*ycheck + x3b[i][j]*y3a[i][j] - y3b[i][j]*x3a[i][j])/sqrt((y3b[i][j]-y3a[i][j])*(y3b[i][j]-y3a[i][j]) + (x3b[i][j]-x3a[i][j])*(x3b[i][j]-x3a[i][j]));
 	    // or calculate slope n then do dist
-	    m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(y3b_R1_e[i][j] - y3a_R1_e[i][j]);
-	    dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
-	    if(dist < str_width){ 
-	      phiID = i;
-	    }
-	  } else {
-	    theta = (i+1)*spacing[j];
-	    angle = theta-adjust;
-	    m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(y3b_R1_e[i][j] - y3a_R1_e[i][j]);
-	    dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
-	    if(dist < str_width){ 
-	      phiID = i;
-	    }
-	  }	  
+	  m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(y3b_R1_e[i][j] - y3a_R1_e[i][j]);
+	  dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
+	  if(dist < str_width){ 
+	    phiID = i;
+	  }
+	    //} else {
+	    //theta = (i+1)*spacing[j];
+	    //angle = theta-adjust;
+	    //m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(y3b_R1_e[i][j] - y3a_R1_e[i][j]);
+	    //dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
+	    //if(dist < str_width){ 
+	    // phiID = i;
+	    //}
+		  
 	}
 	nStripesPerR = keepUntil_R1_e[j] - keepThisAndAfter[j];
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
 	
       } else if(((R1[j]+ padfrac_R1) < r) && (r < (R1[j]+ padfrac_R1))){
 	rID = j+nRadii;
-
-	//'angle' is to the center of a stripe
+	
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R1[j]; i++){
-	  if (j % 2 == 0){
-	    theta = i*spacing[j];
-	    angle = theta + (spacing[j]/2) - adjust;
-	    // look at distance from center line of stripe
-	    m = (y3b_R1[i][j] - y3a_R1[i][j])/(y3b_R1[i][j] - y3a_R1[i][j]);
-	    dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
-	    if(dist < str_width){ 
-	      phiID = i;
-	    }
-	  } else {
-	    theta = (i+1)*spacing[j];
-	    angle = theta-adjust;
-	    m = (y3b_R1[i][j] - y3a_R1[i][j])/(y3b_R1[i][j] - y3a_R1[i][j]);
-	    dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
-	    if(dist < str_width){ 
-	      phiID = i;
-	    }
-	  }	  
+	  // look at distance from center line of stripe
+	  m = (y3b_R1[i][j] - y3a_R1[i][j])/(y3b_R1[i][j] - y3a_R1[i][j]);
+	  dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
+	  if(dist < str_width){ 
+	    phiID = i;
+	  }
 	}
 	nStripesPerR = keepUntil_R1[j] - keepThisAndAfter[j];
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
@@ -443,64 +432,37 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
       } else if(((R2[j]+ padfrac_R2) < r) && (r < (R2[j]+ padfrac_R2))){
 	rID = j+(2*nRadii);
 	
-	//'angle' is to the center of a stripe
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R2[j]; i++){
-	  if (j % 2 == 0){
-	    theta = i*spacing[j];
-	    angle = theta + (spacing[j]/2) - adjust;
-	    // look at distance from center line of stripe
-	    m = (y3b_R2[i][j] - y3a_R2[i][j])/(y3b_R2[i][j] - y3a_R2[i][j]);
-	    dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
-	    if(dist < str_width){ 
-	      phiID = i;
-	    }
-	  } else {
-	    theta = (i+1)*spacing[j];
-	    angle = theta-adjust;
-	    m = (y3b_R2[i][j] - y3a_R2[i][j])/(y3b_R2[i][j] - y3a_R2[i][j]);
-	    dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
-	    if(dist < str_width){ 
-	      phiID = i;
-	    }
-	  }	  
-	}
+	  // look at distance from center line of stripe
+	  m = (y3b_R2[i][j] - y3a_R2[i][j])/(y3b_R2[i][j] - y3a_R2[i][j]);
+	  dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
+	  if(dist < str_width){ 
+	    phiID = i;
+	  }
+	}	  
+	
 	nStripesPerR = keepUntil_R2[j] - keepThisAndAfter[j];
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
 	
       } else if(((R3[j]+ padfrac_R3) < r) && (r < (R3[j]+ padfrac_R3))){
-       	rID = j+(3*nRadii);
-
-	//'angle' is to the center of a stripe
+	rID = j+(3*nRadii);
+	
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R3[j]; i++){
-	  if (j % 2 == 0){
-	    theta = i*spacing[j];
-	    angle = theta + (spacing[j]/2) - adjust;
-	    // look at distance from center line of stripe
-	    m = (y3b_R3[i][j] - y3a_R3[i][j])/(y3b_R3[i][j] - y3a_R3[i][j]);
-	    dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
-	    if(dist < str_width){ 
-	      phiID = i;
-	    }
-	  } else {
-	    theta = (i+1)*spacing[j];
-	    angle = theta-adjust;
-	    m = (y3b_R3[i][j] - y3a_R3[i][j])/(y3b_R3[i][j] - y3a_R3[i][j]);
-	    dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
-	    if(dist < str_width){ 
-	      phiID = i;
-	    }
-	  }	  
+	  // look at distance from center line of stripe
+	  m = (y3b_R3[i][j] - y3a_R3[i][j])/(y3b_R3[i][j] - y3a_R3[i][j]);
+	  dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
+	  if(dist < str_width){ 
+	    phiID = i;
+	  }
 	}
 	nStripesPerR = keepUntil_R3[j] - keepThisAndAfter[j];
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
-	
       }
     }
-
   } else {
     cout << "Point is not in a stripe." << endl;
   }
-
+  
   return fullID;
-
+      
 }
