@@ -388,7 +388,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	
 	//'angle' is to the center of a stripe
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R1_e[j]; i++){
-	  if (i % 2 == 0){
+	  if (j % 2 == 0){
 	    theta = i*spacing[j];
 	    angle = theta + (spacing[j]/2) - adjust;
 	    // look at distance from center line of stripe
@@ -414,11 +414,11 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
 	
       } else if(((R1[j]+ padfrac_R1) < r) && (r < (R1[j]+ padfrac_R1))){
-	rID = i+nRadii;
+	rID = j+nRadii;
 
 	//'angle' is to the center of a stripe
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R1[j]; i++){
-	  if (i % 2 == 0){
+	  if (j % 2 == 0){
 	    theta = i*spacing[j];
 	    angle = theta + (spacing[j]/2) - adjust;
 	    // look at distance from center line of stripe
@@ -441,11 +441,11 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
 	
       } else if(((R2[j]+ padfrac_R2) < r) && (r < (R2[j]+ padfrac_R2))){
-	rID = i+(2*nRadii);
+	rID = j+(2*nRadii);
 	
 	//'angle' is to the center of a stripe
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R2[j]; i++){
-	  if (i % 2 == 0){
+	  if (j % 2 == 0){
 	    theta = i*spacing[j];
 	    angle = theta + (spacing[j]/2) - adjust;
 	    // look at distance from center line of stripe
@@ -468,11 +468,11 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
 	
       } else if(((R3[j]+ padfrac_R3) < r) && (r < (R3[j]+ padfrac_R3))){
-       	rID = i+(3*nRadii);
+       	rID = j+(3*nRadii);
 
 	//'angle' is to the center of a stripe
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R3[j]; i++){
-	  if (i % 2 == 0){
+	  if (j % 2 == 0){
 	    theta = i*spacing[j];
 	    angle = theta + (spacing[j]/2) - adjust;
 	    // look at distance from center line of stripe
