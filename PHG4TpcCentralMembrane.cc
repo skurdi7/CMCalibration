@@ -355,13 +355,9 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
   //213 stripes in a petal, 18 petals, ntotstripes = 3834
   int result, rID, phiID, petalID, nStripesPerR;
   int fullID = -1;
-  double theta, spacing, angle, strphi, whichpetal, m, dist;
+  double theta, spacing[nRadii], angle, m, dist;
   const double adjust = 0.015; //arbitrary angle to center the pattern in a petal
   const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
-
-  const double end_R1_e = 312.0 * mm; // arbitrary radius between R1_e and R1
-  const double end_R1 = 408.0 * mm; // arbitrary radius between R1 and R2
-  const double end_R2 = 580.0 * mm; // arbitrary radius between R2 and R3
 
   double r, phi, phimod, xmod, ymod;
 
@@ -384,7 +380,6 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
     xmod = r*cos(phimod);
     ymod = r*sin(phimod);
 
-    //whichpetal = phi - phimod;
     petalID = phi/phi_petal; 
     
     for(int j=0; j<nRadii; j++){
