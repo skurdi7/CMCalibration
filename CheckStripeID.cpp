@@ -46,7 +46,7 @@ int CheckStripeID() {
       
       //TLatex tex;
       TLatex *tex=new TLatex(x,y,"StripeID");
-      tex->SetTextSize(texshift*0.8);
+      tex->SetTextSize(0.025);
       tex->DrawLatex(x,y,Form("%d",stripeID));
       //if(stripeID == 1)
       //Pattern1->Fill(x,y);
