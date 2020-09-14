@@ -413,7 +413,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	nStripesPerR = keepUntil_R1_e[j] - keepThisAndAfter[j];
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
 	
-      } else if(((R1[i]+ padfrac_R1) < r) && (r < (R1[i]+ padfrac_R1))){
+      } else if(((R1[j]+ padfrac_R1) < r) && (r < (R1[j]+ padfrac_R1))){
 	rID = i+nRadii;
 
 	//'angle' is to the center of a stripe
@@ -440,7 +440,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	nStripesPerR = keepUntil_R1[j] - keepThisAndAfter[j];
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
 	
-      } else if(((R2[i]+ padfrac_R2) < r) && (r < (R2[i]+ padfrac_R2))){
+      } else if(((R2[j]+ padfrac_R2) < r) && (r < (R2[j]+ padfrac_R2))){
 	rID = i+(2*nRadii);
 	
 	//'angle' is to the center of a stripe
@@ -467,7 +467,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	nStripesPerR = keepUntil_R2[j] - keepThisAndAfter[j];
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
 	
-      } else if(((R3[i]+ padfrac_R3) < r) && (r < (R3[i]+ padfrac_R3))){
+      } else if(((R3[j]+ padfrac_R3) < r) && (r < (R3[j]+ padfrac_R3))){
        	rID = i+(3*nRadii);
 
 	//'angle' is to the center of a stripe
