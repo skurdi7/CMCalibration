@@ -398,8 +398,12 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	    // if distance from x,y to center line < str_width
 	    //dist = fabs((y3b[i][j] - y3a[i][j])*xcheck - (x3b[i][j] - x3a[i][j])*ycheck + x3b[i][j]*y3a[i][j] - y3b[i][j]*x3a[i][j])/sqrt((y3b[i][j]-y3a[i][j])*(y3b[i][j]-y3a[i][j]) + (x3b[i][j]-x3a[i][j])*(x3b[i][j]-x3a[i][j]));
 	    // or calculate slope n then do dist
+	  cout << "y3b: " << y3b_R1_e[i][j] <<endl;
+	  cout << "y3a: " << y3a_R1_e[i][j] <<endl;
 	  m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(y3b_R1_e[i][j] - y3a_R1_e[i][j]);
+	  cout << "m: " <<  m << endl;
 	  dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
+	  cout << "dist: " << dist << endl;
 	  if(dist < str_width){ 
 	    phiID = i;
 	  }
