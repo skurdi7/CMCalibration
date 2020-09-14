@@ -361,7 +361,8 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
   //const double adjust = 0.015; //arbitrary angle to center the pattern in a petal
   const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
 
-  double r, phi, phimod, xmod, ymod;
+  double r, phi;
+  //phimod, xmod, ymod;
 
   // check if in a stripe
   result = getSearchResult(xcheck, ycheck);
@@ -378,9 +379,9 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
       phi = phi + 2.0*TMath::Pi();
     }
     //get angle within first petal
-    phimod = fmod(phi,phi_petal);
-    xmod = r*cos(phimod);
-    ymod = r*sin(phimod);
+    //phimod = fmod(phi,phi_petal);
+    //xmod = r*cos(phimod);
+    //ymod = r*sin(phimod);
 
     petalID = phi/phi_petal; 
     
