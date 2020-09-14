@@ -461,7 +461,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
       }
     }
   } else {
-    cout << "Point is not in a stripe." << endl;
+    fullID = 0;
   }
   
   return fullID;
