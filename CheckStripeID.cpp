@@ -34,7 +34,7 @@ int CheckStripeID() {
   phistepsize = 2*TMath::Pi()/phisteps;
 
   //TH2F *Pattern1 = new TH2F("Pattern1","Pattern1",nbins,-770.0,770.0,nbins,-770.0,770.0); // min n max just beyond extent of CM so it's easier to see
-  TLatex *tex=new TLatex(0.0,texpos,"Fill Me In");
+  
   
   for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
     for (phi = 0.0; phi < 2.0*TMath::Pi()/9.0; phi = phi + phistepsize){ // angles spanning full CM
@@ -44,7 +44,8 @@ int CheckStripeID() {
       
       //stripeID = stripes.getStripeID(x, y);
       // tex->SetTextSize(texshift*0.8);
-      tex->DrawLatex(x,y,Form("%d",getStripeID(x,y)));
+      TLatex *tex=new TLatex(x,y,"StripeID");
+      tex->DrawLatex(x,y,Form("%d",stripes.getStripeID(x,y)));
       
       //cout << stripeID << endl;
     }
