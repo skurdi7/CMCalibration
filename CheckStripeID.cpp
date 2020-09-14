@@ -33,7 +33,7 @@ int CheckStripeID() {
   rstepsize = (stripes.end_CM - stripes.begin_CM)/rsteps;
   phistepsize = 2*TMath::Pi()/phisteps;
 
-  //TH2F *Pattern1 = new TH2F("Pattern1","Pattern1",nbins,-770.0,770.0,nbins,-770.0,770.0); // min n max just beyond extent of CM so it's easier to see
+  TH2F *Pattern1 = new TH2F("Pattern1","Pattern1",nbins,-770.0,770.0,nbins,-770.0,770.0); // min n max just beyond extent of CM so it's easier to see
   
   
   for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
@@ -46,7 +46,8 @@ int CheckStripeID() {
       // tex->SetTextSize(texshift*0.8);
       TLatex tex;
       tex.DrawLatex(x,y,Form("%d",stripeID));
-      
+      if(stripeID == 1)
+	Pattern1->Fill(x,y);
       //cout << stripeID << endl;
     }
   }
@@ -74,7 +75,7 @@ int CheckStripeID() {
   
   gStyle->SetOptStat(0);
   TCanvas *c=new TCanvas("a","CheckStripeID.cpp",500,500);
-  //Pattern1->Draw();
+  Pattern1->Draw();
   gDummyHits->Draw("P");
   c->SaveAs("cmStripeID.pdf");
   
