@@ -44,6 +44,11 @@ StripesClass::StripesClass()
   str_width = 1.0 * mm;
   arc_r = 0.5 * mm;
 
+  nStripesPerPetal = 213;
+  nPetals = 18;
+
+  nTotStripes = nStripesPerPetal * nPetals;
+  
   nElectrons = 100;
 
   CalculateVertices(nStripes_R1, nPads_R1, R1_e, spacing_R1_e, x1a_R1_e, y1a_R1_e, x1b_R1_e, y1b_R1_e, x2a_R1_e, y2a_R1_e, x2b_R1_e, y2b_R1_e, x3a_R1_e, y3a_R1_e, x3b_R1_e, y3b_R1_e, padfrac_R1, nGoodStripes_R1_e, keepUntil_R1_e);
@@ -345,3 +350,161 @@ PHG4Hitv1* StripesClass::GetPHG4HitFromStripe(int petalID, int moduleID, int rad
   return hit;
 }
 
+int getStripeID(double xcheck, double ycheck){
+  //check if point came from stripe then see which stripe it is
+  //213 stripes in a petal, 18 petals, ntotstripes = 3834
+  int result, rID, phiID, petalID, nStripesPerR;
+  int fullID = -1;
+  double angle, strphi, whichpetal, m, dist;
+  const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
+
+  const double end_R1_e = 312.0 * mm; // arbitrary radius between R1_e and R1
+  const double end_R1 = 408.0 * mm; // arbitrary radius between R1 and R2
+  const double end_R2 = 580.0 * mm; // arbitrary radius between R2 and R3
+
+  double r, phi, phimod, xmod, ymod;
+
+  // check if in a stripe
+  result = getSearchResult(xcheck, ycheck);
+
+  // find which stripe
+  if(result == 1){
+    
+    //convert coords to radius n angle
+    r = sqrt(xcheck*xcheck + ycheck*ycheck);
+    phi = atan(ycheck/xcheck);
+    if((xcheck < 0.0) && (ycheck > 0.0)){
+      phi = phi + TMath::Pi();
+    } else if ((xcheck > 0.0) && (ycheck < 0.0)){
+      phi = phi + 2.0*TMath::Pi();
+    }
+    //get angle within first petal
+    phimod = fmod(phi,phi_petal);
+    xmod = r*cos(phimod);
+    ymod = r*sin(phimod);
+
+    //whichpetal = phi - phimod;
+    petalID = phi/phi_petal; 
+    
+    for(int j=0; j<nRadii; i++){
+      if((R1_e[j] - padfrac_R1) < r < (R1_e[j] + padfrac_R1)){ // check if radius is in stripe 
+	rID = j; 
+	
+	//'angle' is to the center of a stripe
+	for (int i=keepThisAndAfter[j]; i<keepUntil_R1_e[j]; i++){
+	  if (i % 2 == 0){
+	    theta = i*spacing[j];
+	    angle = theta + (spacing[j]/2) - adjust;
+	    // look at distance from center line of stripe
+	    // if distance from x,y to center line < str_width
+	    //dist = fabs((y3b[i][j] - y3a[i][j])*xcheck - (x3b[i][j] - x3a[i][j])*ycheck + x3b[i][j]*y3a[i][j] - y3b[i][j]*x3a[i][j])/sqrt((y3b[i][j]-y3a[i][j])*(y3b[i][j]-y3a[i][j]) + (x3b[i][j]-x3a[i][j])*(x3b[i][j]-x3a[i][j]));
+	    // or calculate slope n then do dist
+	    m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(y3b_R1_e[i][j] - y3a_R1_e[i][j]);
+	    dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
+	    if(dist < str_width){ 
+	      phiID = i;
+	    }
+	  } else {
+	    theta = (i+1)*spacing[j];
+	    angle = theta-adjust;
+	    m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(y3b_R1_e[i][j] - y3a_R1_e[i][j]);
+	    dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
+	    if(dist < str_width){ 
+	      phiID = i;
+	    }
+	  }	  
+	}
+	nStripesPerR = keepUntil_R1_e[j] - keepThisAndAfter[j];
+	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
+	
+      } else if((R1[i]+ padfrac_R1) < r < (R1[i]+ padfrac_R1)){
+	rID = i+nRadii;
+
+	//'angle' is to the center of a stripe
+	for (int i=keepThisAndAfter[j]; i<keepUntil_R1[j]; i++){
+	  if (i % 2 == 0){
+	    theta = i*spacing[j];
+	    angle = theta + (spacing[j]/2) - adjust;
+	    // look at distance from center line of stripe
+	    m = (y3b_R1[i][j] - y3a_R1[i][j])/(y3b_R1[i][j] - y3a_R1[i][j]);
+	    dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
+	    if(dist < str_width){ 
+	      phiID = i;
+	    }
+	  } else {
+	    theta = (i+1)*spacing[j];
+	    angle = theta-adjust;
+	    m = (y3b_R1[i][j] - y3a_R1[i][j])/(y3b_R1[i][j] - y3a_R1[i][j]);
+	    dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
+	    if(dist < str_width){ 
+	      phiID = i;
+	    }
+	  }	  
+	}
+	nStripesPerR = keepUntil_R1[j] - keepThisAndAfter[j];
+	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
+	
+      } else if((R2[i]+ padfrac_R2) < r < (R2[i]+ padfrac_R2)){
+	rID = i+(2*nRadii);
+	
+	//'angle' is to the center of a stripe
+	for (int i=keepThisAndAfter[j]; i<keepUntil_R2[j]; i++){
+	  if (i % 2 == 0){
+	    theta = i*spacing[j];
+	    angle = theta + (spacing[j]/2) - adjust;
+	    // look at distance from center line of stripe
+	    m = (y3b_R2[i][j] - y3a_R2[i][j])/(y3b_R2[i][j] - y3a_R2[i][j]);
+	    dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
+	    if(dist < str_width){ 
+	      phiID = i;
+	    }
+	  } else {
+	    theta = (i+1)*spacing[j];
+	    angle = theta-adjust;
+	    m = (y3b_R2[i][j] - y3a_R2[i][j])/(y3b_R2[i][j] - y3a_R2[i][j]);
+	    dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
+	    if(dist < str_width){ 
+	      phiID = i;
+	    }
+	  }	  
+	}
+	nStripesPerR = keepUntil_R2[j] - keepThisAndAfter[j];
+	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
+	
+      } else if((R3[i]+ padfrac_R3) < r < (R3[i]+ padfrac_R3)){
+       	rID = i+(3*nRadii);
+
+	//'angle' is to the center of a stripe
+	for (int i=keepThisAndAfter[j]; i<keepUntil_R3[j]; i++){
+	  if (i % 2 == 0){
+	    theta = i*spacing[j];
+	    angle = theta + (spacing[j]/2) - adjust;
+	    // look at distance from center line of stripe
+	    m = (y3b_R3[i][j] - y3a_R3[i][j])/(y3b_R3[i][j] - y3a_R3[i][j]);
+	    dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
+	    if(dist < str_width){ 
+	      phiID = i;
+	    }
+	  } else {
+	    theta = (i+1)*spacing[j];
+	    angle = theta-adjust;
+	    m = (y3b_R3[i][j] - y3a_R3[i][j])/(y3b_R3[i][j] - y3a_R3[i][j]);
+	    dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
+	    if(dist < str_width){ 
+	      phiID = i;
+	    }
+	  }	  
+	}
+	nStripesPerR = keepUntil_R3[j] - keepThisAndAfter[j];
+	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
+	
+      }
+    }
+
+  } else {
+    cout << "Point is not in a stripe." << endl;
+  }
+
+  return fullID;
+
+}

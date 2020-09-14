@@ -23,7 +23,9 @@ class StripesClass {
 public:
   StripesClass(); //default constructor
   int getSearchResult(double xcheck, double ycheck); // check if coords are in a stripe
+  int getStripeID(double xcheck, double ycheck);
 
+  int fullID;
   double begin_CM, end_CM; // inner and outer radii of central membrane
   
   vector<PHG4Hitv1*> PHG4Hits;
@@ -98,6 +100,11 @@ private:
   int keepUntil_R3[nRadii];
   int result;
 
+  int nStripesPerPetal;
+  int nPetals;
+  int nTotStripes;
+  int stripeID;
+  
   int nElectrons;
   
   void CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, int nGoodStripes[], int keepUntil[]);
@@ -106,5 +113,6 @@ private:
   
   PHG4Hitv1* GetPHG4HitFromStripe(int petalID, int moduleID, int radiusID, int stripeID, int nElectrons);
 };
+
 
 #endif
