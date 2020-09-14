@@ -44,10 +44,11 @@ int CheckStripeID() {
       
       stripeID = stripes.getStripeID(x, y);
       // tex->SetTextSize(texshift*0.8);
-      TLatex tex;
+      //TLatex tex;
+      TLatex *tex=new TLatex(x,y,"StripeID");
       tex.DrawLatex(x,y,Form("%d",stripeID));
-      if(stripeID == 1)
-	Pattern1->Fill(x,y);
+      //if(stripeID == 1)
+      //Pattern1->Fill(x,y);
       //cout << stripeID << endl;
     }
   }
