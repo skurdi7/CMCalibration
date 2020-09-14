@@ -355,7 +355,8 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
   //213 stripes in a petal, 18 petals, ntotstripes = 3834
   int result, rID, phiID, petalID, nStripesPerR;
   int fullID = -1;
-  double angle, strphi, whichpetal, m, dist;
+  double theta, spacing, angle, strphi, whichpetal, m, dist;
+  const double adjust = 0.015; //arbitrary angle to center the pattern in a petal
   const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
 
   const double end_R1_e = 312.0 * mm; // arbitrary radius between R1_e and R1
@@ -386,8 +387,8 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
     //whichpetal = phi - phimod;
     petalID = phi/phi_petal; 
     
-    for(int j=0; j<nRadii; i++){
-      if((R1_e[j] - padfrac_R1) < r < (R1_e[j] + padfrac_R1)){ // check if radius is in stripe 
+    for(int j=0; j<nRadii; j++){
+      if(((R1_e[j] - padfrac_R1) < r) && (r < (R1_e[j] + padfrac_R1))){ // check if radius is in stripe 
 	rID = j; 
 	
 	//'angle' is to the center of a stripe
@@ -417,7 +418,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	nStripesPerR = keepUntil_R1_e[j] - keepThisAndAfter[j];
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
 	
-      } else if((R1[i]+ padfrac_R1) < r < (R1[i]+ padfrac_R1)){
+      } else if(((R1[i]+ padfrac_R1) < r) && (r < (R1[i]+ padfrac_R1))){
 	rID = i+nRadii;
 
 	//'angle' is to the center of a stripe
@@ -444,7 +445,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	nStripesPerR = keepUntil_R1[j] - keepThisAndAfter[j];
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
 	
-      } else if((R2[i]+ padfrac_R2) < r < (R2[i]+ padfrac_R2)){
+      } else if(((R2[i]+ padfrac_R2) < r) && (r < (R2[i]+ padfrac_R2))){
 	rID = i+(2*nRadii);
 	
 	//'angle' is to the center of a stripe
@@ -471,7 +472,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	nStripesPerR = keepUntil_R2[j] - keepThisAndAfter[j];
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
 	
-      } else if((R3[i]+ padfrac_R3) < r < (R3[i]+ padfrac_R3)){
+      } else if(((R3[i]+ padfrac_R3) < r) && (r < (R3[i]+ padfrac_R3))){
        	rID = i+(3*nRadii);
 
 	//'angle' is to the center of a stripe
