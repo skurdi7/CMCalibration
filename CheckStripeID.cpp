@@ -64,24 +64,37 @@ int CheckStripeID() {
   //Pattern1->Draw();
   gDummyHits->Draw("AP");
 
+  //loop thru hits again
+  double xav;
+  double yav;
+  for (int i = 0; i < Hits.size(); i++){
+    //avg x0 n x1, y0 n y1 and use to draw stripeID
+    xav = (xhit[i]+xhit[i+1])/2;
+    yav = (yhit[i]+yhit[i+1])/2;
+    stripeID = stripes.getStripeID(xav, yav);
+    TLatex *tex=new TLatex(xav,yav,"StripeID");
+    tex->SetTextSize(0.005);
+    tex->DrawLatex(xav,yav,Form("%d",stripeID));
+      
+  }
   
-for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
+  /*for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
     for (phi = 0.0; phi < 2.0*TMath::Pi()/9.0; phi = phi + phistepsize){ // angles spanning full CM
       
       x = r*cos(phi);
       y = r*sin(phi);
       
-      stripeID = stripes.getStripeID(x, y);
+      
       
       //TLatex tex;
-      TLatex *tex=new TLatex(x,y,"StripeID");
-      tex->SetTextSize(0.005);
-      tex->DrawLatex(x,y,Form("%d",stripeID));
+      
       //if(stripeID == 1)
       //Pattern1->Fill(x,y);
       cout << stripeID << endl;
     }
   }
+  */
+  
  c->SaveAs("cmStripeID.pdf");
      
   return 0;

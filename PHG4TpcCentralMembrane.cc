@@ -461,7 +461,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
       }
     }
   } else {
-    fullID = 0;
+    fullID = -1;
   }
   
   return fullID;
