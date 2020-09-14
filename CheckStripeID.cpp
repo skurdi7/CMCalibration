@@ -75,7 +75,7 @@ for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii span
       
       //TLatex tex;
       TLatex *tex=new TLatex(x,y,"StripeID");
-      tex->SetTextSize(0.025);
+      tex->SetTextSize(0.005);
       tex->DrawLatex(x,y,Form("%d",stripeID));
       //if(stripeID == 1)
       //Pattern1->Fill(x,y);
