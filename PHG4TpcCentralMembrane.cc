@@ -358,7 +358,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
   int fullID = -1;
   //double theta, spacing[nRadii], angle, m, dist;
   double m, dist;
-  const double adjust = 0.015; //arbitrary angle to center the pattern in a petal
+  //const double adjust = 0.015; //arbitrary angle to center the pattern in a petal
   const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
 
   double r, phi, phimod, xmod, ymod;
