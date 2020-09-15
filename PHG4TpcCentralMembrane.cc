@@ -357,7 +357,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
   int phiID = 0;
   int fullID = -1;
   //double theta, spacing[nRadii], angle, m, dist;
-  double m, dist, dist1, dist2;
+  double m, dist;
   //const double adjust = 0.015; //arbitrary angle to center the pattern in a petal
   const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
 
@@ -396,16 +396,13 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  //angle = theta + (spacing[j]/2) - adjust;
 	  // look at distance from center line of stripe
 	  // if distance from x,y to center line < str_width
-	  dist1 = fabs((y3b_R1_e[i][j] - y3a_R1_e[i][j])*xcheck - (x3b_R1_e[i][j] - x3a_R1_e[i][j])*ycheck + x3b_R1_e[i][j]*y3a_R1_e[i][j] - y3b_R1_e[i][j]*x3a_R1_e[i][j])/sqrt((y3b_R1_e[i][j]-y3a_R1_e[i][j])*(y3b_R1_e[i][j]-y3a_R1_e[i][j]) + (x3b_R1_e[i][j]-x3a_R1_e[i][j])*(x3b_R1_e[i][j]-x3a_R1_e[i][j]));
-	  // or calculate slope n then do dist
+	  // calculate slope n then do dist
 	  
 	  m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(x3b_R1_e[i][j] - x3a_R1_e[i][j]);
-	  //cout << "m: " << m << endl;
+	  cout << "m: " << m << endl;
 	  //cout << fabs((-m)*xcheck + ycheck) << endl;
-	  dist2 = fabs((-m)*xcheck + ycheck)/sqrt(1 + m*m);
-	  cout << "dist1: " << dist1 << endl;
-	  cout << "dist2: " << dist2 << endl;
-	  if(dist2 < (str_width/2.0)){ 
+	  dist = fabs((-m)*xcheck + ycheck)/sqrt(1 + m*m);
+       	  if(dist < (str_width/2.0)){ 
 	    phiID = i;
 	    cout << "phiID: " << phiID << endl;
 	  }
@@ -428,8 +425,8 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R1[j]; i++){
 	  // look at distance from center line of stripe
 	  m = (y3b_R1[i][j] - y3a_R1[i][j])/(x3b_R1[i][j] - x3a_R1[i][j]);
-	  dist2 = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
-	  if(dist2 < (str_width/2.0)){ 
+	  dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
+	  if(dist < (str_width/2.0)){ 
 	    phiID = i;
 	  }
 	}
