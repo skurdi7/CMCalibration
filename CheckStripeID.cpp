@@ -71,6 +71,10 @@ int CheckStripeID() {
     //avg x0 n x1, y0 n y1 and use to draw stripeID
     xav = (xhit[i]+xhit[i+1])/2;
     yav = (yhit[i]+yhit[i+1])/2;
+    cout << "xa: " << xhit[i] << endl;
+    cout << "xb: " << xhit[i+1] << endl;
+    cout << "ya: " << yhit[i] << endl;
+    cout << "yb: " << yhit[i+1] << endl;
     cout << "xav: " << xav << endl;
     cout << "yav: " << yav << endl;
     stripeID = stripes.getStripeID(xav, yav);
