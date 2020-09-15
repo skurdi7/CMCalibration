@@ -69,8 +69,8 @@ int CheckStripeID() {
  
   for (int i = 0; i < Hits.size(); i++){
     //avg x0 n x1, y0 n y1 and use to draw stripeID
-    xav = (xhit[i]+xhit[i+1])/2;
-    yav = (yhit[i]+yhit[i+1])/2;
+    xav = ((xhit[i]+xhit[i+1])/2) *mm/cm;
+    yav = ((yhit[i]+yhit[i+1])/2) *mm/cm;
     
     stripeID = stripes.getStripeID(xav, yav);
     TLatex *tex=new TLatex(xav,yav,"StripeID");
