@@ -168,7 +168,7 @@ int StripesClass::SearchModule(int nStripes, double x1a[][nRadii], double x1b[][
   int c = 0;
   
   for(int j=0; j<nRadii; j++){
-    for (int i=keepThisAndAfter[j]; i<nGoodStripes[j]; i++){
+    for (int i=0; i<nGoodStripes[j]; i++){
       if( ((y1a[i][j]>y) != (y2a[i][j]>y) && (x<(x2a[i][j]-x1a[i][j])*(y-y1a[i][j])/(y2a[i][j]-y1a[i][j])+x1a[i][j])))
 	c = !c;
       if( ((y1b[i][j]>y) != (y1a[i][j]>y) && (x<(x1a[i][j]-x1b[i][j])*(y-y1b[i][j])/(y1a[i][j]-y1b[i][j])+x1b[i][j])))
@@ -369,7 +369,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
   
   // find which stripe
   if(result == 1){
-    
+    cout << "on a stripe" << endl;
     //convert coords to radius n angle
     r = sqrt(xcheck*xcheck + ycheck*ycheck);
     phi = atan(ycheck/xcheck);
