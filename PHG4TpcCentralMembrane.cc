@@ -107,13 +107,13 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
     int i_out = 0;
     for (int i=keepThisAndAfter[j]; i<keepUntil[j]; i++){
       if (j % 2 == 0){
-	theta = i*spacing[j];
-	cx[i_out][j] = R[j]*cos(theta + (spacing[j]/2) -adjust);
-	cy[i_out][j] = R[j]*sin(theta + (spacing[j]/2) -adjust);
+	theta = i*spacing[j] - adjust;
+	cx[i_out][j] = R[j]*cos(theta + (spacing[j]/2));
+	cy[i_out][j] = R[j]*sin(theta + (spacing[j]/2));
       } else {
-	theta = (i+1)*spacing[j];
-	cx[i_out][j] = R[j]*cos(theta-adjust);
-	cy[i_out][j] = R[j]*sin(theta-adjust);
+	theta = (i+1)*spacing[j] - adjust;
+	cx[i_out][j] = R[j]*cos(theta);
+	cy[i_out][j] = R[j]*sin(theta);
       }
 
       x1a[i_out][j] = cx[i_out][j] - padfrac + arc_r;
