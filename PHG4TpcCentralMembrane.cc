@@ -401,7 +401,8 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 
 	  m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(x3b_R1_e[i][j] - x3a_R1_e[i][j]);
 	  dist = fabs((-m)*xcheck + ycheck)/sqrt(1 + m*m);
-	  if(dist < str_width){ 
+	  cout << "dist: " << dist << endl;
+	  if(dist < (str_width/2.0)){ 
 	    phiID = i;
 	    cout << "phiID: " << phiID << endl;
 	  }
@@ -425,7 +426,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  // look at distance from center line of stripe
 	  m = (y3b_R1[i][j] - y3a_R1[i][j])/(x3b_R1[i][j] - x3a_R1[i][j]);
 	  dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
-	  if(dist < str_width){ 
+	  if(dist < (str_width/2.0)){ 
 	    phiID = i;
 	  }
 	}
@@ -439,7 +440,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  // look at distance from center line of stripe
 	  m = (y3b_R2[i][j] - y3a_R2[i][j])/(x3b_R2[i][j] - x3a_R2[i][j]);
 	  dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
-	  if(dist < str_width){ 
+	  if(dist < (str_width/2.0)){ 
 	    phiID = i;
 	  }
 	}	  
@@ -454,7 +455,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  // look at distance from center line of stripe
 	  m = (y3b_R3[i][j] - y3a_R3[i][j])/(x3b_R3[i][j] - x3a_R3[i][j]);
 	  dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
-	  if(dist < str_width){ 
+	  if(dist < (str_width/2.0)){ 
 	    phiID = i;
 	  }
 	}
