@@ -88,14 +88,14 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
   //center coords
   double cx[nStripes][nRadii], cy[nStripes][nRadii];
   //corner coords
-  double tempX1a[nStripes][nRadii], tempY1a[nStripes][nRadii];
+  /* double tempX1a[nStripes][nRadii], tempY1a[nStripes][nRadii];
   double tempX1b[nStripes][nRadii], tempY1b[nStripes][nRadii];
   double tempX2a[nStripes][nRadii], tempY2a[nStripes][nRadii];
   double tempX2b[nStripes][nRadii], tempY2b[nStripes][nRadii];
   double rotatedX1a[nStripes][nRadii], rotatedY1a[nStripes][nRadii];
   double rotatedX1b[nStripes][nRadii], rotatedY1b[nStripes][nRadii];
   double rotatedX2a[nStripes][nRadii], rotatedY2a[nStripes][nRadii];
-  double rotatedX2b[nStripes][nRadii], rotatedY2b[nStripes][nRadii];
+  double rotatedX2b[nStripes][nRadii], rotatedY2b[nStripes][nRadii]; */
 
   //calculate spacing first:
   for (int i=0; i<nRadii; i++){
