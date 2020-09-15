@@ -388,7 +388,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
     for(int j=0; j<nRadii; j++){
       if(((R1_e[j] - padfrac_R1) < r) && (r < (R1_e[j] + padfrac_R1))){ // check if radius is in stripe 
 	rID = j; 
-	cout << "R1_E" << endl;
+	//cout << "R1_E" << endl;
 	//'angle' is to the center of a stripe
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R1_e[j]; i++){
 	  //if (j % 2 == 0){
@@ -400,10 +400,10 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	    // or calculate slope n then do dist
 
 	  m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(x3b_R1_e[i][j] - x3a_R1_e[i][j]);
-	  cout << "m: " << endl;
-	  cout << fabs((-m)*xcheck + ycheck) << endl;
+	  cout << "m: " << m << endl;
+	  //cout << fabs((-m)*xcheck + ycheck) << endl;
 	  dist = fabs((-m)*xcheck + ycheck)/sqrt(1 + m*m);
-	  cout << "dist: " << dist << endl;
+	  //cout << "dist: " << dist << endl;
 	  if(dist < (str_width/2.0)){ 
 	    phiID = i;
 	    cout << "phiID: " << phiID << endl;
