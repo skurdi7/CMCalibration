@@ -388,19 +388,19 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
     for(int j=0; j<nRadii; j++){
       if(((R1_e[j] - padfrac_R1) < r) && (r < (R1_e[j] + padfrac_R1))){ // check if radius is in stripe 
 	rID = j; 
-	//cout << "R1_E" << endl;
+	cout << "R1_E" << endl;
 	//'angle' is to the center of a stripe
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R1_e[j]; i++){
 	  //if (j % 2 == 0){
 	  //theta = i*spacing[j];
 	  //angle = theta + (spacing[j]/2) - adjust;
-	    // look at distance from center line of stripe
-	    // if distance from x,y to center line < str_width
-	    //dist = fabs((y3b_R1_e[i][j] - y3a_R1_e[i][j])*xcheck - (x3b_R1_e[i][j] - x3a_R1_e[i][j])*ycheck + x3b_R1_e[i][j]*y3a_R1_e[i][j] - y3b_R1_e[i][j]*x3a_R1_e[i][j])/sqrt((y3b_R1_e[i][j]-y3a_R1_e[i][j])*(y3b_R1_e[i][j]-y3a_R1_e[i][j]) + (x3b_R1_e[i][j]-x3a_R1_e[i][j])*(x3b_R1_e[i][j]-x3a_R1_e[i][j]));
-	    // or calculate slope n then do dist
-
-	    m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(x3b_R1_e[i][j] - x3a_R1_e[i][j]);
-	    //cout << "m: " << m << endl;
+	  // look at distance from center line of stripe
+	  // if distance from x,y to center line < str_width
+	  //dist = fabs((y3b_R1_e[i][j] - y3a_R1_e[i][j])*xcheck - (x3b_R1_e[i][j] - x3a_R1_e[i][j])*ycheck + x3b_R1_e[i][j]*y3a_R1_e[i][j] - y3b_R1_e[i][j]*x3a_R1_e[i][j])/sqrt((y3b_R1_e[i][j]-y3a_R1_e[i][j])*(y3b_R1_e[i][j]-y3a_R1_e[i][j]) + (x3b_R1_e[i][j]-x3a_R1_e[i][j])*(x3b_R1_e[i][j]-x3a_R1_e[i][j]));
+	  // or calculate slope n then do dist
+	  
+	  m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(x3b_R1_e[i][j] - x3a_R1_e[i][j]);
+	  cout << "m: " << m << endl;
 	  //cout << fabs((-m)*xcheck + ycheck) << endl;
 	  dist = fabs((-m)*xcheck + ycheck)/sqrt(1 + m*m);
 	  cout << "dist: " << dist << endl;
