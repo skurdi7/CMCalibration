@@ -58,6 +58,7 @@ int CheckStripeID() {
   int npts = 2*Hits.size();
   TGraph *gDummyHits = new TGraph(npts, &xhit[0], &yhit[0]);
   gDummyHits->SetMarkerColor(2);
+  gDummyHits->SetMarkerSize(0.5);
   
   gStyle->SetOptStat(0);
   TCanvas *c=new TCanvas("a","CheckStripeID.cpp",500,500);
@@ -85,7 +86,7 @@ int CheckStripeID() {
     if(i > 10) break;
     TLine *line=new TLine;
     line->DrawLine(Hits[i]->get_x(0)*cm/mm ,Hits[i]->get_y(0)*cm/mm,Hits[i]->get_x(1)*cm/mm, Hits[i]->get_y(1)*cm/mm);
-    line->DrawLine(0, 0, 200, 200*((yb- ya)/(xb-xa));
+    line->DrawLine(0, 0, 200, 200*((yb- ya)/(xb-xa)));
   }
   
   /*for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
