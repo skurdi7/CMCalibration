@@ -357,7 +357,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
   int phiID = 0;
   int fullID = -1;
   //double theta, spacing[nRadii], angle, m, dist;
-  double m, dist;
+  double xmid, m, dist;
   //const double adjust = 0.015; //arbitrary angle to center the pattern in a petal
   const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
 
@@ -399,6 +399,8 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	    //dist = fabs((y3b[i][j] - y3a[i][j])*xcheck - (x3b[i][j] - x3a[i][j])*ycheck + x3b[i][j]*y3a[i][j] - y3b[i][j]*x3a[i][j])/sqrt((y3b[i][j]-y3a[i][j])*(y3b[i][j]-y3a[i][j]) + (x3b[i][j]-x3a[i][j])*(x3b[i][j]-x3a[i][j]));
 	    // or calculate slope n then do dist
 	  m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(x3b_R1_e[i][j] - x3a_R1_e[i][j]);
+	  xmid = (x3b_R1_e[i][j] + x3a_R1_e[i][j])/2;
+	  cout << "xmid: " << xmid << endl;
 	  dist = fabs((-m)*xcheck + ycheck)/sqrt(1 + m*m);
 	  if(dist < str_width){ 
 	    phiID = i;
@@ -418,7 +420,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	cout << "fullID: " << fullID << endl;
       } else if (((R1[j]- padfrac_R1) < r) && (r < (R1[j]+ padfrac_R1))){
 	rID = j+nRadii;
-	cout << "R1" << endl;
+	//cout << "R1" << endl;
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R1[j]; i++){
 	  // look at distance from center line of stripe
 	  m = (y3b_R1[i][j] - y3a_R1[i][j])/(x3b_R1[i][j] - x3a_R1[i][j]);
@@ -432,7 +434,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	
       } else if (((R2[j]- padfrac_R2) < r) && (r < (R2[j]+ padfrac_R2))){
 	rID = j+(2*nRadii);
-	cout << "R2" << endl;
+	//cout << "R2" << endl;
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R2[j]; i++){
 	  // look at distance from center line of stripe
 	  m = (y3b_R2[i][j] - y3a_R2[i][j])/(x3b_R2[i][j] - x3a_R2[i][j]);
@@ -447,7 +449,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	
       } else if (((R3[j]- padfrac_R3) < r) && (r < (R3[j]+ padfrac_R3))){
 	rID = j+(3*nRadii);
-	cout << "R3" << endl;
+	//cout << "R3" << endl;
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R3[j]; i++){
 	  // look at distance from center line of stripe
 	  m = (y3b_R3[i][j] - y3a_R3[i][j])/(x3b_R3[i][j] - x3a_R3[i][j]);
