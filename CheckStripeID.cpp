@@ -65,17 +65,17 @@ int CheckStripeID() {
   gDummyHits->Draw("AP");
 
   //loop thru hits again
-  double xav, yav;
+  double xav, yav, xa, xb, ya, yb;
  
   for (int i = 0; i < Hits.size(); i++){
     //avg x0 n x1, y0 n y1 and use to draw stripeID
     xav = (Hits[i]->get_x(0)*cm/mm + Hits[i]->get_x(1)*cm/mm)/2;
     yav = (Hits[i]->get_y(0)*cm/mm + Hits[i]->get_y(1)*cm/mm)/2;
     cout << "i: " << i << endl;
-    cout << "xa: " << Hits[i]->get_x(0)*cm/mm << endl;
-    cout << "xb: " << Hits[i]->get_x(1)*cm/mm << endl;
-    cout << "ya: " << Hits[i]->get_y(0)*cm/mm << endl;
-    cout << "yb: " << Hits[i]->get_y(1)*cm/mm << endl;
+    xa = Hits[i]->get_x(0)*cm/mm ;
+    xb= Hits[i]->get_x(1)*cm/mm ;
+    ya= Hits[i]->get_y(0)*cm/mm ;
+    yb = Hits[i]->get_y(1)*cm/mm ;
     cout << "xav: " << xav << endl;
     cout << "yav: " << yav << endl; 
     stripeID = stripes.getStripeID(xav, yav);
@@ -85,7 +85,7 @@ int CheckStripeID() {
     if(i > 10) break;
     TLine *line=new TLine;
     line->DrawLine(Hits[i]->get_x(0)*cm/mm ,Hits[i]->get_y(0)*cm/mm,Hits[i]->get_x(1)*cm/mm, Hits[i]->get_y(1)*cm/mm);
-    line->DrawLine(0, 0, 200, 200*0.060069823);
+    line->DrawLine(0, 0, 200, 200*((yb- ya)/(xb-xa));
   }
   
   /*for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
