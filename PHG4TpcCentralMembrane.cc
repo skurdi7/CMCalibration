@@ -398,11 +398,9 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	    // if distance from x,y to center line < str_width
 	    //dist = fabs((y3b[i][j] - y3a[i][j])*xcheck - (x3b[i][j] - x3a[i][j])*ycheck + x3b[i][j]*y3a[i][j] - y3b[i][j]*x3a[i][j])/sqrt((y3b[i][j]-y3a[i][j])*(y3b[i][j]-y3a[i][j]) + (x3b[i][j]-x3a[i][j])*(x3b[i][j]-x3a[i][j]));
 	    // or calculate slope n then do dist
-	  cout << "y3b: " << y3b_R1_e[i][j] <<endl;
-	  cout << "y3a: " << y3a_R1_e[i][j] <<endl;
 	  m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(x3b_R1_e[i][j] - x3a_R1_e[i][j]);
 	  cout << "m: " <<  m << endl;
-	  dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
+	  dist = fabs((-m)*xcheck + ycheck)/sqrt(1 + m*m);
 	  cout << "dist: " << dist << endl;
 	  if(dist < str_width){ 
 	    phiID = i;
@@ -419,8 +417,8 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	}
 	nStripesPerR = keepUntil_R1_e[j] - keepThisAndAfter[j];
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
-	
-      } else if(((R1[j]+ padfrac_R1) < r) && (r < (R1[j]+ padfrac_R1))){
+	cout << "fullID: " << fullID << endl;
+      } else if (((R1[j]+ padfrac_R1) < r) && (r < (R1[j]+ padfrac_R1))){
 	rID = j+nRadii;
 	cout << "R1" << endl;
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R1[j]; i++){
@@ -434,7 +432,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	nStripesPerR = keepUntil_R1[j] - keepThisAndAfter[j];
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
 	
-      } else if(((R2[j]+ padfrac_R2) < r) && (r < (R2[j]+ padfrac_R2))){
+      } else if (((R2[j]+ padfrac_R2) < r) && (r < (R2[j]+ padfrac_R2))){
 	rID = j+(2*nRadii);
 	cout << "R2" << endl;
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R2[j]; i++){
@@ -449,7 +447,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	nStripesPerR = keepUntil_R2[j] - keepThisAndAfter[j];
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
 	
-      } else if(((R3[j]+ padfrac_R3) < r) && (r < (R3[j]+ padfrac_R3))){
+      } else if (((R3[j]+ padfrac_R3) < r) && (r < (R3[j]+ padfrac_R3))){
 	rID = j+(3*nRadii);
 	cout << "R3" << endl;
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R3[j]; i++){
