@@ -405,7 +405,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  cout << "x1: " << x3a_R1_e[i][j] << endl;
 	  cout << "xc: " << xcheck << endl;
 	  cout << "yc: " << ycheck << endl;
-	  cout << "m: " << m << endl; 
+	  cout << "m: " << m << endl;  
 	  //cout << fabs((-m)*xcheck + ycheck) << endl;
 	  dist = fabs((-m)*xcheck + ycheck)/sqrt(1 + m*m);
 	  cout << "dist:" << dist << endl;
