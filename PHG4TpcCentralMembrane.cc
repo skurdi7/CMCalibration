@@ -399,9 +399,10 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  // calculate slope n then do dist
 	  
 	  m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(x3b_R1_e[i][j] - x3a_R1_e[i][j]);
-	  cout << "m: " << m << endl;
+	  //cout << "m: " << m << endl;
 	  //cout << fabs((-m)*xcheck + ycheck) << endl;
 	  dist = fabs((-m)*xcheck + ycheck)/sqrt(1 + m*m);
+	  cout << "dist:" << dist << endl;
        	  if(dist < (str_width/2.0)){ 
 	    phiID = i;
 	    cout << "phiID: " << phiID << endl;
