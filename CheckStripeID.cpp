@@ -71,8 +71,8 @@ int CheckStripeID() {
     //avg x0 n x1, y0 n y1 and use to draw stripeID
     xav = (xhit[i]+xhit[i+1])/2;
     yav = (yhit[i]+yhit[i+1])/2;
-    //cout << "xav: " << xav << endl;
-    //cout << "yav: " << yav << endl;
+    cout << "xav: " << xav << endl;
+    cout << "yav: " << yav << endl;
     stripeID = stripes.getStripeID(xav, yav);
     TLatex *tex=new TLatex(xav,yav,"StripeID");
     tex->SetTextSize(0.005);
