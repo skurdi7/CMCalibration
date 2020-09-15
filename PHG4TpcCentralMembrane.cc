@@ -396,7 +396,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  //angle = theta + (spacing[j]/2) - adjust;
 	    // look at distance from center line of stripe
 	    // if distance from x,y to center line < str_width
-	    dist = fabs((y3b[i][j] - y3a[i][j])*xcheck - (x3b[i][j] - x3a[i][j])*ycheck + x3b[i][j]*y3a[i][j] - y3b[i][j]*x3a[i][j])/sqrt((y3b[i][j]-y3a[i][j])*(y3b[i][j]-y3a[i][j]) + (x3b[i][j]-x3a[i][j])*(x3b[i][j]-x3a[i][j]));
+	    dist = fabs((y3b_R1_e[i][j] - y3a_R1_e[i][j])*xcheck - (x3b_R1_e[i][j] - x3a_R1_e[i][j])*ycheck + x3b_R1_e[i][j]*y3a_R1_e[i][j] - y3b_R1_e[i][j]*x3a_R1_e[i][j])/sqrt((y3b_R1_e[i][j]-y3a_R1_e[i][j])*(y3b_R1_e[i][j]-y3a_R1_e[i][j]) + (x3b_R1_e[i][j]-x3a_R1_e[i][j])*(x3b_R1_e[i][j]-x3a_R1_e[i][j]));
 	    // or calculate slope n then do dist
 
 	    //m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(x3b_R1_e[i][j] - x3a_R1_e[i][j]);
