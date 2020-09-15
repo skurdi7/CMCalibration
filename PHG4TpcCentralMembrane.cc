@@ -405,7 +405,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  dist2 = fabs((-m)*xcheck + ycheck)/sqrt(1 + m*m);
 	  cout << "dist1: " << dist1 << endl;
 	  cout << "dist2: " << dist2 << endl;
-	  if(dist < (str_width/2.0)){ 
+	  if(dist2 < (str_width/2.0)){ 
 	    phiID = i;
 	    cout << "phiID: " << phiID << endl;
 	  }
