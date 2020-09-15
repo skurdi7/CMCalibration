@@ -399,13 +399,13 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  // calculate slope n then do dist
 	  
 	  m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(x3b_R1_e[i][j] - x3a_R1_e[i][j]);
-	  /*cout << "y2: " << y3b_R1_e[i][j] << endl;
+	  cout << "y2: " << y3b_R1_e[i][j] << endl;
 	  cout << "y1: " << y3a_R1_e[i][j] << endl;
 	  cout << "x2: " << x3b_R1_e[i][j] << endl;
 	  cout << "x1: " << x3a_R1_e[i][j] << endl;
 	  cout << "xc: " << xcheck << endl;
 	  cout << "yc: " << ycheck << endl;
-	  cout << "m: " << m << endl; */
+	  cout << "m: " << m << endl; 
 	  //cout << fabs((-m)*xcheck + ycheck) << endl;
 	  dist = fabs((-m)*xcheck + ycheck)/sqrt(1 + m*m);
 	  cout << "dist:" << dist << endl;
