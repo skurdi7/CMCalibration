@@ -165,14 +165,14 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
       rotatedX2b[i_out][j] = tempX2b[i_out][j]*cos(theta) - tempY2b[i_out][j]*sin(theta);
       rotatedY2b[i_out][j] = tempX2b[i_out][j]*sin(theta) + tempY2b[i_out][j]*cos(theta);*/
 
-      x1a[i_out][j] = rotatedX1a[i_out][j] + cx[i_out][j];
+      /* x1a[i_out][j] = rotatedX1a[i_out][j] + cx[i_out][j];
       y1a[i_out][j] = rotatedY1a[i_out][j] + cy[i_out][j];
       x1b[i_out][j] = rotatedX1b[i_out][j] + cx[i_out][j];
       y1b[i_out][j] = rotatedY1b[i_out][j] + cy[i_out][j];
       x2a[i_out][j] = rotatedX2a[i_out][j] + cx[i_out][j];
       y2a[i_out][j] = rotatedY2a[i_out][j] + cy[i_out][j];
       x2b[i_out][j] = rotatedX2b[i_out][j] + cx[i_out][j];
-      y2b[i_out][j] = rotatedY2b[i_out][j] + cy[i_out][j];
+      y2b[i_out][j] = rotatedY2b[i_out][j] + cy[i_out][j]; */
 
       x3a[i_out][j] = (x1a[i_out][j] +  x2a[i_out][j])/ 2.0;
       y3a[i_out][j] = (y1a[i_out][j] +  y2a[i_out][j])/ 2.0;
