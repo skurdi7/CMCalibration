@@ -65,14 +65,13 @@ int CheckStripeID() {
   gDummyHits->Draw("AP");
 
   //loop thru hits again
-  double xav, yav, mc;
+  double xav, yav;
  
   for (int i = 0; i < Hits.size(); i++){
     //avg x0 n x1, y0 n y1 and use to draw stripeID
     xav = (xhit[i]+xhit[i+1])/2;
     yav = (yhit[i]+yhit[i+1])/2;
-    mc = (yhit[i+1]-yhit[i])/(xhit[i+1]-xhit[i]);
-    cout << "mc: " << mc << endl;
+    
     stripeID = stripes.getStripeID(xav, yav);
     TLatex *tex=new TLatex(xav,yav,"StripeID");
     tex->SetTextSize(0.005);
