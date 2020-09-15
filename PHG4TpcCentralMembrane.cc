@@ -390,7 +390,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	rID = j; 
 	//cout << "R1_E" << endl;
 	//'angle' is to the center of a stripe
-	for (int i=keepThisAndAfter[j]; i<keepUntil_R1_e[j]; i++){
+	for (int i=0; i<nGoodStripes_R1_e[j]; i++){
 	  //if (j % 2 == 0){
 	  //theta = i*spacing[j];
 	  //angle = theta + (spacing[j]/2) - adjust;
@@ -422,7 +422,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
       } else if (((R1[j]- padfrac_R1) < r) && (r < (R1[j]+ padfrac_R1))){
 	rID = j+nRadii;
 	//cout << "R1" << endl;
-	for (int i=keepThisAndAfter[j]; i<keepUntil_R1[j]; i++){
+	for (int i=0; i<nGoodStripes_R1[j]; i++){
 	  // look at distance from center line of stripe
 	  m = (y3b_R1[i][j] - y3a_R1[i][j])/(x3b_R1[i][j] - x3a_R1[i][j]);
 	  dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
@@ -436,7 +436,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
       } else if (((R2[j]- padfrac_R2) < r) && (r < (R2[j]+ padfrac_R2))){
 	rID = j+(2*nRadii);
 	//cout << "R2" << endl;
-	for (int i=keepThisAndAfter[j]; i<keepUntil_R2[j]; i++){
+	for (int i=0; i<nGoodStripes_R2[j]; i++){
 	  // look at distance from center line of stripe
 	  m = (y3b_R2[i][j] - y3a_R2[i][j])/(x3b_R2[i][j] - x3a_R2[i][j]);
 	  dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
@@ -451,7 +451,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
       } else if (((R3[j]- padfrac_R3) < r) && (r < (R3[j]+ padfrac_R3))){
 	rID = j+(3*nRadii);
 	//cout << "R3" << endl;
-	for (int i=keepThisAndAfter[j]; i<keepUntil_R3[j]; i++){
+	for (int i=0; i<nGoodStripes_R3[j]; i++){
 	  // look at distance from center line of stripe
 	  m = (y3b_R3[i][j] - y3a_R3[i][j])/(x3b_R3[i][j] - x3a_R3[i][j]);
 	  dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
