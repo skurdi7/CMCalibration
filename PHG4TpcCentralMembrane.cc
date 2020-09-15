@@ -366,7 +366,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 
   // check if in a stripe
   result = getSearchResult(xcheck, ycheck);
-
+  cout << result << endl;
   // find which stripe
   if(result == 1){
     
@@ -384,7 +384,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
     //ymod = r*sin(phimod);
 
     petalID = phi/phi_petal; 
-    cout << fullID << endl;
+    
     for(int j=0; j<nRadii; j++){
       if(((R1_e[j] - padfrac_R1) < r) && (r < (R1_e[j] + padfrac_R1))){ // check if radius is in stripe 
 	rID = j; 
