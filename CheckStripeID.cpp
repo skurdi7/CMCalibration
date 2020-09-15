@@ -69,14 +69,14 @@ int CheckStripeID() {
  
   for (int i = 0; i < Hits.size(); i++){
     //avg x0 n x1, y0 n y1 and use to draw stripeID
-    xav = (xhit[i]+xhit[i+1])/2;
-    yav = (yhit[i]+yhit[i+1])/2;
-    cout << "xa: " << xhit[i] << endl;
+    xav = (Hits[i]->get_x(0)*cm/mm + Hits[i]->get_x(1)*cm/mm)/2;
+    yav = (Hits[i]->get_y(0)*cm/mm + Hits[i]->get_y(1)*cm/mm)/2;
+    /*cout << "xa: " << xhit[i] << endl;
     cout << "xb: " << xhit[i+1] << endl;
     cout << "ya: " << yhit[i] << endl;
     cout << "yb: " << yhit[i+1] << endl;
     cout << "xav: " << xav << endl;
-    cout << "yav: " << yav << endl;
+    cout << "yav: " << yav << endl; */
     stripeID = stripes.getStripeID(xav, yav);
     TLatex *tex=new TLatex(xav,yav,"StripeID");
     tex->SetTextSize(0.005);
