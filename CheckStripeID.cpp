@@ -85,7 +85,7 @@ int CheckStripeID() {
     if(i > 10) break;
     TLine *line=new TLine;
     line->DrawLine(Hits[i]->get_x(0)*cm/mm ,Hits[i]->get_y(0)*cm/mm,Hits[i]->get_x(1)*cm/mm, Hits[i]->get_y(1)*cm/mm);
-    
+    line->DrawLine(0, 0, 200, 200*0.060069823);
   }
   
   /*for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
