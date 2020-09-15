@@ -357,7 +357,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
   int phiID = 0;
   int fullID = -1;
   //double theta, spacing[nRadii], angle, m, dist;
-  double m, dist;
+  double m, dist1, dist2;
   //const double adjust = 0.015; //arbitrary angle to center the pattern in a petal
   const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
 
@@ -388,7 +388,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
     for(int j=0; j<nRadii; j++){
       if(((R1_e[j] - padfrac_R1) < r) && (r < (R1_e[j] + padfrac_R1))){ // check if radius is in stripe 
 	rID = j; 
-	cout << "R1_E" << endl;
+	//cout << "R1_E" << endl;
 	//'angle' is to the center of a stripe
 	for (int i=keepThisAndAfter[j]; i<keepUntil_R1_e[j]; i++){
 	  //if (j % 2 == 0){
@@ -396,13 +396,13 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  //angle = theta + (spacing[j]/2) - adjust;
 	  // look at distance from center line of stripe
 	  // if distance from x,y to center line < str_width
-	  //dist = fabs((y3b_R1_e[i][j] - y3a_R1_e[i][j])*xcheck - (x3b_R1_e[i][j] - x3a_R1_e[i][j])*ycheck + x3b_R1_e[i][j]*y3a_R1_e[i][j] - y3b_R1_e[i][j]*x3a_R1_e[i][j])/sqrt((y3b_R1_e[i][j]-y3a_R1_e[i][j])*(y3b_R1_e[i][j]-y3a_R1_e[i][j]) + (x3b_R1_e[i][j]-x3a_R1_e[i][j])*(x3b_R1_e[i][j]-x3a_R1_e[i][j]));
+	  dist1 = fabs((y3b_R1_e[i][j] - y3a_R1_e[i][j])*xcheck - (x3b_R1_e[i][j] - x3a_R1_e[i][j])*ycheck + x3b_R1_e[i][j]*y3a_R1_e[i][j] - y3b_R1_e[i][j]*x3a_R1_e[i][j])/sqrt((y3b_R1_e[i][j]-y3a_R1_e[i][j])*(y3b_R1_e[i][j]-y3a_R1_e[i][j]) + (x3b_R1_e[i][j]-x3a_R1_e[i][j])*(x3b_R1_e[i][j]-x3a_R1_e[i][j]));
 	  // or calculate slope n then do dist
 	  
 	  m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(x3b_R1_e[i][j] - x3a_R1_e[i][j]);
-	  cout << "m: " << m << endl;
+	  //cout << "m: " << m << endl;
 	  //cout << fabs((-m)*xcheck + ycheck) << endl;
-	  dist = fabs((-m)*xcheck + ycheck)/sqrt(1 + m*m);
+	  dist2 = fabs((-m)*xcheck + ycheck)/sqrt(1 + m*m);
 	  cout << "dist: " << dist << endl;
 	  if(dist < (str_width/2.0)){ 
 	    phiID = i;
@@ -411,7 +411,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	    //} else {
 	    //theta = (i+1)*spacing[j];
 	    //angle = theta-adjust;
-	    //m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(y3b_R1_e[i][j] - y3a_R1_e[i][j]);
+	    //m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(x3b_R1_e[i][j] - x3a_R1_e[i][j]);
 	    //dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
 	    //if(dist < str_width){ 
 	    // phiID = i;
