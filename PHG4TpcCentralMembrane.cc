@@ -107,16 +107,38 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
     int i_out = 0;
     for (int i=keepThisAndAfter[j]; i<keepUntil[j]; i++){
       if (j % 2 == 0){
-	theta = i*spacing[j] - adjust;
-	cx[i_out][j] = R[j]*cos(theta + (spacing[j]/2));
-	cy[i_out][j] = R[j]*sin(theta + (spacing[j]/2));
+	theta = i*spacing[j] + (spacing[j]/2) - adjust;
+	cx[i_out][j] = R[j]*cos(theta);
+	cy[i_out][j] = R[j]*sin(theta);
       } else {
 	theta = (i+1)*spacing[j] - adjust;
 	cx[i_out][j] = R[j]*cos(theta);
 	cy[i_out][j] = R[j]*sin(theta);
       }
 
-      x1a[i_out][j] = cx[i_out][j] - padfrac + arc_r;
+      TVector3 corner[4];
+      corner[0].SetXYZ(-padfrac+arc_r,-str_width/2,0);//"1a" = length of the pad, but not including the arc piece
+      corner[1].SetXYZ(padfrac-arc_r,-str_width/2,0);//"1b" = length of the pad, but not including the arc piece
+      corner[2].SetXYZ(-padfrac+arc_r,str_width/2,0);//"2a" = length of the pad, but not including the arc piece
+      corner[3].SetXYZ(padfrac-arc_r,str_width/2,0);//"2b" = length of the pad, but not including the arc piece
+     
+      TVector3 rotatedcorner[4];
+      for (int i=0;i<4;i++){
+	rotatedcorner[i]=corner[i];
+	rotatedcorner[i].RotateZ(theta);
+      }
+
+      x1a[i_out][j]=rotatedcorner[0].X()+cx[i_out][j];
+      x1b[i_out][j]=rotatedcorner[1].X()+cx[i_out][j];
+      x2a[i_out][j]=rotatedcorner[2].X()+cx[i_out][j];
+      x2b[i_out][j]=rotatedcorner[3].X()+cx[i_out][j];
+
+      y1a[i_out][j]=rotatedcorner[0].Y()+cy[i_out][j];
+      y1b[i_out][j]=rotatedcorner[1].Y()+cy[i_out][j];
+      y2a[i_out][j]=rotatedcorner[2].Y()+cy[i_out][j];
+      y2b[i_out][j]=rotatedcorner[3].Y()+cy[i_out][j];
+
+      /* x1a[i_out][j] = cx[i_out][j] - padfrac + arc_r;
       y1a[i_out][j] = cy[i_out][j] - str_width/2;
       x1b[i_out][j] = cx[i_out][j] + padfrac - arc_r;
       y1b[i_out][j] = cy[i_out][j] - str_width/2;
@@ -141,7 +163,7 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
       rotatedX2a[i_out][j] = tempX2a[i_out][j]*cos(theta) - tempY2a[i_out][j]*sin(theta);
       rotatedY2a[i_out][j] = tempX2a[i_out][j]*sin(theta) + tempY2a[i_out][j]*cos(theta);
       rotatedX2b[i_out][j] = tempX2b[i_out][j]*cos(theta) - tempY2b[i_out][j]*sin(theta);
-      rotatedY2b[i_out][j] = tempX2b[i_out][j]*sin(theta) + tempY2b[i_out][j]*cos(theta);
+      rotatedY2b[i_out][j] = tempX2b[i_out][j]*sin(theta) + tempY2b[i_out][j]*cos(theta);*/
 
       x1a[i_out][j] = rotatedX1a[i_out][j] + cx[i_out][j];
       y1a[i_out][j] = rotatedY1a[i_out][j] + cy[i_out][j];
