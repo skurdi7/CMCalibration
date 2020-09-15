@@ -71,6 +71,7 @@ int CheckStripeID() {
     //avg x0 n x1, y0 n y1 and use to draw stripeID
     xav = (Hits[i]->get_x(0)*cm/mm + Hits[i]->get_x(1)*cm/mm)/2;
     yav = (Hits[i]->get_y(0)*cm/mm + Hits[i]->get_y(1)*cm/mm)/2;
+    cout << "i: " << i << endl;
     cout << "xa: " << Hits[i]->get_x(0)*cm/mm << endl;
     cout << "xb: " << Hits[i]->get_x(1)*cm/mm << endl;
     cout << "ya: " << Hits[i]->get_y(0)*cm/mm << endl;
@@ -81,7 +82,7 @@ int CheckStripeID() {
     TLatex *tex=new TLatex(xav,yav,"StripeID");
     tex->SetTextSize(0.005);
     tex->DrawLatex(xav,yav,Form("%d",stripeID));
-      
+    if(i > 10) break;
   }
   
   /*for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
