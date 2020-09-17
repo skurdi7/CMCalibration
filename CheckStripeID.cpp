@@ -71,9 +71,9 @@ int CheckStripeID() {
     TLatex *tex=new TLatex(xav,yav,"StripeID");
     tex->SetTextSize(0.005);
     tex->DrawLatex(xav,yav,Form("%d",stripeID));
-    TLine *line=new TLine;
-    line->DrawLine(Hits[i]->get_x(0)*cm/mm ,Hits[i]->get_y(0)*cm/mm,Hits[i]->get_x(1)*cm/mm, Hits[i]->get_y(1)*cm/mm);
-    line->DrawLine(0, 0, 200, 200*((yb- ya)/(xb-xa)));
+    //TLine *line=new TLine;
+    //line->DrawLine(Hits[i]->get_x(0)*cm/mm ,Hits[i]->get_y(0)*cm/mm,Hits[i]->get_x(1)*cm/mm, Hits[i]->get_y(1)*cm/mm);
+    //line->DrawLine(0, 0, 200, 200*((yb- ya)/(xb-xa)));
     
   }
   

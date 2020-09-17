@@ -391,7 +391,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
   
   // find which stripe
   if(result == 1){
-    cout << "on a stripe" << endl;
+    //cout << "on a stripe" << endl;
     //convert coords to radius n angle
     r = sqrt(xcheck*xcheck + ycheck*ycheck);
     phi = atan(ycheck/xcheck);
