@@ -25,19 +25,7 @@ int CheckStripeID() {
 
   int stripeID, nbins, rsteps, phisteps; 
   double r, phi, x, y, xmod, ymod, phimod, rstepsize, phistepsize;
-  
-  nbins = 100;
-  rsteps = 100;
-  phisteps = 100;
-  
-  rstepsize = (stripes.end_CM - stripes.begin_CM)/rsteps;
-  phistepsize = 2*TMath::Pi()/phisteps;
 
-  //TH2F *Pattern1 = new TH2F("Pattern1","Pattern1",nbins,-770.0,770.0,nbins,-770.0,770.0); // min n max just beyond extent of CM so it's easier to see
-  
-  
-  
-  
   vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
 
   const double mm = 1.0;
@@ -72,18 +60,17 @@ int CheckStripeID() {
     //avg x0 n x1, y0 n y1 and use to draw stripeID
     xav = (Hits[i]->get_x(0)*cm/mm + Hits[i]->get_x(1)*cm/mm)/2;
     yav = (Hits[i]->get_y(0)*cm/mm + Hits[i]->get_y(1)*cm/mm)/2;
-    cout << "i: " << i << endl;
+    //cout << "i: " << i << endl;
     xa = Hits[i]->get_x(0)*cm/mm ;
     xb= Hits[i]->get_x(1)*cm/mm ;
     ya= Hits[i]->get_y(0)*cm/mm ;
     yb = Hits[i]->get_y(1)*cm/mm ;
-    cout << "xav: " << xav << endl;
-    cout << "yav: " << yav << endl; 
+    //cout << "xav: " << xav << endl;
+    //cout << "yav: " << yav << endl; 
     stripeID = stripes.getStripeID(xav, yav);
     TLatex *tex=new TLatex(xav,yav,"StripeID");
     tex->SetTextSize(0.005);
     tex->DrawLatex(xav,yav,Form("%d",stripeID));
-    if(i > 3) break;
     TLine *line=new TLine;
     line->DrawLine(Hits[i]->get_x(0)*cm/mm ,Hits[i]->get_y(0)*cm/mm,Hits[i]->get_x(1)*cm/mm, Hits[i]->get_y(1)*cm/mm);
     line->DrawLine(0, 0, 200, 200*((yb- ya)/(xb-xa)));
