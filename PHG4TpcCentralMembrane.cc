@@ -210,7 +210,7 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
   }
 }
 
-double StripesClass::GetBotVertices(int petalID, int moduleID, int radiusID, int stripeID){
+PHG4Hitv1* StripesClass::GetBotVertices(int petalID, int moduleID, int radiusID, int stripeID){
   PHG4Hitv1 *botvert;
   TVector3 dummyPos0, dummyPos1;
   
@@ -258,7 +258,7 @@ double StripesClass::GetBotVertices(int petalID, int moduleID, int radiusID, int
   return botvert;
 }
 
-double StripesClass::GetTopVertices(int petalID, int moduleID, int radiusID, int stripeID){
+PHG4Hitv1* StripesClass::GetTopVertices(int petalID, int moduleID, int radiusID, int stripeID){
   PHG4Hitv1 *topvert;
   TVector3 dummyPos0, dummyPos1;
     

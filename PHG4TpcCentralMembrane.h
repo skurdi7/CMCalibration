@@ -118,8 +118,8 @@ private:
   
   void CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, double str_width[][nRadii], int nGoodStripes[], int keepUntil[]);
 
-  double GetBotVertices(int petalID, int moduleID, int radiusID, int stripeID);
-  double GetTopVertices(int petalID, int moduleID, int radiusID, int stripeID);
+  PHG4Hitv1* GetBotVertices(int petalID, int moduleID, int radiusID, int stripeID);
+  PHG4Hitv1* GetTopVertices(int petalID, int moduleID, int radiusID, int stripeID);
   
   int SearchModule(int nStripes, double x1a[][nRadii], double x1b[][nRadii], double x2a[][nRadii], double x2b[][nRadii], double y1a[][nRadii], double y1b[][nRadii], double y2a[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double x, double y, int nGoodStripes[]);
   
