@@ -41,8 +41,22 @@ StripesClass::StripesClass()
   padfrac_R2 = 0.5*10.13836283 * mm;
   padfrac_R3 = 0.5*10.90189537 * mm;
   
-  str_width = 1.0 * mm;
+  //str_width = 1.0 * mm;
   arc_r = 0.5 * mm;
+
+  //fill in varying stripe widths - currently set to 1.0 mm for all
+  for (int j=0; j<nRadii; j++){
+    for (int i=0; i<nStripes_R1; i++){
+      str_width_R1_e[i][j] = 1.0 * mm;
+      str_width_R1[i][j] = 1.0 * mm;
+    }
+    for (int i=0; i<nStripes_R2; i++){
+      str_width_R2[i][j] = 1.0 * mm;
+    }
+    for (int i=0; i<nStripes_R3; i++){
+      str_width_R3[i][j] = 1.0 * mm;
+    }
+  }
 
   nStripesPerPetal = 213;
   nPetals = 18;
@@ -51,24 +65,32 @@ StripesClass::StripesClass()
   
   nElectrons = 100;
 
-  CalculateVertices(nStripes_R1, nPads_R1, R1_e, spacing_R1_e, x1a_R1_e, y1a_R1_e, x1b_R1_e, y1b_R1_e, x2a_R1_e, y2a_R1_e, x2b_R1_e, y2b_R1_e, x3a_R1_e, y3a_R1_e, x3b_R1_e, y3b_R1_e, padfrac_R1, nGoodStripes_R1_e, keepUntil_R1_e);
-  CalculateVertices(nStripes_R1, nPads_R1, R1, spacing_R1, x1a_R1, y1a_R1, x1b_R1, y1b_R1, x2a_R1, y2a_R1, x2b_R1, y2b_R1, x3a_R1, y3a_R1, x3b_R1, y3b_R1, padfrac_R1, nGoodStripes_R1, keepUntil_R1);
-  CalculateVertices(nStripes_R2, nPads_R2, R2, spacing_R2, x1a_R2, y1a_R2, x1b_R2, y1b_R2, x2a_R2, y2a_R2, x2b_R2, y2b_R2, x3a_R2, y3a_R2, x3b_R2, y3b_R2, padfrac_R2, nGoodStripes_R2, keepUntil_R2);
-  CalculateVertices(nStripes_R3, nPads_R3, R3, spacing_R3, x1a_R3, y1a_R3, x1b_R3, y1b_R3, x2a_R3, y2a_R3, x2b_R3, y2b_R3, x3a_R3, y3a_R3, x3b_R3, y3b_R3, padfrac_R3, nGoodStripes_R3, keepUntil_R3);
+  CalculateVertices(nStripes_R1, nPads_R1, R1_e, spacing_R1_e, x1a_R1_e, y1a_R1_e, x1b_R1_e, y1b_R1_e, x2a_R1_e, y2a_R1_e, x2b_R1_e, y2b_R1_e, x3a_R1_e, y3a_R1_e, x3b_R1_e, y3b_R1_e, padfrac_R1, str_width_R1_e, nGoodStripes_R1_e, keepUntil_R1_e);
+  CalculateVertices(nStripes_R1, nPads_R1, R1, spacing_R1, x1a_R1, y1a_R1, x1b_R1, y1b_R1, x2a_R1, y2a_R1, x2b_R1, y2b_R1, x3a_R1, y3a_R1, x3b_R1, y3b_R1, padfrac_R1, str_width_R1, nGoodStripes_R1, keepUntil_R1);
+  CalculateVertices(nStripes_R2, nPads_R2, R2, spacing_R2, x1a_R2, y1a_R2, x1b_R2, y1b_R2, x2a_R2, y2a_R2, x2b_R2, y2b_R2, x3a_R2, y3a_R2, x3b_R2, y3b_R2, padfrac_R2, str_width_R2, nGoodStripes_R2, keepUntil_R2);
+  CalculateVertices(nStripes_R3, nPads_R3, R3, spacing_R3, x1a_R3, y1a_R3, x1b_R3, y1b_R3, x2a_R3, y2a_R3, x2b_R3, y2b_R3, x3a_R3, y3a_R3, x3b_R3, y3b_R3, padfrac_R3, str_width_R3, nGoodStripes_R3, keepUntil_R3);
    
   for (int i = 0; i < 18; i++){ // loop over petalID
     for (int j = 0; j < 8; j++){ // loop over radiusID
       for (int k = 0; k < nGoodStripes_R1_e[j]; k++){ // loop over stripeID
 	PHG4Hits.push_back(GetPHG4HitFromStripe(i, 0, j, k, nElectrons));
+	BotVertices.push_back(GetBotVertices(i, 0, j, k));
+	TopVertices.push_back(GetTopVertices(i, 0, j, k));
       }
       for (int k = 0; k < nGoodStripes_R1[j]; k++){ // loop over stripeID
 	PHG4Hits.push_back(GetPHG4HitFromStripe(i, 1, j, k, nElectrons));
+	BotVertices.push_back(GetBotVertices(i, 1, j, k));
+	TopVertices.push_back(GetTopVertices(i, 1, j, k));
       }
       for (int k = 0; k < nGoodStripes_R2[j]; k++){ // loop over stripeID
 	PHG4Hits.push_back(GetPHG4HitFromStripe(i, 2, j, k, nElectrons));
+	BotVertices.push_back(GetBotVertices(i, 2, j, k));
+	TopVertices.push_back(GetTopVertices(i, 2, j, k));
       }
       for (int k = 0; k < nGoodStripes_R3[j]; k++){ // loop over stripeID
 	PHG4Hits.push_back(GetPHG4HitFromStripe(i, 3, j, k, nElectrons));
+	BotVertices.push_back(GetBotVertices(i, 3, j, k));
+	TopVertices.push_back(GetTopVertices(i, 3, j, k));
       }
     }
   }
@@ -77,7 +99,7 @@ StripesClass::StripesClass()
 }
 
 
-void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, int nGoodStripes[],  int keepUntil[]) {
+void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, double str_width[][nRadii], int nGoodStripes[],  int keepUntil[]) {
   const double phi_module = TMath::Pi()/6.0; // angle span of a module
   const int pr_mult = 3; // multiples of intrinsic resolution of pads
   const int dw_mult = 8; // multiples of diffusion width
@@ -117,10 +139,10 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
       }
 
       TVector3 corner[4];
-      corner[0].SetXYZ(-padfrac+arc_r,-str_width/2,0);//"1a" = length of the pad, but not including the arc piece
-      corner[1].SetXYZ(padfrac-arc_r,-str_width/2,0);//"1b" = length of the pad, but not including the arc piece
-      corner[2].SetXYZ(-padfrac+arc_r,str_width/2,0);//"2a" = length of the pad, but not including the arc piece
-      corner[3].SetXYZ(padfrac-arc_r,str_width/2,0);//"2b" = length of the pad, but not including the arc piece
+      corner[0].SetXYZ(-padfrac+arc_r,-str_width[i][j]/2,0);//"1a" = length of the pad, but not including the arc piece
+      corner[1].SetXYZ(padfrac-arc_r,-str_width[i][j]/2,0);//"1b" = length of the pad, but not including the arc piece
+      corner[2].SetXYZ(-padfrac+arc_r,str_width[i][j]/2,0);//"2a" = length of the pad, but not including the arc piece
+      corner[3].SetXYZ(padfrac-arc_r,str_width[i][j]/2,0);//"2b" = length of the pad, but not including the arc piece
      
       TVector3 rotatedcorner[4];
       for (int i=0;i<4;i++){
@@ -180,11 +202,109 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
       y3b[i_out][j] = (y1b[i_out][j] +  y2b[i_out][j])/ 2.0;
 
       i_out++;
+
+      //nStripesIn[j] = keepUntil_R1_e[j] - keepThisAndAfter[j];
+      // nStripesBefore[j] = nStripesIn[j-1] + nStripesBefore[j-1];
     }
     nGoodStripes[j]=i_out;
   }
 }
 
+double StripesClass::GetBotVertices(int petalID, int moduleID, int radiusID, int stripeID){
+  PHG4Hitv1 *botvert;
+  TVector3 dummyPos0, dummyPos1;
+  
+  //0 - left, 1 - right
+  
+  botvert = new PHG4Hitv1();
+    hit->set_layer(-2);
+  if (moduleID == 0){
+    botvert->set_x(0, x1a_R1_e[stripeID][radiusID] / cm);
+    botvert->set_y(0, y1a_R1_e[stripeID][radiusID] / cm);
+    botvert->set_x(1, x1b_R1_e[stripeID][radiusID] / cm);
+    botvert->set_y(1, y1b_R1_e[stripeID][radiusID] / cm);
+    
+  } else if (moduleID == 1){
+    botvert->set_x(0, x1a_R1[stripeID][radiusID] / cm);
+    botvert->set_y(0, y1a_R1[stripeID][radiusID] / cm);
+    botvert->set_x(1, x1b_R1[stripeID][radiusID] / cm);
+    botvert->set_y(1, y1b_R1[stripeID][radiusID] / cm);
+    
+  } else if (moduleID == 2){
+    botvert->set_x(0, x1a_R2[stripeID][radiusID] / cm);
+    botvert->set_y(0, y1a_R2[stripeID][radiusID] / cm);
+    botvert->set_x(1, x1b_R2[stripeID][radiusID] / cm);
+    botvert->set_y(1, y1b_R2[stripeID][radiusID] / cm);
+    
+  } else if (moduleID == 3){
+    botvert->set_x(0, x1a_R3[stripeID][radiusID] / cm);
+    botvert->set_y(0, y1a_R3[stripeID][radiusID] / cm);
+    botvert->set_x(1, x1b_R3[stripeID][radiusID] / cm);
+    botvert->set_y(1, y1b_R3[stripeID][radiusID] / cm);
+  }
+  botvert->set_z(0, 0.0 / cm);
+
+  if(petalID > 0){
+    dummyPos0.SetXYZ(botvert->get_x(0), botvert->get_y(0), botvert->get_z(0));
+    dummyPos0.RotateZ(petalID * phi_petal);
+    botvert->set_x(0, dummyPos0.X());
+    botvert->set_y(0, dummyPos0.Y());
+    dummyPos1.SetXYZ(botvert->get_x(1), botvert->get_y(1), botvert->get_z(1));
+    dummyPos1.RotateZ(petalID * phi_petal);
+    botvert->set_x(1, dummyPos1.X());
+    botvert->set_y(1, dummyPos1.Y());
+  }
+  
+  return botvert;
+}
+
+double StripesClass::GetTopVertices(int petalID, int moduleID, int radiusID, int stripeID){
+  PHG4Hitv1 *topvert;
+  TVector3 dummyPos0, dummyPos1;
+    
+  //0 - left, 1 - right
+  
+  topvert = new PHG4Hitv1();
+    hit->set_layer(-3);
+    if (moduleID == 0){
+      topvert->set_x(0, x2a_R1_e[stripeID][radiusID] / cm);
+      topvert->set_y(0, y2a_R1_e[stripeID][radiusID] / cm);
+      topvert->set_x(1, x2b_R1_e[stripeID][radiusID] / cm);
+      topvert->set_y(1, y2b_R1_e[stripeID][radiusID] / cm);
+    
+    } else if (moduleID == 1){
+      topvert->set_x(0, x2a_R1[stripeID][radiusID] / cm);
+      topvert->set_y(0, y2a_R1[stripeID][radiusID] / cm);
+      topvert->set_x(1, x2b_R1[stripeID][radiusID] / cm);
+      topvert->set_y(1, y2b_R1[stripeID][radiusID] / cm);
+      
+    } else if (moduleID == 2){
+      topvert->set_x(0, x2a_R2[stripeID][radiusID] / cm);
+      topvert->set_y(0, y2a_R2[stripeID][radiusID] / cm);
+      topvert->set_x(1, x2b_R2[stripeID][radiusID] / cm);
+      topvert->set_y(1, y2b_R2[stripeID][radiusID] / cm);
+    
+    } else if (moduleID == 3){
+      topvert->set_x(0, x2a_R3[stripeID][radiusID] / cm);
+      topvert->set_y(0, y2a_R3[stripeID][radiusID] / cm);
+      topvert->set_x(1, x2b_R3[stripeID][radiusID] / cm);
+      topvert->set_y(1, y2b_R3[stripeID][radiusID] / cm);
+    }
+    topvert->set_z(0, 0.0 / cm);
+    
+    if(petalID > 0){
+      dummyPos0.SetXYZ(topvert->get_x(0), topvert->get_y(0), topvert->get_z(0));
+      dummyPos0.RotateZ(petalID * phi_petal);
+      topvert->set_x(0, dummyPos0.X());
+      topvert->set_y(0, dummyPos0.Y());
+      dummyPos1.SetXYZ(topvert->get_x(1), topvert->get_y(1), topvert->get_z(1));
+      dummyPos1.RotateZ(petalID * phi_petal);
+      topvert->set_x(1, dummyPos1.X());
+      topvert->set_y(1, dummyPos1.Y());
+    }
+
+    return topvert;
+}
 
 int StripesClass::SearchModule(int nStripes, double x1a[][nRadii], double x1b[][nRadii], double x2a[][nRadii], double x2b[][nRadii], double y1a[][nRadii], double y1b[][nRadii], double y2a[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double x, double y, int nGoodStripes[]){
   int c = 0;
@@ -383,8 +503,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
   //const double adjust = 0.015; //arbitrary angle to center the pattern in a petal
   const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
 
-  double r, phi;
-  //phimod, xmod, ymod;
+  double r, phi, phimod, xmod, ymod;
 
   // check if in a stripe
   result = getSearchResult(xcheck, ycheck);
@@ -401,9 +520,9 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
       phi = phi + 2.0*TMath::Pi();
     }
     //get angle within first petal
-    //phimod = fmod(phi,phi_petal);
-    //xmod = r*cos(phimod);
-    //ymod = r*sin(phimod);
+    phimod = fmod(phi,phi_petal);
+    xmod = r*cos(phimod);
+    ymod = r*sin(phimod);
 
     petalID = phi/phi_petal; 
     
@@ -431,21 +550,12 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  //cout << fabs((-m)*xcheck + ycheck) << endl;
 	  dist = fabs((-m)*xcheck + ycheck)/sqrt(1 + m*m);
 	  //cout << "dist:" << dist << endl;
-       	  if(dist < (str_width/2.0)){ 
+       	  if(dist < (str_width_R1_e[i][j]/2.0)){ 
 	    phiID = i;
 	    cout << "phiID: " << phiID << endl;
 	  }
-	    //} else {
-	    //theta = (i+1)*spacing[j];
-	    //angle = theta-adjust;
-	    //m = (y3b_R1_e[i][j] - y3a_R1_e[i][j])/(x3b_R1_e[i][j] - x3a_R1_e[i][j]);
-	    //dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
-	    //if(dist < str_width){ 
-	    // phiID = i;
-	    //}
-		  
 	}
-	nStripesPerR = keepUntil_R1_e[j] - keepThisAndAfter[j];
+	
 	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
 	//cout << "fullID: " << fullID << endl;
       } else if (((R1[j]- padfrac_R1) < r) && (r < (R1[j]+ padfrac_R1))){
@@ -455,7 +565,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  // look at distance from center line of stripe
 	  m = (y3b_R1[i][j] - y3a_R1[i][j])/(x3b_R1[i][j] - x3a_R1[i][j]);
 	  dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
-	  if(dist < (str_width/2.0)){ 
+	  if(dist < (str_width_R1[i][j]/2.0)){ 
 	    phiID = i;
 	  }
 	}
@@ -469,7 +579,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  // look at distance from center line of stripe
 	  m = (y3b_R2[i][j] - y3a_R2[i][j])/(x3b_R2[i][j] - x3a_R2[i][j]);
 	  dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
-	  if(dist < (str_width/2.0)){ 
+	  if(dist < (str_width_R2[i][j]/2.0)){ 
 	    phiID = i;
 	  }
 	}	  
@@ -484,7 +594,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  // look at distance from center line of stripe
 	  m = (y3b_R3[i][j] - y3a_R3[i][j])/(x3b_R3[i][j] - x3a_R3[i][j]);
 	  dist = fabs(m*xcheck - ycheck)/sqrt(1 + m*m);
-	  if(dist < (str_width/2.0)){ 
+	  if(dist < (str_width_R3[i][j]/2.0)){ 
 	    phiID = i;
 	  }
 	}

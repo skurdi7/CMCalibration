@@ -29,6 +29,8 @@ public:
   double begin_CM, end_CM; // inner and outer radii of central membrane
   
   vector<PHG4Hitv1*> PHG4Hits;
+  vector<PHG4Hitv1*> BotVertices;
+  vector<PHG4Hitv1*> TopVertices;
   
 private:
   static const int nRadii = 8;
@@ -46,10 +48,15 @@ private:
   double padfrac_R1;
   double padfrac_R2;
   double padfrac_R3;
-  double str_width; // width of a stripe
+  //double str_width; // width of a stripe
   double arc_r; // radius of arc on end of a stripe
   double R1_e[nRadii], R1[nRadii], R2[nRadii], R3[nRadii];
   
+  double str_width_R1_e[nStripes_R1][nRadii];
+  double str_width_R1[nStripes_R1][nRadii];
+  double str_width_R2[nStripes_R2][nRadii];
+  double str_width_R3[nStripes_R3][nRadii];
+ 
   double spacing_R1_e[nRadii], spacing_R1[nRadii], spacing_R2[nRadii], spacing_R3[nRadii];
   
   //bottom left - 1a
@@ -100,6 +107,8 @@ private:
   int keepUntil_R3[nRadii];
   int result;
 
+  double botvert, topvert;
+  
   int nStripesPerPetal;
   int nPetals;
   int nTotStripes;
@@ -107,7 +116,10 @@ private:
   
   int nElectrons;
   
-  void CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, int nGoodStripes[], int keepUntil[]);
+  void CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, double str_width[][nRadii], int nGoodStripes[], int keepUntil[]);
+
+  double GetBotVertices(int petalID, int moduleID, int radiusID, int stripeID);
+  double GetTopVertices(int petalID, int moduleID, int radiusID, int stripeID);
   
   int SearchModule(int nStripes, double x1a[][nRadii], double x1b[][nRadii], double x2a[][nRadii], double x2b[][nRadii], double y1a[][nRadii], double y1b[][nRadii], double y2a[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double x, double y, int nGoodStripes[]);
   
