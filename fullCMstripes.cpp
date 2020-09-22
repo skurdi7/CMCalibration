@@ -20,7 +20,7 @@ int fullCMstripes() {
   //vector<double> xbotleft, xbotright, xtopleft, xtopright;
   //vector<double> ybotleft, ybotright, ytopleft, ytopright;
 
-  //for (int i = 0; i < BV.size(); i++){
+  for (int i = 0; i < BV.size(); i++){
     xbl = BV[i]->get_x(0);
     xbr = BV[i]->get_x(1);
     xtl = TV[i]->get_x(0);
@@ -31,14 +31,14 @@ int fullCMstripes() {
     ytr = TV[i]->get_y(1);
 
     ofstream eagle;
-    eagle.open ("stripes.txt");
+    eagle.open ("eaglestripes.txt");
     eagle << "wire x1=\"" << xbl << "\" y1=\"" << ybl << "\" x2=\""<< xtl << "\" y2=\"" << ytl << "\" width=\"0.1524\" layer=\"46\" curve=\"-180\"/> " << endl;
     eagle << "<wire x1=\"" << xtl << "\" y1=\"" << ytl << "\" x2=\""<< xtr << "\" y2=\"" << ytr << "\" width=\"0.1524\" layer=\"46\"/> " << endl;
     eagle << "<wire x1=\"" << xtr << "\" y1=\"" << ytr << "\" x2=\""<< xbr << "\" y2=\"" << ybr << "\" width=\"0.1524\" layer=\"46\" curve=\"-180\"/> " << endl;  
     eagle << "<wire x1=\"" << xbr << "\" y1=\"" << ybr << "\" x2=\""<< xbl << "\" y2=\"" << ybl << "\" width=\"0.1524\" layer=\"46\"/> " << endl;
     eagle << endl;
     eagle.close();
-    // }
+  }
   
   return 0;
 }
