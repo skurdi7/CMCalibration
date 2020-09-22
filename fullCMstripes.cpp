@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <cmath>
 #include <vector>
 #include "TMath.h"
@@ -28,13 +29,15 @@ int fullCMstripes() {
     ybr = BotVertices[i]->get_y(1);
     ytl = TopVertices[i]->get_y(0);
     ytr = TopVertices[i]->get_y(1);
-    
-    cout << "wire x1=\"" << xbl << "\" y1=\"" << ybl << "\" x2=\""<< xtl << "\" y2=\"" << ytl << "\" width=\"0.1524\" layer=\"46\" curve=\"-180\"/> " << endl;
-    cout << "<wire x1=\"" << xtl << "\" y1=\"" << ytl << "\" x2=\""<< xtr << "\" y2=\"" << ytr << "\" width=\"0.1524\" layer=\"46\"/> " << endl;
-    cout << "<wire x1=\"" << xtr << "\" y1=\"" << ytr << "\" x2=\""<< xbr << "\" y2=\"" << ybr << "\" width=\"0.1524\" layer=\"46\" curve=\"-180\"/> " << endl;  
-    cout << "<wire x1=\"" << xbr << "\" y1=\"" << ybr << "\" x2=\""<< xbl << "\" y2=\"" << ybl << "\" width=\"0.1524\" layer=\"46\"/> " << endl;
-    cout << endl;
-  }
+
+    ofstream eagle;
+    eagle.open ("stripes.txt");
+    eagle << "wire x1=\"" << xbl << "\" y1=\"" << ybl << "\" x2=\""<< xtl << "\" y2=\"" << ytl << "\" width=\"0.1524\" layer=\"46\" curve=\"-180\"/> " << endl;
+    eagle << "<wire x1=\"" << xtl << "\" y1=\"" << ytl << "\" x2=\""<< xtr << "\" y2=\"" << ytr << "\" width=\"0.1524\" layer=\"46\"/> " << endl;
+    eagle << "<wire x1=\"" << xtr << "\" y1=\"" << ytr << "\" x2=\""<< xbr << "\" y2=\"" << ybr << "\" width=\"0.1524\" layer=\"46\" curve=\"-180\"/> " << endl;  
+    eagle << "<wire x1=\"" << xbr << "\" y1=\"" << ybr << "\" x2=\""<< xbl << "\" y2=\"" << ybl << "\" width=\"0.1524\" layer=\"46\"/> " << endl;
+    eagle << endl;
+    eagle.close();
   
   return 0;
 }
