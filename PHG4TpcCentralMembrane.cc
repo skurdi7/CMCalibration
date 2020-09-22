@@ -74,23 +74,23 @@ StripesClass::StripesClass()
     for (int j = 0; j < 8; j++){ // loop over radiusID
       for (int k = 0; k < nGoodStripes_R1_e[j]; k++){ // loop over stripeID
 	PHG4Hits.push_back(GetPHG4HitFromStripe(i, 0, j, k, nElectrons));
-	BotVertices.push_back(GetBotVertices(i, 0, j, k));
-	TopVertices.push_back(GetTopVertices(i, 0, j, k));
+	BotVertices.push_back(GetBotVerticesFromStripe(i, 0, j, k));
+	TopVertices.push_back(GetTopVerticesFromStripe(i, 0, j, k));
       }
       for (int k = 0; k < nGoodStripes_R1[j]; k++){ // loop over stripeID
 	PHG4Hits.push_back(GetPHG4HitFromStripe(i, 1, j, k, nElectrons));
-	BotVertices.push_back(GetBotVertices(i, 1, j, k));
-	TopVertices.push_back(GetTopVertices(i, 1, j, k));
+	BotVertices.push_back(GetBotVerticesFromStripe(i, 1, j, k));
+	TopVertices.push_back(GetTopVerticesFromStripe(i, 1, j, k));
       }
       for (int k = 0; k < nGoodStripes_R2[j]; k++){ // loop over stripeID
 	PHG4Hits.push_back(GetPHG4HitFromStripe(i, 2, j, k, nElectrons));
-	BotVertices.push_back(GetBotVertices(i, 2, j, k));
-	TopVertices.push_back(GetTopVertices(i, 2, j, k));
+	BotVertices.push_back(GetBotVerticesFromStripe(i, 2, j, k));
+	TopVertices.push_back(GetTopVerticesFromStripe(i, 2, j, k));
       }
       for (int k = 0; k < nGoodStripes_R3[j]; k++){ // loop over stripeID
 	PHG4Hits.push_back(GetPHG4HitFromStripe(i, 3, j, k, nElectrons));
-	BotVertices.push_back(GetBotVertices(i, 3, j, k));
-	TopVertices.push_back(GetTopVertices(i, 3, j, k));
+	BotVertices.push_back(GetBotVerticesFromStripe(i, 3, j, k));
+	TopVertices.push_back(GetTopVerticesFromStripe(i, 3, j, k));
       }
     }
   }
@@ -210,7 +210,7 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
   }
 }
 
-PHG4Hitv1* StripesClass::GetBotVertices(int petalID, int moduleID, int radiusID, int stripeID){
+PHG4Hitv1* StripesClass::GetBotVerticesFromStripe(int petalID, int moduleID, int radiusID, int stripeID){
   PHG4Hitv1 *botvert;
   TVector3 dummyPos0, dummyPos1;
   const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
@@ -259,7 +259,7 @@ PHG4Hitv1* StripesClass::GetBotVertices(int petalID, int moduleID, int radiusID,
   return botvert;
 }
 
-PHG4Hitv1* StripesClass::GetTopVertices(int petalID, int moduleID, int radiusID, int stripeID){
+PHG4Hitv1* StripesClass::GetTopVerticesFromStripe(int petalID, int moduleID, int radiusID, int stripeID){
   PHG4Hitv1 *topvert;
   TVector3 dummyPos0, dummyPos1;
   const double phi_petal = TMath::Pi()/9.0; // angle span of one petal

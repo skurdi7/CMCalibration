@@ -12,8 +12,8 @@ R__LOAD_LIBRARY(build/.libs/libg4tpccentralmembrane)
 int fullCMstripes() {
   StripesClass stripes;
 
-  vector<PHG4Hitv1*> BotVertices = stripes.GetBotVertices;
-  vector<PHG4Hitv1*> TopVertices = stripes.GetTopVertices;
+  vector<PHG4Hitv1*> BotVertices = stripes.BotVertices;
+  vector<PHG4Hitv1*> TopVertices = stripes.TopVertices;
   double xbl, xbr, xtl, xtr;
   double ybl, ybr, ytl, ytr;
   //vector<double> xbotleft, xbotright, xtopleft, xtopright;
