@@ -203,8 +203,8 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
 
       i_out++;
 
-      //nStripesIn[j] = keepUntil_R1_e[j] - keepThisAndAfter[j];
-      // nStripesBefore[j] = nStripesIn[j-1] + nStripesBefore[j-1];
+      nStripesIn[j] = keepUntil_R1_e[j] - keepThisAndAfter[j];
+      nStripesBefore[j] = nStripesIn[j-1] + nStripesBefore[j-1];
     }
     nGoodStripes[j]=i_out;
   }
@@ -558,7 +558,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  }
 	}
 	
-	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
+	fullID = petalID*nStripesPerPetal + rID*nStripesBefore[j] + phiID;
 	//cout << "fullID: " << fullID << endl;
       } else if (((R1[j]- padfrac_R1) < r) && (r < (R1[j]+ padfrac_R1))){
 	rID = j+nRadii;
@@ -571,8 +571,8 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	    phiID = i;
 	  }
 	}
-	nStripesPerR = keepUntil_R1[j] - keepThisAndAfter[j];
-	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
+	
+	fullID = petalID*nStripesPerPetal + rID*nStripesBefore[j] + phiID;
 	
       } else if (((R2[j]- padfrac_R2) < r) && (r < (R2[j]+ padfrac_R2))){
 	rID = j+(2*nRadii);
@@ -586,8 +586,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  }
 	}	  
 	
-	nStripesPerR = keepUntil_R2[j] - keepThisAndAfter[j];
-	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
+       	fullID = petalID*nStripesPerPetal + rID*nStripesBefore[j] + phiID;
 	
       } else if (((R3[j]- padfrac_R3) < r) && (r < (R3[j]+ padfrac_R3))){
 	rID = j+(3*nRadii);
@@ -600,8 +599,8 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	    phiID = i;
 	  }
 	}
-	nStripesPerR = keepUntil_R3[j] - keepThisAndAfter[j];
-	fullID = petalID*nStripesPerPetal + rID*nStripesPerR + phiID;
+	
+	fullID = petalID*nStripesPerPetal + rID*nStripesBefore[j] + phiID;
       }
     }
   } else {
