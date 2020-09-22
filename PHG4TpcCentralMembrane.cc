@@ -213,8 +213,7 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
 PHG4Hitv1* StripesClass::GetBotVerticesFromStripe(int moduleID, int radiusID, int stripeID){
   PHG4Hitv1 *botvert;
   TVector3 dummyPos0, dummyPos1;
-  const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
-  
+    
   //0 - left, 1 - right
   
   botvert = new PHG4Hitv1();
@@ -252,8 +251,7 @@ PHG4Hitv1* StripesClass::GetBotVerticesFromStripe(int moduleID, int radiusID, in
 PHG4Hitv1* StripesClass::GetTopVerticesFromStripe(int moduleID, int radiusID, int stripeID){
   PHG4Hitv1 *topvert;
   TVector3 dummyPos0, dummyPos1;
-  const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
-  
+    
   //0 - left, 1 - right
   
   topvert = new PHG4Hitv1();
