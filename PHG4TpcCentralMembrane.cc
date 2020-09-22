@@ -213,11 +213,12 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
 PHG4Hitv1* StripesClass::GetBotVertices(int petalID, int moduleID, int radiusID, int stripeID){
   PHG4Hitv1 *botvert;
   TVector3 dummyPos0, dummyPos1;
+  const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
   
   //0 - left, 1 - right
   
   botvert = new PHG4Hitv1();
-    hit->set_layer(-2);
+  botvert->set_layer(-2);
   if (moduleID == 0){
     botvert->set_x(0, x1a_R1_e[stripeID][radiusID] / cm);
     botvert->set_y(0, y1a_R1_e[stripeID][radiusID] / cm);
@@ -243,7 +244,7 @@ PHG4Hitv1* StripesClass::GetBotVertices(int petalID, int moduleID, int radiusID,
     botvert->set_y(1, y1b_R3[stripeID][radiusID] / cm);
   }
   botvert->set_z(0, 0.0 / cm);
-
+  
   if(petalID > 0){
     dummyPos0.SetXYZ(botvert->get_x(0), botvert->get_y(0), botvert->get_z(0));
     dummyPos0.RotateZ(petalID * phi_petal);
@@ -261,48 +262,49 @@ PHG4Hitv1* StripesClass::GetBotVertices(int petalID, int moduleID, int radiusID,
 PHG4Hitv1* StripesClass::GetTopVertices(int petalID, int moduleID, int radiusID, int stripeID){
   PHG4Hitv1 *topvert;
   TVector3 dummyPos0, dummyPos1;
-    
+  const double phi_petal = TMath::Pi()/9.0; // angle span of one petal
+  
   //0 - left, 1 - right
   
   topvert = new PHG4Hitv1();
-    hit->set_layer(-3);
-    if (moduleID == 0){
-      topvert->set_x(0, x2a_R1_e[stripeID][radiusID] / cm);
-      topvert->set_y(0, y2a_R1_e[stripeID][radiusID] / cm);
-      topvert->set_x(1, x2b_R1_e[stripeID][radiusID] / cm);
-      topvert->set_y(1, y2b_R1_e[stripeID][radiusID] / cm);
+  topvert->set_layer(-3);
+  if (moduleID == 0){
+    topvert->set_x(0, x2a_R1_e[stripeID][radiusID] / cm);
+    topvert->set_y(0, y2a_R1_e[stripeID][radiusID] / cm);
+    topvert->set_x(1, x2b_R1_e[stripeID][radiusID] / cm);
+    topvert->set_y(1, y2b_R1_e[stripeID][radiusID] / cm);
     
-    } else if (moduleID == 1){
-      topvert->set_x(0, x2a_R1[stripeID][radiusID] / cm);
-      topvert->set_y(0, y2a_R1[stripeID][radiusID] / cm);
-      topvert->set_x(1, x2b_R1[stripeID][radiusID] / cm);
-      topvert->set_y(1, y2b_R1[stripeID][radiusID] / cm);
-      
-    } else if (moduleID == 2){
-      topvert->set_x(0, x2a_R2[stripeID][radiusID] / cm);
-      topvert->set_y(0, y2a_R2[stripeID][radiusID] / cm);
-      topvert->set_x(1, x2b_R2[stripeID][radiusID] / cm);
-      topvert->set_y(1, y2b_R2[stripeID][radiusID] / cm);
+  } else if (moduleID == 1){
+    topvert->set_x(0, x2a_R1[stripeID][radiusID] / cm);
+    topvert->set_y(0, y2a_R1[stripeID][radiusID] / cm);
+    topvert->set_x(1, x2b_R1[stripeID][radiusID] / cm);
+    topvert->set_y(1, y2b_R1[stripeID][radiusID] / cm);
     
-    } else if (moduleID == 3){
-      topvert->set_x(0, x2a_R3[stripeID][radiusID] / cm);
-      topvert->set_y(0, y2a_R3[stripeID][radiusID] / cm);
-      topvert->set_x(1, x2b_R3[stripeID][radiusID] / cm);
-      topvert->set_y(1, y2b_R3[stripeID][radiusID] / cm);
-    }
-    topvert->set_z(0, 0.0 / cm);
+  } else if (moduleID == 2){
+    topvert->set_x(0, x2a_R2[stripeID][radiusID] / cm);
+    topvert->set_y(0, y2a_R2[stripeID][radiusID] / cm);
+    topvert->set_x(1, x2b_R2[stripeID][radiusID] / cm);
+    topvert->set_y(1, y2b_R2[stripeID][radiusID] / cm);
     
-    if(petalID > 0){
-      dummyPos0.SetXYZ(topvert->get_x(0), topvert->get_y(0), topvert->get_z(0));
-      dummyPos0.RotateZ(petalID * phi_petal);
-      topvert->set_x(0, dummyPos0.X());
-      topvert->set_y(0, dummyPos0.Y());
-      dummyPos1.SetXYZ(topvert->get_x(1), topvert->get_y(1), topvert->get_z(1));
-      dummyPos1.RotateZ(petalID * phi_petal);
-      topvert->set_x(1, dummyPos1.X());
-      topvert->set_y(1, dummyPos1.Y());
-    }
-
+  } else if (moduleID == 3){
+    topvert->set_x(0, x2a_R3[stripeID][radiusID] / cm);
+    topvert->set_y(0, y2a_R3[stripeID][radiusID] / cm);
+    topvert->set_x(1, x2b_R3[stripeID][radiusID] / cm);
+    topvert->set_y(1, y2b_R3[stripeID][radiusID] / cm);
+  }
+  topvert->set_z(0, 0.0 / cm);
+  
+  if(petalID > 0){
+    dummyPos0.SetXYZ(topvert->get_x(0), topvert->get_y(0), topvert->get_z(0));
+    dummyPos0.RotateZ(petalID * phi_petal);
+    topvert->set_x(0, dummyPos0.X());
+    topvert->set_y(0, dummyPos0.Y());
+    dummyPos1.SetXYZ(topvert->get_x(1), topvert->get_y(1), topvert->get_z(1));
+    dummyPos1.RotateZ(petalID * phi_petal);
+    topvert->set_x(1, dummyPos1.X());
+    topvert->set_y(1, dummyPos1.Y());
+  }
+  
     return topvert;
 }
 
