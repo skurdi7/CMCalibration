@@ -13,22 +13,22 @@ R__LOAD_LIBRARY(build/.libs/libg4tpccentralmembrane)
 int fullCMstripes() {
   StripesClass stripes;
 
-  vector<PHG4Hitv1*> BotVertices = stripes.BotVertices;
-  vector<PHG4Hitv1*> TopVertices = stripes.TopVertices;
+  vector<PHG4Hitv1*> BV = stripes.BotVertices;
+  vector<PHG4Hitv1*> TV = stripes.TopVertices;
   double xbl, xbr, xtl, xtr;
   double ybl, ybr, ytl, ytr;
   //vector<double> xbotleft, xbotright, xtopleft, xtopright;
   //vector<double> ybotleft, ybotright, ytopleft, ytopright;
 
-  for (int i = 0; i < BotVertices.size(); i++){
-    xbl = BotVertices[i]->get_x(0);
-    xbr = BotVertices[i]->get_x(1);
-    xtl = TopVertices[i]->get_x(0);
-    xtr = TopVertices[i]->get_x(1);
-    ybl = BotVertices[i]->get_y(0);
-    ybr = BotVertices[i]->get_y(1);
-    ytl = TopVertices[i]->get_y(0);
-    ytr = TopVertices[i]->get_y(1);
+  //for (int i = 0; i < BV.size(); i++){
+    xbl = BV[i]->get_x(0);
+    xbr = BV[i]->get_x(1);
+    xtl = TV[i]->get_x(0);
+    xtr = TV[i]->get_x(1);
+    ybl = BV[i]->get_y(0);
+    ybr = BV[i]->get_y(1);
+    ytl = TV[i]->get_y(0);
+    ytr = TV[i]->get_y(1);
 
     ofstream eagle;
     eagle.open ("stripes.txt");
@@ -38,7 +38,7 @@ int fullCMstripes() {
     eagle << "<wire x1=\"" << xbr << "\" y1=\"" << ybr << "\" x2=\""<< xbl << "\" y2=\"" << ybl << "\" width=\"0.1524\" layer=\"46\"/> " << endl;
     eagle << endl;
     eagle.close();
-  }
+    // }
   
   return 0;
 }
