@@ -38,6 +38,7 @@ int fullCMstripes() {
     eagle << "<wire x1=\"" << xbr << "\" y1=\"" << ybr << "\" x2=\""<< xbl << "\" y2=\"" << ybl << "\" width=\"0.1524\" layer=\"46\"/> " << endl;
     eagle << endl;
     eagle.close();
+  }
   
   return 0;
 }
