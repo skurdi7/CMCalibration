@@ -219,30 +219,30 @@ PHG4Hitv1* StripesClass::GetBotVerticesFromStripe(int moduleID, int radiusID, in
   botvert = new PHG4Hitv1();
   botvert->set_layer(-2);
   if (moduleID == 0){
-    botvert->set_x(0, x1a_R1_e[stripeID][radiusID] / cm);
-    botvert->set_y(0, y1a_R1_e[stripeID][radiusID] / cm);
-    botvert->set_x(1, x1b_R1_e[stripeID][radiusID] / cm);
-    botvert->set_y(1, y1b_R1_e[stripeID][radiusID] / cm);
+    botvert->set_x(0, x1a_R1_e[stripeID][radiusID]);
+    botvert->set_y(0, y1a_R1_e[stripeID][radiusID]);
+    botvert->set_x(1, x1b_R1_e[stripeID][radiusID]);
+    botvert->set_y(1, y1b_R1_e[stripeID][radiusID]);
     
   } else if (moduleID == 1){
-    botvert->set_x(0, x1a_R1[stripeID][radiusID] / cm);
-    botvert->set_y(0, y1a_R1[stripeID][radiusID] / cm);
-    botvert->set_x(1, x1b_R1[stripeID][radiusID] / cm);
-    botvert->set_y(1, y1b_R1[stripeID][radiusID] / cm);
+    botvert->set_x(0, x1a_R1[stripeID][radiusID]);
+    botvert->set_y(0, y1a_R1[stripeID][radiusID]);
+    botvert->set_x(1, x1b_R1[stripeID][radiusID]);
+    botvert->set_y(1, y1b_R1[stripeID][radiusID]);
     
   } else if (moduleID == 2){
-    botvert->set_x(0, x1a_R2[stripeID][radiusID] / cm);
-    botvert->set_y(0, y1a_R2[stripeID][radiusID] / cm);
-    botvert->set_x(1, x1b_R2[stripeID][radiusID] / cm);
-    botvert->set_y(1, y1b_R2[stripeID][radiusID] / cm);
+    botvert->set_x(0, x1a_R2[stripeID][radiusID]);
+    botvert->set_y(0, y1a_R2[stripeID][radiusID]);
+    botvert->set_x(1, x1b_R2[stripeID][radiusID]);
+    botvert->set_y(1, y1b_R2[stripeID][radiusID]);
     
   } else if (moduleID == 3){
-    botvert->set_x(0, x1a_R3[stripeID][radiusID] / cm);
-    botvert->set_y(0, y1a_R3[stripeID][radiusID] / cm);
-    botvert->set_x(1, x1b_R3[stripeID][radiusID] / cm);
-    botvert->set_y(1, y1b_R3[stripeID][radiusID] / cm);
+    botvert->set_x(0, x1a_R3[stripeID][radiusID]);
+    botvert->set_y(0, y1a_R3[stripeID][radiusID]);
+    botvert->set_x(1, x1b_R3[stripeID][radiusID]);
+    botvert->set_y(1, y1b_R3[stripeID][radiusID]);
   }
-  botvert->set_z(0, 0.0 / cm);
+  botvert->set_z(0, 0.0);
   
  
   return botvert;
@@ -257,30 +257,30 @@ PHG4Hitv1* StripesClass::GetTopVerticesFromStripe(int moduleID, int radiusID, in
   topvert = new PHG4Hitv1();
   topvert->set_layer(-3);
   if (moduleID == 0){
-    topvert->set_x(0, x2a_R1_e[stripeID][radiusID] / cm);
-    topvert->set_y(0, y2a_R1_e[stripeID][radiusID] / cm);
-    topvert->set_x(1, x2b_R1_e[stripeID][radiusID] / cm);
-    topvert->set_y(1, y2b_R1_e[stripeID][radiusID] / cm);
+    topvert->set_x(0, x2a_R1_e[stripeID][radiusID]);
+    topvert->set_y(0, y2a_R1_e[stripeID][radiusID]);
+    topvert->set_x(1, x2b_R1_e[stripeID][radiusID]);
+    topvert->set_y(1, y2b_R1_e[stripeID][radiusID]);
     
   } else if (moduleID == 1){
-    topvert->set_x(0, x2a_R1[stripeID][radiusID] / cm);
-    topvert->set_y(0, y2a_R1[stripeID][radiusID] / cm);
-    topvert->set_x(1, x2b_R1[stripeID][radiusID] / cm);
-    topvert->set_y(1, y2b_R1[stripeID][radiusID] / cm);
+    topvert->set_x(0, x2a_R1[stripeID][radiusID]);
+    topvert->set_y(0, y2a_R1[stripeID][radiusID]);
+    topvert->set_x(1, x2b_R1[stripeID][radiusID]);
+    topvert->set_y(1, y2b_R1[stripeID][radiusID]);
     
   } else if (moduleID == 2){
-    topvert->set_x(0, x2a_R2[stripeID][radiusID] / cm);
-    topvert->set_y(0, y2a_R2[stripeID][radiusID] / cm);
-    topvert->set_x(1, x2b_R2[stripeID][radiusID] / cm);
-    topvert->set_y(1, y2b_R2[stripeID][radiusID] / cm);
+    topvert->set_x(0, x2a_R2[stripeID][radiusID]);
+    topvert->set_y(0, y2a_R2[stripeID][radiusID]);
+    topvert->set_x(1, x2b_R2[stripeID][radiusID]);
+    topvert->set_y(1, y2b_R2[stripeID][radiusID]);
     
   } else if (moduleID == 3){
-    topvert->set_x(0, x2a_R3[stripeID][radiusID] / cm);
-    topvert->set_y(0, y2a_R3[stripeID][radiusID] / cm);
-    topvert->set_x(1, x2b_R3[stripeID][radiusID] / cm);
-    topvert->set_y(1, y2b_R3[stripeID][radiusID] / cm);
+    topvert->set_x(0, x2a_R3[stripeID][radiusID]);
+    topvert->set_y(0, y2a_R3[stripeID][radiusID]);
+    topvert->set_x(1, x2b_R3[stripeID][radiusID]);
+    topvert->set_y(1, y2b_R3[stripeID][radiusID]);
   }
-  topvert->set_z(0, 0.0 / cm);
+  topvert->set_z(0, 0.0);
   
  
     return topvert;
