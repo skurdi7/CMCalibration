@@ -23,7 +23,7 @@ using namespace std;
 int CheckStripeID() {
   StripesClass stripes;
 
-  int stripeID, nbins, rsteps, phisteps; 
+  int stripeID, nbins, rsteps, phisteps, result; 
   double r, phi, x, y, xmod, ymod, phimod, rstepsize, phistepsize;
 
   nbins = 100;
