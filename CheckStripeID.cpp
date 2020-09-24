@@ -58,6 +58,7 @@ int CheckStripeID() {
       
     }
   }
+  
   vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
 
   const double mm = 1.0;
@@ -83,10 +84,13 @@ int CheckStripeID() {
   gStyle->SetOptStat(0);
   TCanvas *c=new TCanvas("a","CheckStripeID.cpp",500,500);
   Pattern1->Draw();
-  gDummyHits->Draw("AP");
+  gDummyHits->Draw("P");
 
   c->SaveAs("cmStripeID.pdf");
-  
+       
+  return 0;
+}
+
   //loop thru hits again
   /*
   double xav, yav, xa, xb, ya, yb;
@@ -142,6 +146,3 @@ int CheckStripeID() {
   */
   
  
-     
-  return 0;
-}
