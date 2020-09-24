@@ -105,8 +105,14 @@ private:
   int keepUntil_R1[nRadii];
   int keepUntil_R2[nRadii];
   int keepUntil_R3[nRadii];
-  int nStripesIn[nRadii];
-  int nStripesBefore[nRadii];
+  int nStripesIn_R1_e[nRadii];
+  int nStripesIn_R1[nRadii];
+  int nStripesIn_R2[nRadii];
+  int nStripesIn_R3[nRadii];
+  int nStripesBefore_R1_e[nRadii];
+  int nStripesBefore_R1[nRadii];
+  int nStripesBefore_R2[nRadii];
+  int nStripesBefore_R3[nRadii];
   int result;
 
   double botvert, topvert;
