@@ -65,8 +65,7 @@ StripesClass::StripesClass()
   
   nElectrons = 100;
 
-  nStripesBefore_R1_e[0] = 0;
-  
+    
   CalculateVertices(nStripes_R1, nPads_R1, R1_e, spacing_R1_e, x1a_R1_e, y1a_R1_e, x1b_R1_e, y1b_R1_e, x2a_R1_e, y2a_R1_e, x2b_R1_e, y2b_R1_e, x3a_R1_e, y3a_R1_e, x3b_R1_e, y3b_R1_e, padfrac_R1, str_width_R1_e, nGoodStripes_R1_e, keepUntil_R1_e, nStripesIn_R1_e, nStripesBefore_R1_e);
   CalculateVertices(nStripes_R1, nPads_R1, R1, spacing_R1, x1a_R1, y1a_R1, x1b_R1, y1b_R1, x2a_R1, y2a_R1, x2b_R1, y2b_R1, x3a_R1, y3a_R1, x3b_R1, y3b_R1, padfrac_R1, str_width_R1, nGoodStripes_R1, keepUntil_R1, nStripesIn_R1, nStripesBefore_R1);
   CalculateVertices(nStripes_R2, nPads_R2, R2, spacing_R2, x1a_R2, y1a_R2, x1b_R2, y1b_R2, x2a_R2, y2a_R2, x2b_R2, y2b_R2, x3a_R2, y3a_R2, x3b_R2, y3b_R2, padfrac_R2, str_width_R2, nGoodStripes_R2, keepUntil_R2, nStripesIn_R2, nStripesBefore_R2);
@@ -206,9 +205,13 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
       y3b[i_out][j] = (y1b[i_out][j] +  y2b[i_out][j])/ 2.0;
 
       i_out++;
-      
+
+      nStripesBefore_R1_e[0] = 0;
+
       nStripesIn[j] = keepUntil[j] - keepThisAndAfter[j];
+      
       nStripesBefore[j] = nStripesIn[j-1] + nStripesBefore[j-1];
+      nStripesBefore_R1_e[0] = 0;
     }
     nGoodStripes[j]=i_out;
   }
