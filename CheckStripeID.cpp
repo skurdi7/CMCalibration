@@ -50,11 +50,11 @@ int CheckStripeID() {
 	 tex->DrawLatex(x,y,Form("%d",stripeID));
       */
 
-      if(stripeID == -1){
-	tex->DrawLatex(x,y,Form("%d",0));
-      } else{
+      //if(stripeID == -1){
+      //tex->DrawLatex(x,y,Form("%d",0));
+      //} else{
 	tex->DrawLatex(x,y,Form("%d",1));
-      }
+	//}
       
     }
   }
