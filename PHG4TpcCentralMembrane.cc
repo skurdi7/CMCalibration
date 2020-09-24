@@ -99,7 +99,7 @@ StripesClass::StripesClass()
 }
 
 
-void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, double str_width[][nRadii], int nGoodStripes[],  int keepUntil[], nStripesIn[nRadii], nStripesBefore[nRadii]) {
+void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, double str_width[][nRadii], int nGoodStripes[],  int keepUntil[], nStripesIn[], nStripesBefore[]) {
   const double phi_module = TMath::Pi()/6.0; // angle span of a module
   const int pr_mult = 3; // multiples of intrinsic resolution of pads
   const int dw_mult = 8; // multiples of diffusion width
