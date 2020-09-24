@@ -45,18 +45,18 @@ int CheckStripeID() {
       cout << x << endl;
       cout << y << endl; 
       
-      //stripeID = stripes.getStripeID(x, y);
+      stripeID = stripes.getStripeID(x, y);
       /* TLatex *tex=new TLatex(x,y,"StripeID");
 	 tex->SetTextSize(0.005);
 	 tex->DrawLatex(x,y,Form("%d",stripeID));
       */
       
-      /*if(stripeID == -1){
-	tex->DrawLatex(x,y,Form("%d",0));
+      if(stripeID == -1){
+        Pattern1->Fill(x,y,0);
       } else{
-	tex->DrawLatex(x,y,Form("%d",1));
+        Pattern1->Fill(x,y,1);
       }
-      */
+      
     }
   }
 
