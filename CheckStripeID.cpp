@@ -82,9 +82,10 @@ int CheckStripeID() {
   
   gStyle->SetOptStat(0);
   TCanvas *c=new TCanvas("a","CheckStripeID.cpp",500,500);
-  //Pattern1->Draw();
+  Pattern1->Draw();
   gDummyHits->Draw("AP");
 
+  c->SaveAs("cmStripeID.pdf");
   
   //loop thru hits again
   /*
@@ -114,6 +115,7 @@ int CheckStripeID() {
     } else{
       tex->DrawLatex(xav,yav,Form("%d",1));
     }
+}
   */
       
     //TLine *line=new TLine;
@@ -139,7 +141,7 @@ int CheckStripeID() {
   }
   */
   
- c->SaveAs("cmStripeID.pdf");
+ 
      
   return 0;
 }
