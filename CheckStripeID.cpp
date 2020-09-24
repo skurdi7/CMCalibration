@@ -26,6 +26,32 @@ int CheckStripeID() {
   int stripeID, nbins, rsteps, phisteps; 
   double r, phi, x, y, xmod, ymod, phimod, rstepsize, phistepsize;
 
+   vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
+
+  const double mm = 1.0;
+  const double cm = 10.0;
+  
+  vector<double> xhit;
+  vector<double> yhit;
+  
+  //build tgraph from dummy hits
+  for (int i = 0; i < Hits.size(); i++){
+    xhit.push_back(Hits[i]->get_x(0)*cm/mm); 
+    yhit.push_back(Hits[i]->get_y(0)*cm/mm);
+    xhit.push_back(Hits[i]->get_x(1)*cm/mm);
+    yhit.push_back(Hits[i]->get_y(1)*cm/mm);
+    
+  }
+  
+  int npts = 2*Hits.size();
+  TGraph *gDummyHits = new TGraph(npts, &xhit[0], &yhit[0]);
+  gDummyHits->SetMarkerColor(2);
+  gDummyHits->SetMarkerSize(0.5);
+  
+  gStyle->SetOptStat(0);
+  TCanvas *c=new TCanvas("a","CheckStripeID.cpp",500,500);
+  gDummyHits->Draw("P");
+  
   nbins = 100;
   rsteps = 100;
   phisteps = 100;
@@ -59,32 +85,7 @@ int CheckStripeID() {
     }
   }
   
-  vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
-
-  const double mm = 1.0;
-  const double cm = 10.0;
-  
-  vector<double> xhit;
-  vector<double> yhit;
-  
-  //build tgraph from dummy hits
-  for (int i = 0; i < Hits.size(); i++){
-    xhit.push_back(Hits[i]->get_x(0)*cm/mm); 
-    yhit.push_back(Hits[i]->get_y(0)*cm/mm);
-    xhit.push_back(Hits[i]->get_x(1)*cm/mm);
-    yhit.push_back(Hits[i]->get_y(1)*cm/mm);
-    
-  }
-  
-  int npts = 2*Hits.size();
-  TGraph *gDummyHits = new TGraph(npts, &xhit[0], &yhit[0]);
-  gDummyHits->SetMarkerColor(2);
-  gDummyHits->SetMarkerSize(0.5);
-  
-  gStyle->SetOptStat(0);
-  TCanvas *c=new TCanvas("a","CheckStripeID.cpp",500,500);
   Pattern1->Draw();
-  gDummyHits->Draw("P");
 
   c->SaveAs("cmStripeID.pdf");
        
