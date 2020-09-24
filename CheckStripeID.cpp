@@ -74,7 +74,7 @@ int CheckStripeID() {
   TCanvas *c=new TCanvas("a","CheckStripeID.cpp",500,500);
   Pattern1->Draw();
   gDummyHits->Draw("P");
-  c->SaveAs("CheckStripeID.cpp"); 
+  c->SaveAs("CheckStripeID.pdf"); 
 
   return 0;
 }
