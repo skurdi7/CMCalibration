@@ -42,19 +42,21 @@ int CheckStripeID() {
       
       x = r*cos(phi);
       y = r*sin(phi);
+      cout << x << endl;
+      cout << y << endl;
       
-      stripeID = stripes.getStripeID(x, y);
+      //stripeID = stripes.getStripeID(x, y);
       /* TLatex *tex=new TLatex(x,y,"StripeID");
 	 tex->SetTextSize(0.005);
 	 tex->DrawLatex(x,y,Form("%d",stripeID));
       */
       
-      if(stripeID == -1){
+      /*if(stripeID == -1){
 	tex->DrawLatex(x,y,Form("%d",0));
       } else{
 	tex->DrawLatex(x,y,Form("%d",1));
       }
-      
+      */
     }
   }
 
