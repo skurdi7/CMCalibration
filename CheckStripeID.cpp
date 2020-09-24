@@ -55,7 +55,7 @@ int CheckStripeID() {
 
   //loop thru hits again
   double xav, yav, xa, xb, ya, yb;
- 
+ for (int i = 0; i < Hits.size(); i++){
   
     //avg x0 n x1, y0 n y1 and use to draw stripeID
     xav = (Hits[i]->get_x(0)*cm/mm + Hits[i]->get_x(1)*cm/mm)/2;
