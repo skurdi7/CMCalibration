@@ -77,9 +77,9 @@ int CheckStripeID() {
     tex->SetTextSize(0.005);
     if(stripeID == -1){
       tex->DrawLatex(xav,yav,Form("%d",0));
-      else{
-	tex->DrawLatex(xav,yav,Form("%d",1));
-      }
+    } else{
+      tex->DrawLatex(xav,yav,Form("%d",1));
+    }
       
     //TLine *line=new TLine;
     //line->DrawLine(Hits[i]->get_x(0)*cm/mm ,Hits[i]->get_y(0)*cm/mm,Hits[i]->get_x(1)*cm/mm, Hits[i]->get_y(1)*cm/mm);
