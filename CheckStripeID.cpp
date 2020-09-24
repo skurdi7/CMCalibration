@@ -43,7 +43,7 @@ int CheckStripeID() {
       x = r*cos(phi);
       y = r*sin(phi);
       cout << x << endl;
-      cout << y << endl;
+      cout << y << endl; 
       
       //stripeID = stripes.getStripeID(x, y);
       /* TLatex *tex=new TLatex(x,y,"StripeID");
