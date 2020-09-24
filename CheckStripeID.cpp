@@ -68,9 +68,19 @@ int CheckStripeID() {
     //cout << "xav: " << xav << endl;
     //cout << "yav: " << yav << endl; 
     stripeID = stripes.getStripeID(xav, yav);
-    TLatex *tex=new TLatex(xav,yav,"StripeID");
+    /* TLatex *tex=new TLatex(xav,yav,"StripeID");
     tex->SetTextSize(0.005);
     tex->DrawLatex(xav,yav,Form("%d",stripeID));
+    */
+
+    TLatex *tex=new TLatex(xav,yav,"Stripe");
+    tex->SetTextSize(0.005);
+    if(stripeID == -1){
+      tex->DrawLatex(xav,yav,Form("%d",0));
+      else{
+	tex->DrawLatex(xav,yav,Form("%d",1));
+      }
+      
     //TLine *line=new TLine;
     //line->DrawLine(Hits[i]->get_x(0)*cm/mm ,Hits[i]->get_y(0)*cm/mm,Hits[i]->get_x(1)*cm/mm, Hits[i]->get_y(1)*cm/mm);
     //line->DrawLine(0, 0, 200, 200*((yb- ya)/(xb-xa)));
