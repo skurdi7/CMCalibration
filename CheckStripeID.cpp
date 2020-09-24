@@ -85,8 +85,9 @@ int CheckStripeID() {
   //Pattern1->Draw();
   gDummyHits->Draw("AP");
 
-  /*
+  
   //loop thru hits again
+  /*
   double xav, yav, xa, xb, ya, yb;
  for (int i = 0; i < Hits.size(); i++){
   
@@ -101,10 +102,10 @@ int CheckStripeID() {
     //cout << "xav: " << xav << endl;
     //cout << "yav: " << yav << endl; 
     stripeID = stripes.getStripeID(xav, yav);
-    /* TLatex *tex=new TLatex(xav,yav,"StripeID");
+    TLatex *tex=new TLatex(xav,yav,"StripeID");
     tex->SetTextSize(0.005);
     tex->DrawLatex(xav,yav,Form("%d",stripeID));
-    */
+    
 
     TLatex *tex=new TLatex(xav,yav,"Stripe");
     tex->SetTextSize(0.005);
@@ -113,7 +114,7 @@ int CheckStripeID() {
     } else{
       tex->DrawLatex(xav,yav,Form("%d",1));
     }
-    */
+  */
       
     //TLine *line=new TLine;
     //line->DrawLine(Hits[i]->get_x(0)*cm/mm ,Hits[i]->get_y(0)*cm/mm,Hits[i]->get_x(1)*cm/mm, Hits[i]->get_y(1)*cm/mm);
