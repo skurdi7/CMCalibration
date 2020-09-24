@@ -124,7 +124,7 @@ private:
   
   int nElectrons;
   
-  void CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, double str_width[][nRadii], int nGoodStripes[], int keepUntil[]);
+  void CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, double str_width[][nRadii], int nGoodStripes[], int keepUntil[], nStripesIn[nRadii], nStripesBefore[nRadii]);
 
   PHG4Hitv1* GetBotVerticesFromStripe(int moduleID, int radiusID, int stripeID);
   PHG4Hitv1* GetTopVerticesFromStripe(int moduleID, int radiusID, int stripeID);
