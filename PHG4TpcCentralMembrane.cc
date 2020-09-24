@@ -511,7 +511,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
     for(int j=0; j<nRadii; j++){
       if(((R1_e[j] - padfrac_R1) < r) && (r < (R1_e[j] + padfrac_R1))){ // check if radius is in stripe 
 	rID = j; 
-	//cout << "R1_E" << endl;
+	cout << "rID: " << rID << endl;
 	//'angle' is to the center of a stripe
 	for (int i=0; i<nGoodStripes_R1_e[j]; i++){
 	  //if (j % 2 == 0){
@@ -534,10 +534,11 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  //cout << "dist:" << dist << endl;
        	  if(dist < (str_width_R1_e[i][j]/2.0)){ 
 	    phiID = i;
-	    cout << "phiID: " << phiID << endl;
+	    //cout << "phiID: " << phiID << endl;
 	  }
 	}
-	
+
+	cout << "nStripesBefore: " << nStripesBefore_R1_e[j] << endl;
 	fullID = petalID*nStripesPerPetal + rID*nStripesBefore_R1_e[j] + phiID;
 	//cout << "fullID: " << fullID << endl;
       } else if (((R1[j]- padfrac_R1) < r) && (r < (R1[j]+ padfrac_R1))){
