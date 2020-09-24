@@ -25,7 +25,9 @@ int CheckStripeID() {
 
   int stripeID, nbins, rsteps, phisteps, result; 
   double r, phi, x, y, xmod, ymod, phimod, rstepsize, phistepsize;
-
+  double low = -770.0;
+  double high = 770.0;
+  
   nbins = 100;
   rsteps = 100;
   phisteps = 100;
@@ -34,16 +36,21 @@ int CheckStripeID() {
   phistepsize = 2*TMath::Pi()/phisteps;
   
   //histogram from search
-  TH2F *Pattern1 = new TH2F("Pattern1","Pattern1",nbins,-770.0,770.0,nbins,-770.0,770.0); // min n max just beyond extent of CM so it's easier to see
-  TLatex *tex=new TLatex(x,y,"Stripe");
+  TH2F *Pattern1 = new TH2F("Pattern1","Pattern1",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+
+  //TLatex *tex=new TLatex(x,y,"Stripe");
   //tex->SetTextSize(0.005);
-   for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
-    for (phi = 0.0; phi < 2*TMath::Pi(); phi = phi + phistepsize){ // angles spanning full CM
-      
-      x = r*cos(phi);
-      y = r*sin(phi);
-      cout << x << endl;
-      cout << y << endl; 
+  // for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
+  // for (phi = 0.0; phi < 2*TMath::Pi(); phi = phi + phistepsize){ // angles spanning full CM
+  for (int i=0;i<nbins;i++){
+    x=low+(high-low)/nbins*(i+0.5);
+    for (int j=0;j<nbins;j++){
+      y=low+(high-low)/nbins*(j+0.5);
+ 
+    // x = r*cos(phi);
+    // y = r*sin(phi);
+      // cout << x << endl;
+      //cout << y << endl; 
       
       stripeID = stripes.getStripeID(x, y);
       /* TLatex *tex=new TLatex(x,y,"StripeID");
