@@ -71,6 +71,7 @@ StripesClass::StripesClass()
   CalculateVertices(nStripes_R3, nPads_R3, R3, spacing_R3, x1a_R3, y1a_R3, x1b_R3, y1b_R3, x2a_R3, y2a_R3, x2b_R3, y2b_R3, x3a_R3, y3a_R3, x3b_R3, y3b_R3, padfrac_R3, str_width_R3, nGoodStripes_R3, keepUntil_R3, nStripesIn_R3, nStripesBefore_R3);
 
   nStripesBefore_R1_e[0] = 0;
+  
   for (int i = 0; i < 18; i++){ // loop over petalID
     for (int j = 0; j < 8; j++){ // loop over radiusID
       for (int k = 0; k < nGoodStripes_R1_e[j]; k++){ // loop over stripeID
