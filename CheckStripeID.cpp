@@ -36,7 +36,7 @@ int CheckStripeID() {
   phistepsize = 2*TMath::Pi()/phisteps;
   
   //histogram from search
-  TH2F *Pattern1 = new TH2F("Pattern1","Pattern1",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+  TH2F *Pattern1 = new TH2F("Pattern1","X,Y Scan if in Stripe;X (mm);Y (mm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
 
   //TLatex *tex=new TLatex(x,y,"Stripe");
   //tex->SetTextSize(0.005);
