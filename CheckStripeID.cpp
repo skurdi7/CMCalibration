@@ -25,10 +25,10 @@ int CheckStripeID() {
 
   int stripeID, nbins, rsteps, phisteps, result; 
   double r, phi, x, y, xmod, ymod, phimod, rstepsize, phistepsize;
-  double low = -770.0;
-  double high = 770.0;
+  double low = 200.0;
+  double high = 400.0;
   
-  nbins = 100;
+  nbins = 1000;
   rsteps = 100;
   phisteps = 100;
   
