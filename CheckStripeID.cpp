@@ -26,7 +26,39 @@ int CheckStripeID() {
   int stripeID, nbins, rsteps, phisteps; 
   double r, phi, x, y, xmod, ymod, phimod, rstepsize, phistepsize;
 
-   vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
+  nbins = 100;
+  rsteps = 100;
+  phisteps = 100;
+  
+  rstepsize = (stripes.end_CM - stripes.begin_CM)/rsteps;
+  phistepsize = 2*TMath::Pi()/phisteps;
+  
+  //histogram from search
+  TH2F *Pattern1 = new TH2F("Pattern1","Pattern1",nbins,-770.0,770.0,nbins,-770.0,770.0); // min n max just beyond extent of CM so it's easier to see
+  TLatex *tex=new TLatex(x,y,"Stripe");
+  tex->SetTextSize(0.005);
+      
+  for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
+    for (phi = 0.0; phi < 2*TMath::Pi(); phi = phi + phistepsize){ // angles spanning full CM
+      
+      x = r*cos(phi);
+      y = r*sin(phi);
+
+      stripeID = stripes.getStripeID(x, y);
+      /* TLatex *tex=new TLatex(x,y,"StripeID");
+	 tex->SetTextSize(0.005);
+	 tex->DrawLatex(x,y,Form("%d",stripeID));
+      */
+
+      if(stripeID == -1){
+	tex->DrawLatex(x,y,Form("%d",0));
+      } else{
+	tex->DrawLatex(x,y,Form("%d",1));
+      }
+      
+    }
+  }
+  vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
 
   const double mm = 1.0;
   const double cm = 10.0;
@@ -50,42 +82,8 @@ int CheckStripeID() {
   
   gStyle->SetOptStat(0);
   TCanvas *c=new TCanvas("a","CheckStripeID.cpp",500,500);
-  gDummyHits->Draw("P");
-  
-  nbins = 100;
-  rsteps = 100;
-  phisteps = 100;
-  
-  rstepsize = (stripes.end_CM - stripes.begin_CM)/rsteps;
-  phistepsize = 2*TMath::Pi()/phisteps;
-  
-  //histogram from search
-  TH2F *Pattern1 = new TH2F("Pattern1","Pattern1",nbins,-770.0,770.0,nbins,-770.0,770.0); // min n max just beyond extent of CM so it's easier to see
-  
-  for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
-    for (phi = 0.0; phi < 2*TMath::Pi(); phi = phi + phistepsize){ // angles spanning full CM
-      
-      x = r*cos(phi);
-      y = r*sin(phi);
-
-      stripeID = stripes.getStripeID(x, y);
-      /* TLatex *tex=new TLatex(x,y,"StripeID");
-	 tex->SetTextSize(0.005);
-	 tex->DrawLatex(x,y,Form("%d",stripeID));
-      */
-
-      TLatex *tex=new TLatex(x,y,"Stripe");
-      tex->SetTextSize(0.005);
-      if(stripeID == -1){
-	tex->DrawLatex(x,y,Form("%d",0));
-      } else{
-	tex->DrawLatex(x,y,Form("%d",1));
-      }
-      
-    }
-  }
-  
   Pattern1->Draw();
+  gDummyHits->Draw("AP");
 
   c->SaveAs("cmStripeID.pdf");
        
