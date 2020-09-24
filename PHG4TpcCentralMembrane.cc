@@ -587,7 +587,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	}
 	
 	fullID = petalID*nStripesPerPetal + nStripesBefore_R3[j] + phiID;
-      }
+      } 
     }
   } else {
     fullID = -1;
