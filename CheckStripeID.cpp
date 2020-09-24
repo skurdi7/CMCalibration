@@ -35,43 +35,33 @@ int CheckStripeID() {
   
   //histogram from search
   TH2F *Pattern1 = new TH2F("Pattern1","Pattern1",nbins,-770.0,770.0,nbins,-770.0,770.0); // min n max just beyond extent of CM so it's easier to see
- 
+  TLatex *tex=new TLatex(x,y,"Stripe");
+  //tex->SetTextSize(0.005);
   for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
     for (phi = 0.0; phi < 2*TMath::Pi(); phi = phi + phistepsize){ // angles spanning full CM
       
       x = r*cos(phi);
       y = r*sin(phi);
-
-      result = stripes.getSearchResult(x, y);
-
-      if(result == 1)
-	Pattern1->Fill(x,y);
+      
+      stripeID = stripes.getStripeID(x, y);
+      /* TLatex *tex=new TLatex(x,y,"StripeID");
+	 tex->SetTextSize(0.005);
+	 tex->DrawLatex(x,y,Form("%d",stripeID));
+      */
+      
+      if(stripeID == -1){
+	tex->DrawLatex(x,y,Form("%d",0));
+      } else{
+	tex->DrawLatex(x,y,Form("%d",1));
+      }
+      
     }
   }
 
-  vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
-
-  vector<double> xhit;
-  vector<double> yhit;
-  
-  //build tgraph from dummy hits
-  for (int i = 0; i < Hits.size(); i++){
-    xhit.push_back(Hits[i].x0);
-    yhit.push_back(Hits[i].y0);
-    xhit.push_back(Hits[i].x1);
-    yhit.push_back(Hits[i].y1);
-  }
-
-  int npts = 2*Hits.size();
-  TGraph *gDummyHits = new TGraph(npts, &xhit[0], &yhit[0]);
-  gDummyHits->SetMarkerColor(2);
-  
-  gStyle->SetOptStat(0);
-  TCanvas *c=new TCanvas("a","CheckStripeID.cpp",500,500);
+  TCanvas *c=new TCanvas("a","CheckStripeID.cpp",500,500); 
   Pattern1->Draw();
-  gDummyHits->Draw("P");
-  c->SaveAs("CheckStripeID.pdf"); 
-
+  c->SaveAs("cmStripeID.pdf");
+  
   return 0;
 }
 
