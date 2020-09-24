@@ -544,7 +544,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	}
 
 	cout << "nStripesBefore: " << nStripesBefore_R1_e[j] << endl;
-	fullID = petalID*nStripesPerPetal + rID*nStripesBefore_R1_e[j] + phiID;
+	fullID = petalID*nStripesPerPetal + nStripesBefore_R1_e[j] + phiID;
 	//cout << "fullID: " << fullID << endl;
       } else if (((R1[j]- padfrac_R1) < r) && (r < (R1[j]+ padfrac_R1))){
 	rID = j+nRadii;
@@ -558,7 +558,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  }
 	}
 	
-	fullID = petalID*nStripesPerPetal + rID*nStripesBefore_R1[j] + phiID;
+	fullID = petalID*nStripesPerPetal + nStripesBefore_R1[j] + phiID;
 	
       } else if (((R2[j]- padfrac_R2) < r) && (r < (R2[j]+ padfrac_R2))){
 	rID = j+(2*nRadii);
@@ -572,7 +572,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  }
 	}	  
 	
-       	fullID = petalID*nStripesPerPetal + rID*nStripesBefore_R2[j] + phiID;
+       	fullID = petalID*nStripesPerPetal + nStripesBefore_R2[j] + phiID;
 	
       } else if (((R3[j]- padfrac_R3) < r) && (r < (R3[j]+ padfrac_R3))){
 	rID = j+(3*nRadii);
@@ -586,7 +586,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  }
 	}
 	
-	fullID = petalID*nStripesPerPetal + rID*nStripesBefore_R3[j] + phiID;
+	fullID = petalID*nStripesPerPetal + nStripesBefore_R3[j] + phiID;
       }
     }
   } else {
