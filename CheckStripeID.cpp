@@ -51,23 +51,19 @@ int CheckStripeID() {
 
   vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
 
-  const double mm = 1.0;
-  const double cm = 10.0;
-  
-  vector<double> xhitS;
-  vector<double> yhitS;
+  vector<double> xhit;
+  vector<double> yhit;
   
   //build tgraph from dummy hits
   for (int i = 0; i < Hits.size(); i++){
-    xhitS.push_back(Hits[i]->get_x(0)*cm/mm); 
-    yhitS.push_back(Hits[i]->get_y(0)*cm/mm);
-    xhitS.push_back(Hits[i]->get_x(1)*cm/mm);
-    yhitS.push_back(Hits[i]->get_y(1)*cm/mm);
-    
+    xhit.push_back(Hits[i].x0);
+    yhit.push_back(Hits[i].y0);
+    xhit.push_back(Hits[i].x1);
+    yhit.push_back(Hits[i].y1);
   }
 
   int npts = 2*Hits.size();
-  TGraph *gDummyHits = new TGraph(npts, &xhitS[0], &yhitS[0]);
+  TGraph *gDummyHits = new TGraph(npts, &xhit[0], &yhit[0]);
   gDummyHits->SetMarkerColor(2);
   
   gStyle->SetOptStat(0);
