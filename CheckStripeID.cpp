@@ -19,6 +19,7 @@ R__LOAD_LIBRARY(libphg4hit.so)
 
 using namespace std;
 
+void ScanHist(int nbins, double low, double high, double x, double y);
 
 int CheckStripeID() {
   StripesClass stripes;
@@ -34,10 +35,16 @@ int CheckStripeID() {
   
   rstepsize = (stripes.end_CM - stripes.begin_CM)/rsteps;
   phistepsize = 2*TMath::Pi()/phisteps;
+
+  ScanHist(nbins, low, high, x, y);
   
+  return 0;
+}
+
+void ScanHist(int nbins, double low, double high, double x, double y){
   //histogram from search
   TH2F *Pattern1 = new TH2F("Pattern1","X,Y Scan if in Stripe;X (mm);Y (mm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
-
+  
   //TLatex *tex=new TLatex(x,y,"Stripe");
   //tex->SetTextSize(0.005);
   // for (r = stripes.begin_CM; r < stripes.end_CM; r = r + rstepsize){ // radii spanning full CM
@@ -69,10 +76,9 @@ int CheckStripeID() {
 
   TCanvas *c=new TCanvas("a","CheckStripeID.cpp",500,500); 
   Pattern1->Draw();
-  c->SaveAs("cmStripeID.pdf");
-  
-  return 0;
+  c->SaveAs("cmScan.pdf");
 }
+
 
   //loop thru hits again
   /*
