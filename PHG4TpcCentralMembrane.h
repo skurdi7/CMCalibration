@@ -24,7 +24,7 @@ public:
   StripesClass(); //default constructor
   int getSearchResult(double xcheck, double ycheck); // check if coords are in a stripe
   int getStripeID(double xcheck, double ycheck);
-
+ 
   int fullID;
   double begin_CM, end_CM; // inner and outer radii of central membrane
   
