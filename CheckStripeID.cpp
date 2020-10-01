@@ -20,6 +20,7 @@ R__LOAD_LIBRARY(libphg4hit.so)
 using namespace std;
 
 void ScanHist(int nbins, double low, double high, double x, double y);
+void IDLabels();
 
 int CheckStripeID() {
   int nbins, rsteps, phisteps, result; 
@@ -34,7 +35,8 @@ int CheckStripeID() {
   rstepsize = (stripes.end_CM - stripes.begin_CM)/rsteps;
   phistepsize = 2*TMath::Pi()/phisteps; */
 
-  ScanHist(nbins, low, high, x, y);
+  //ScanHist(nbins, low, high, x, y);
+  IDLabels();
   
   return 0;
 }
@@ -79,7 +81,53 @@ void ScanHist(int nbins, double low, double high, double x, double y){
   c->SaveAs("cmScan.pdf");
 }
 
+void IDLabels(){
+  StripesClass stripes;
+  int stripeID;
+  vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
+  const double mm = 1.0;
+  const double cm = 10.0;
+  
+  vector<double> xhit;
+  vector<double> yhit;
+  
+  //build tgraph from dummy hits
+  for (int i = 0; i < Hits.size(); i++){
+    xhit.push_back(Hits[i]->get_x(0)*cm/mm); 
+    yhit.push_back(Hits[i]->get_y(0)*cm/mm);
+    xhit.push_back(Hits[i]->get_x(1)*cm/mm);
+    yhit.push_back(Hits[i]->get_y(1)*cm/mm);
+  }
+  
+  int npts = 2*Hits.size();
+  TGraph *gDummyHits = new TGraph(npts, &xhit[0], &yhit[0]);
+  gDummyHits->SetMarkerColor(2);
+  gDummyHits->SetMarkerSize(0.5);
+  
+  gStyle->SetOptStat(0);
+  TCanvas *c=new TCanvas("a","CheckStripeID.cpp",500,500);
+  gDummyHits->Draw("AP");
 
+  //loop thru hits again
+  double xav, yav, xa, xb, ya, yb;
+
+  for (int i = 0; i < Hits.size(); i++){
+    //avg x0 n x1, y0 n y1 and use to draw stripeID
+    xav = (Hits[i]->get_x(0)*cm/mm + Hits[i]->get_x(1)*cm/mm)/2;
+    yav = (Hits[i]->get_y(0)*cm/mm + Hits[i]->get_y(1)*cm/mm)/2;
+    //cout << "i: " << i << endl;
+    xa = Hits[i]->get_x(0)*cm/mm ;
+    xb= Hits[i]->get_x(1)*cm/mm ;
+    ya= Hits[i]->get_y(0)*cm/mm ;
+    yb = Hits[i]->get_y(1)*cm/mm ;
+    //cout << "xav: " << xav << endl;
+    //cout << "yav: " << yav << endl; 
+    stripeID = stripes.getStripeID(xav, yav);
+    TLatex *tex=new TLatex(xav,yav,"StripeID");
+    tex->SetTextSize(0.005);
+    tex->DrawLatex(xav,yav,Form("%d",stripeID));
+  }
+}  
   //loop thru hits again
   /*
   double xav, yav, xa, xb, ya, yb;
