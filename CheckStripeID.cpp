@@ -126,6 +126,7 @@ void IDLabels(){
     TLatex *tex=new TLatex(xav,yav,"StripeID");
     tex->SetTextSize(0.005);
     tex->DrawLatex(xav,yav,Form("%d",stripeID));
+    c->SaveAs("cmStripeID.pdf");
   }
 }  
   //loop thru hits again
