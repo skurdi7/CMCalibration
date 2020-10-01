@@ -28,11 +28,11 @@ int CheckStripeID() {
   double high = 290.0;
   
   nbins = 1000;
-  rsteps = 100;
+  /*rsteps = 100;
   phisteps = 100;
   
   rstepsize = (stripes.end_CM - stripes.begin_CM)/rsteps;
-  phistepsize = 2*TMath::Pi()/phisteps;
+  phistepsize = 2*TMath::Pi()/phisteps; */
 
   ScanHist(nbins, low, high, x, y);
   
