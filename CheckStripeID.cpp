@@ -22,9 +22,7 @@ using namespace std;
 void ScanHist(int nbins, double low, double high, double x, double y);
 
 int CheckStripeID() {
-  StripesClass stripes;
-
-  int stripeID, nbins, rsteps, phisteps, result; 
+  int nbins, rsteps, phisteps, result; 
   double r, phi, x, y, xmod, ymod, phimod, rstepsize, phistepsize;
   double low = 250.0;
   double high = 290.0;
@@ -43,6 +41,7 @@ int CheckStripeID() {
 
 void ScanHist(int nbins, double low, double high, double x, double y){
   StripesClass stripes;
+  int stripeID;
   //histogram from search
   TH2F *Pattern1 = new TH2F("Pattern1","X,Y Scan if in Stripe;X (mm);Y (mm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
   
