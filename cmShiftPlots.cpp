@@ -19,6 +19,10 @@ R__LOAD_LIBRARY(libphg4hit.so)
 
 using namespace std;
 
+/*class Shifter {
+public:
+  
+}*/
 TVector3 Shift(TVector3 position);
 void ScanHist(int nbins, double low, double high, double x, double y);
 void IDLabels();
@@ -56,7 +60,7 @@ int cmShiftPlots() {
 
     deltaR = newposition.Perp() - position.Perp();
     RShift->Fill(x,y,deltaR);
-    
+    cout << i << endl;
   }
  
   TCanvas *c=new TCanvas("c","RShift",500,500); 
