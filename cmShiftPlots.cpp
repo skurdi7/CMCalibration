@@ -19,14 +19,17 @@ R__LOAD_LIBRARY(libphg4hit.so)
 
 using namespace std;
 
+TVector3 Shift(TVector3 position);
 void ScanHist(int nbins, double low, double high, double x, double y);
 void IDLabels();
 
-int CheckStripeID() {
-  int nbins, rsteps, phisteps, result; 
-  double r, phi, x, y, xmod, ymod, phimod, rstepsize, phistepsize;
-  double low = 250.0;
+int cmShiftPlots() {
+  int nbins; 
+  double x, y, z;
+  TVector3 position, newposition;
+  double low = 220.0;
   double high = 290.0;
+  double deltaR;
   
   nbins = 1000;
   /*rsteps = 100;
@@ -36,9 +39,71 @@ int CheckStripeID() {
   phistepsize = 2*TMath::Pi()/phisteps; */
 
   //ScanHist(nbins, low, high, x, y);
-  IDLabels();
+  //IDLabels();
+
+  TH2F *RShift = new TH2F("RShift","Radial shift of stripe centers",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+  
+  for (int i = 0; i < Hits.size(); i++){
+    x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; //stripe center
+    y = (Hits[i]->get_y(0) + Hits[i]->get_y(1))/2;
+    z = 0.5;
+
+    position.SetXYZ(x,y,z);
+    
+    newposition = Shift(position);
+
+    deltaR = newposition.Perp() - position.Perp();
+    RShift->Fill(x,y,deltaR);
+    
+  }
+ 
+  TCanvas *c=new TCanvas("c","RShift",500,500); 
+  RShift->Draw("colz");
+  c->SaveAs("RShift.pdf");
   
   return 0;
+}
+
+TVector3 Shift(TVector3 position){
+  StripesClass stripes;
+  vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
+  double x, y, z;
+  const double mm = 1.0;
+  const double cm = 10.0;
+  TVector3 shiftposition;
+
+  x= position.X();
+  y= position.Y();
+  z= position.Z();
+  
+  TFile *forward=TFile::Open("/sphenix/user/rcorliss/distortion_maps/res_scan/Summary_bX1508071_0_10_events.root.h_Charge_evt_0.real_B1.5_E-400.0.ross_phi1_sphenix_phislice_lookup_r23xp23xz35.distortion_map.hist.root","READ"); //using temporary histogram for testing
+  
+  TFile *back=TFile::Open("/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //tells it only to read, not to write anything you make there.
+
+
+  TH3F *hX=(TH3F*)forward->Get("hIntDistortionX");
+  TH3F *hY=(TH3F*)forward->Get("hIntDistortionY");
+  TH3F *hZ=(TH3F*)forward->Get("hIntDistortionZ");
+
+  TH3F *hXBack=(TH3F*)back->Get("hIntDistortionX");
+  TH3F *hYBack=(TH3F*)back->Get("hIntDistortionY");
+  TH3F *hZBack=(TH3F*)back->Get("hIntDistortionZ");
+
+  
+  xshift=hX->Interpolate(x,y,z);//coordinate of your stripe
+  yshift=hY->Interpolate(x,y,z);
+  zshift=hZ->Interpolate(x,y,z);
+    
+  xshiftback=-1*hXBack->Interpolate(x+xshift,y+yshift,z);
+  yshiftback=-1*hYBack->Interpolate(x+xshift,y+yshift,z);
+  zshiftback=-1*hZBack->Interpolate(x+xshift,y+yshift,z);
+    
+  shiftposition.SetXYZ(x+xshift+xshiftback,y+yshift+yshiftback,z);
+
+  forward->Close();
+  back->Close();
+  
+  return shiftposition;
 }
 
 void ScanHist(int nbins, double low, double high, double x, double y){
