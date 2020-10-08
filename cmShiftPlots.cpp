@@ -90,14 +90,21 @@ TVector3 Shift(TVector3 position){
   TH3F *hYBack=(TH3F*)back->Get("hIntDistortionY");
   TH3F *hZBack=(TH3F*)back->Get("hIntDistortionZ");
 
+  double r=position.Perp();
+  double phi=position.Phi();
   
-  xshift=hX->Interpolate(x,y,z);//coordinate of your stripe
-  yshift=hY->Interpolate(x,y,z);
-  zshift=hZ->Interpolate(x,y,z);
-    
-  double xshiftback=-1*hXBack->Interpolate(x+xshift,y+yshift,z);
-  double yshiftback=-1*hYBack->Interpolate(x+xshift,y+yshift,z);
-  double zshiftback=-1*hZBack->Interpolate(x+xshift,y+yshift,z);
+  xshift=hX->Interpolate(phi,r,z);//coordinate of your stripe
+  yshift=hY->Interpolate(phi,r,z);
+  zshift=hZ->Interpolate(phi,r,z);
+
+  TVector3 forwardshift(x+xshift,y+yshift,z);
+
+  double rforward=forwardshift.Perp();
+  double phiforward=forwardshift.Phi();
+  
+  double xshiftback=-1*hXBack->Interpolate(phiforward,rforward,z);
+  double yshiftback=-1*hYBack->Interpolate(phiforward,rforward,z);
+  double zshiftback=-1*hZBack->Interpolate(phiforward,rforward,z);
     
   shiftposition.SetXYZ(x+xshift+xshiftback,y+yshift+yshiftback,z);
 
