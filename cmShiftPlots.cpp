@@ -78,6 +78,7 @@ void ScanHist(int nbins, double low, double high, double x, double y);
 void IDLabels();
 
 int cmShiftPlots() {
+  Shifter shifter;
   StripesClass stripes;
   vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
   int nbins; 
@@ -106,7 +107,7 @@ int cmShiftPlots() {
 
     position.SetXYZ(x,y,z);
     
-    newposition = Shift(position);
+    newposition = shifter.Shift(position);
 
     deltaR = newposition.Perp() - position.Perp();
     RShift->Fill(x,y,deltaR);
