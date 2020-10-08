@@ -24,6 +24,8 @@ void ScanHist(int nbins, double low, double high, double x, double y);
 void IDLabels();
 
 int cmShiftPlots() {
+  StripesClass stripes;
+  vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
   int nbins; 
   double x, y, z;
   TVector3 position, newposition;
@@ -65,9 +67,8 @@ int cmShiftPlots() {
 }
 
 TVector3 Shift(TVector3 position){
-  StripesClass stripes;
-  vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
-  double x, y, z;
+ 
+  double x, y, z, xshift, yshift, zshift;
   const double mm = 1.0;
   const double cm = 10.0;
   TVector3 shiftposition;
@@ -94,9 +95,9 @@ TVector3 Shift(TVector3 position){
   yshift=hY->Interpolate(x,y,z);
   zshift=hZ->Interpolate(x,y,z);
     
-  xshiftback=-1*hXBack->Interpolate(x+xshift,y+yshift,z);
-  yshiftback=-1*hYBack->Interpolate(x+xshift,y+yshift,z);
-  zshiftback=-1*hZBack->Interpolate(x+xshift,y+yshift,z);
+  double xshiftback=-1*hXBack->Interpolate(x+xshift,y+yshift,z);
+  double yshiftback=-1*hYBack->Interpolate(x+xshift,y+yshift,z);
+  double zshiftback=-1*hZBack->Interpolate(x+xshift,y+yshift,z);
     
   shiftposition.SetXYZ(x+xshift+xshiftback,y+yshift+yshiftback,z);
 
