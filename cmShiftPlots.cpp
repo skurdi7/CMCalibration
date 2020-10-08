@@ -19,11 +19,61 @@ R__LOAD_LIBRARY(libphg4hit.so)
 
 using namespace std;
 
-/*class Shifter {
+class Shifter {
 public:
+  Shifter();
+  TVector3 Shift(TVector3 position); 
+  TFile *forward, *back;
+  TH3F *hX, *hY, *hZ, *hXBack, *hYBack, *hZBack;  
+};
+
+Shifter::Shifter(){
+  forward=TFile::Open("/sphenix/user/rcorliss/distortion_maps/res_scan/Summary_bX1508071_0_10_events.root.h_Charge_evt_0.real_B1.5_E-400.0.ross_phi1_sphenix_phislice_lookup_r23xp23xz35.distortion_map.hist.root","READ"); //using temporary histogram for testing
   
-}*/
-TVector3 Shift(TVector3 position);
+  back=TFile::Open("/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //tells it only to read, not to write anything you make there.
+
+  hX=(TH3F*)forward->Get("hIntDistortionX");
+  hY=(TH3F*)forward->Get("hIntDistortionY");
+  hZ=(TH3F*)forward->Get("hIntDistortionZ");
+
+  hXBack=(TH3F*)back->Get("hIntDistortionX");
+  hYBack=(TH3F*)back->Get("hIntDistortionY");
+  hZBack=(TH3F*)back->Get("hIntDistortionZ");
+}
+
+TVector3 Shifter::Shift(TVector3 position){
+ 
+  double x, y, z, xshift, yshift, zshift;
+  const double mm = 1.0;
+  const double cm = 10.0;
+  TVector3 shiftposition;
+
+  x= position.X();
+  y= position.Y();
+  z= position.Z();
+
+  double r=position.Perp();
+  double phi=position.Phi() + TMath::Pi(); //match up to correct angle at some point
+
+  
+  xshift=hX->Interpolate(phi,r,z);//coordinate of your stripe
+  yshift=hY->Interpolate(phi,r,z);
+  zshift=hZ->Interpolate(phi,r,z);
+
+  TVector3 forwardshift(x+xshift,y+yshift,z);
+
+  double rforward=forwardshift.Perp();
+  double phiforward=forwardshift.Phi() + TMath::Pi();
+  
+  double xshiftback=-1*hXBack->Interpolate(phiforward,rforward,z);
+  double yshiftback=-1*hYBack->Interpolate(phiforward,rforward,z);
+  double zshiftback=-1*hZBack->Interpolate(phiforward,rforward,z);
+    
+  shiftposition.SetXYZ(x+xshift+xshiftback,y+yshift+yshiftback,z);
+  
+  return shiftposition;
+}
+
 void ScanHist(int nbins, double low, double high, double x, double y);
 void IDLabels();
 
@@ -68,54 +118,6 @@ int cmShiftPlots() {
   c->SaveAs("RShift.pdf");
   
   return 0;
-}
-
-TVector3 Shift(TVector3 position){
- 
-  double x, y, z, xshift, yshift, zshift;
-  const double mm = 1.0;
-  const double cm = 10.0;
-  TVector3 shiftposition;
-
-  x= position.X();
-  y= position.Y();
-  z= position.Z();
-  
-  TFile *forward=TFile::Open("/sphenix/user/rcorliss/distortion_maps/res_scan/Summary_bX1508071_0_10_events.root.h_Charge_evt_0.real_B1.5_E-400.0.ross_phi1_sphenix_phislice_lookup_r23xp23xz35.distortion_map.hist.root","READ"); //using temporary histogram for testing
-  
-  TFile *back=TFile::Open("/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //tells it only to read, not to write anything you make there.
-
-
-  TH3F *hX=(TH3F*)forward->Get("hIntDistortionX");
-  TH3F *hY=(TH3F*)forward->Get("hIntDistortionY");
-  TH3F *hZ=(TH3F*)forward->Get("hIntDistortionZ");
-
-  TH3F *hXBack=(TH3F*)back->Get("hIntDistortionX");
-  TH3F *hYBack=(TH3F*)back->Get("hIntDistortionY");
-  TH3F *hZBack=(TH3F*)back->Get("hIntDistortionZ");
-
-  double r=position.Perp();
-  double phi=position.Phi();
-  
-  xshift=hX->Interpolate(phi,r,z);//coordinate of your stripe
-  yshift=hY->Interpolate(phi,r,z);
-  zshift=hZ->Interpolate(phi,r,z);
-
-  TVector3 forwardshift(x+xshift,y+yshift,z);
-
-  double rforward=forwardshift.Perp();
-  double phiforward=forwardshift.Phi();
-  
-  double xshiftback=-1*hXBack->Interpolate(phiforward,rforward,z);
-  double yshiftback=-1*hYBack->Interpolate(phiforward,rforward,z);
-  double zshiftback=-1*hZBack->Interpolate(phiforward,rforward,z);
-    
-  shiftposition.SetXYZ(x+xshift+xshiftback,y+yshift+yshiftback,z);
-
-  forward->Close();
-  back->Close();
-  
-  return shiftposition;
 }
 
 void ScanHist(int nbins, double low, double high, double x, double y){
