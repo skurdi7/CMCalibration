@@ -100,7 +100,7 @@ int cmShiftPlots() {
 
   TH2F *RShift = new TH2F("RShift","Radial shift of stripe centers",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
   
-  for (int i = 0; i < Hits.size(); i++){
+  for (int i = 0; i < Hits.size()/18; i++){ // div by 18 to test only first petal?
     x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; //stripe center
     y = (Hits[i]->get_y(0) + Hits[i]->get_y(1))/2;
     z = 0.5;
