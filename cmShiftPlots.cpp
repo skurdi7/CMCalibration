@@ -119,7 +119,7 @@ int cmShiftPlots() {
   }
  
   TCanvas *c=new TCanvas("c","RShift",500,500); 
-  RShift->Draw();
+  RShift->Draw("colz");
   c->SaveAs("RShift.pdf");
   
   return 0;
