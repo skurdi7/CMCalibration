@@ -88,7 +88,7 @@ int cmShiftPlots() {
   int nbins; 
   double x, y, z;
   TVector3 position, newposition;
-  double low = 0.0;
+  double low = -80.0;
   double high = 80.0;
   double deltaR;
   
@@ -119,7 +119,7 @@ int cmShiftPlots() {
   }
  
   TCanvas *c=new TCanvas("c","RShift",500,500); 
-  RShift->Draw("colz");
+  RShift->Draw();
   c->SaveAs("RShift.pdf");
   
   return 0;
