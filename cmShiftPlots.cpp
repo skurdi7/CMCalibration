@@ -103,7 +103,7 @@ int cmShiftPlots() {
   //IDLabels();
 
   TH2F *RShift = new TH2F("RShift","Radial shift of stripe centers",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
-  TH2F *ShiftCheck = new TH2F("ShiftCheck","Positions of radial shift of stripe centers",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+  TH2F *ShiftCheck = new TH2F("ShiftCheck","Radial shift (weight 1) of stripe centers",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
   
   for (int i = 0; i < Hits.size(); i++){ 
     x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; //stripe center
@@ -125,7 +125,7 @@ int cmShiftPlots() {
   TCanvas *c=new TCanvas("c","RShift",1000,500);
   c->Divide(2,1);
   c->cd(1);
-  RShift->Draw("colz");
+  RShift->Draw();
   c->cd(2);
   ShiftCheck->Draw();
   c->SaveAs("RShift.pdf");
