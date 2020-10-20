@@ -53,8 +53,11 @@ TVector3 Shifter::Shift(TVector3 position){
   z= position.Z();
 
   double r=position.Perp();
-  double phi=position.Phi() + TMath::Pi(); //match up to correct angle at some point
-
+  if((x < 0.0) && (y > 0.0)){
+    double phi=position.Phi() + TMath::Pi(); //match up to correct angle?
+  } else if ((x > 0.0) && (y < 0.0)){
+    double phi=position.Phi() + 2.0*TMath::Pi(); 
+  }
   
   xshift=hX->Interpolate(phi,r,z);//coordinate of your stripe
   yshift=hY->Interpolate(phi,r,z);
