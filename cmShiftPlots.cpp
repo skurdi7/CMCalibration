@@ -88,8 +88,8 @@ int cmShiftPlots() {
   int nbins; 
   double x, y, z;
   TVector3 position, newposition;
-  double low = 22.0;
-  double high = 29.0;
+  double low = 0.0;
+  double high = 80.0;
   double deltaR;
   
   nbins = 10;
