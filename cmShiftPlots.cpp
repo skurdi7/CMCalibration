@@ -22,7 +22,9 @@ using namespace std;
 class Shifter {
 public:
   Shifter();
-  TVector3 Shift(TVector3 position); 
+  TVector3 Shift(TVector3 position);
+  TVector3 ShiftForward(TVector3 position); //only shift with forward histogram
+  TVector3 ShiftBack(TVector3 position); //
   TFile *forward, *back;
   TH3F *hX, *hY, *hZ, *hXBack, *hYBack, *hZBack;  
 };
@@ -41,9 +43,8 @@ Shifter::Shifter(){
   hZBack=(TH3F*)back->Get("hIntDistortionZ");
 }
 
-TVector3 Shifter::Shift(TVector3 position){
- 
-  double x, y, z, xshift, yshift, zshift;
+TVector3 Shifter::ShiftForward(TVector3 position){
+double x, y, z, xshift, yshift, zshift;
   const double mm = 1.0;
   const double cm = 10.0;
   TVector3 shiftposition;
@@ -64,6 +65,19 @@ TVector3 Shifter::Shift(TVector3 position){
 
   TVector3 forwardshift(x+xshift,y+yshift,z);
 
+  return forwardshift;
+}
+
+TVector3 Shifter::ShiftBack(TVector3 forwardshift){
+double x, y, z, xshift, yshift, zshift;
+  const double mm = 1.0;
+  const double cm = 10.0;
+  TVector3 shiftposition;
+
+  x= forwardshift.X();
+  y= forwardshift.Y();
+  z= forwardshift.Z();
+
   double rforward=forwardshift.Perp();
   double phiforward=forwardshift.Phi();
   if(forwardshift.Phi() < 0.0){
@@ -74,9 +88,14 @@ TVector3 Shifter::Shift(TVector3 position){
   double yshiftback=-1*hYBack->Interpolate(phiforward,rforward,z);
   double zshiftback=-1*hZBack->Interpolate(phiforward,rforward,z);
     
-  shiftposition.SetXYZ(x+xshift+xshiftback,y+yshift+yshiftback,z);
-  
+  shiftposition.SetXYZ(x+xshiftback,y+yshiftback,z);
+
   return shiftposition;
+}
+
+TVector3 Shifter::Shift(TVector3 position){
+  
+  return ShiftBack(ShiftForward(position));
 }
 
 void ScanHist(int nbins, double low, double high, double x, double y);
