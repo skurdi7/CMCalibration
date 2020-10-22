@@ -105,12 +105,24 @@ int cmShiftPlots() {
   TH2F *RShift = new TH2F("RShift","Radial shift of stripe centers",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
   TH2F *ShiftCheck = new TH2F("ShiftCheck","Radial shift (weight 1) of stripe centers",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
   TH2F *AveShift = new TH2F("AveShift","Divide RShift by ShiftCheck",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+  TH2F *hPhiCheck2d = new TH2F("hPhiCheck2d","what phi am i using",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+
+  TH1F *PhiCheck = new TH1F("PhiCheck","What phi am i using",200,-10.0,10.0);
   
   for (int i = 0; i < Hits.size(); i++){ 
     x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; //stripe center
     y = (Hits[i]->get_y(0) + Hits[i]->get_y(1))/2;
     z = 0.5;
 
+    double phi;
+    if((x < 0.0) && (y > 0.0)){
+      phi = position.Phi() + TMath::Pi(); //match up to correct angle?
+    } else if ((x > 0.0) && (y < 0.0)){
+      phi = position.Phi() + 2.0*TMath::Pi(); 
+    }
+    PhiCheck->Fill(phi);
+    hPhiCheck2d->Fill(x,y,phi);
+    
     position.SetXYZ(x,y,z);
     
     newposition = shifter.Shift(position);
@@ -124,15 +136,21 @@ int cmShiftPlots() {
   }
 
   AveShift->Divide(RShift,ShiftCheck);
+  hPhiCheck2d->Divide(ShiftCheck);
   
-  TCanvas *c=new TCanvas("c","RShift",1500,500);
-  c->Divide(3,1);
+  TCanvas *c=new TCanvas("c","RShift",1500,1000);
+  c->Divide(3,2);
   c->cd(1);
   RShift->Draw("colz");
   c->cd(2);
   ShiftCheck->Draw("colz");
   c->cd(3);
   AveShift->Draw("colz");
+  c->cd(4);
+  PhiCheck->Draw();
+  c->cd(5);
+  hPhiCheck2d->Draw("colz");
+  
   c->SaveAs("RShift.pdf");
   
   return 0;
