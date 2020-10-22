@@ -65,7 +65,10 @@ TVector3 Shifter::Shift(TVector3 position){
   TVector3 forwardshift(x+xshift,y+yshift,z);
 
   double rforward=forwardshift.Perp();
-  double phiforward=forwardshift.Phi() + TMath::Pi();
+  double phiforward=forwardshift.Phi();
+  if(forwardshift.Phi() < 0.0){
+    phiforward += 2.0*TMath::Pi();
+  }
   
   double xshiftback=-1*hXBack->Interpolate(phiforward,rforward,z);
   double yshiftback=-1*hYBack->Interpolate(phiforward,rforward,z);
@@ -90,7 +93,7 @@ int cmShiftPlots() {
   double high = 80.0;
   double deltaR;
   
-  nbins = 50;
+  nbins = 40;
   /*rsteps = 100;
   phisteps = 100;
   
