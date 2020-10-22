@@ -127,7 +127,7 @@ int cmShiftPlots() {
   c->cd(1);
   RShift->Draw("colz");
   c->cd(2);
-  ShiftCheck->Draw();
+  ShiftCheck->Draw("colz");
   c->SaveAs("RShift.pdf");
   
   return 0;
