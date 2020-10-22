@@ -92,7 +92,7 @@ int cmShiftPlots() {
   double high = 80.0;
   double deltaR;
   
-  nbins = 10;
+  nbins = 50;
   /*rsteps = 100;
   phisteps = 100;
   
@@ -104,6 +104,7 @@ int cmShiftPlots() {
 
   TH2F *RShift = new TH2F("RShift","Radial shift of stripe centers",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
   TH2F *ShiftCheck = new TH2F("ShiftCheck","Radial shift (weight 1) of stripe centers",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+  TH2F *AveShift = new TH2F("AveShift","Divide RShift by ShiftCheck",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
   
   for (int i = 0; i < Hits.size(); i++){ 
     x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; //stripe center
@@ -121,13 +122,17 @@ int cmShiftPlots() {
     }
     cout << i << endl;
   }
- 
-  TCanvas *c=new TCanvas("c","RShift",1000,500);
-  c->Divide(2,1);
+
+  AveShift->Divide(RShift,ShiftCheck);
+  
+  TCanvas *c=new TCanvas("c","RShift",1500,500);
+  c->Divide(3,1);
   c->cd(1);
   RShift->Draw("colz");
   c->cd(2);
   ShiftCheck->Draw("colz");
+  c->cd(3);
+  AveShift->Draw("colz");
   c->SaveAs("RShift.pdf");
   
   return 0;
