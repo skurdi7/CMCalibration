@@ -183,7 +183,7 @@ int cmShiftPlots() {
     deltaR = newposition.Perp() - position.Perp();
     hForward->Fill(x,y,deltaR);
   
-  }
+  } 
 
   AveShift->Divide(hForward,hStripesPerBin);
   hPhiCheck2d->Divide(hStripesPerBin);
