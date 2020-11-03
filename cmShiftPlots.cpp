@@ -187,7 +187,19 @@ int cmShiftPlots() {
 
   AveShift->Divide(hForward,hStripesPerBin);
   hPhiCheck2d->Divide(hStripesPerBin);
-  	
+
+  int nphi = shifter.hR->GetXaxis()->GetNbins();
+  int nr = shifter.hR->GetYaxis()->GetNbins();
+  int nz = shifter.hR->GetZaxis()->GetNbins();
+  
+  double minphi = shifter.hR->GetXaxis()->GetXmin();
+  double minr = shifter.hR->GetYaxis()->GetXmin();
+  double minz = shifter.hR->GetZaxis()->GetXmin();
+  
+  double maxphi = shifter.hR->GetXaxis()->GetXmax();
+  double maxr = shifter.hR->GetYaxis()->GetXmax();
+  double maxz = shifter.hR->GetZaxis()->GetXmax();
+
 
   TH3F *hCMModel = new TH3F("hCMModel", "Radial Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
 
