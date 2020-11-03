@@ -26,7 +26,7 @@ public:
   TVector3 ShiftForward(TVector3 position); //only shift with forward histogram
   TVector3 ShiftBack(TVector3 position); //
   TFile *forward, *back;
-  TH3F *hX, *hY, *hZ, *hXBack, *hYBack, *hZBack;  
+  TH3F *hX, *hY, *hZ, *hR, *hXBack, *hYBack, *hZBack;  
 };
 
 Shifter::Shifter(){
@@ -38,6 +38,8 @@ Shifter::Shifter(){
   hY=(TH3F*)forward->Get("hIntDistortionY");
   hZ=(TH3F*)forward->Get("hIntDistortionZ");
 
+  hR=(TH3F*)forward->Get("hIntDistortionR");
+   
   hXBack=(TH3F*)back->Get("hIntDistortionX");
   hYBack=(TH3F*)back->Get("hIntDistortionY");
   hZBack=(TH3F*)back->Get("hIntDistortionZ");
@@ -121,7 +123,7 @@ int cmShiftPlots() {
 
   //ScanHist(nbins, low, high, x, y);
   //IDLabels();
-
+   
   TH2F *RShift = new TH2F("RShift","Radial shift of stripe centers; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
 
   TH2F *hStripesPerBin = new TH2F("hStripesPerBin","Stripes Per Bin; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
@@ -155,13 +157,92 @@ int cmShiftPlots() {
     cout << i << endl;
   }
 
-  AveShift->Divide(RShift,hStripesPerBin);
+  //AveShift->Divide(RShift,hStripesPerBin);
+  //hPhiCheck2d->Divide(hStripesPerBin);
+
+
+  //repeat for forward only
+  TH2F *hForward = new TH2F("hForward","Radial Shift Forward of Stripe Centers",nbins,low,high,nbins,low,high); 
+  for (int i = 0; i < Hits.size(); i++){
+    x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; //stripe center
+    y = (Hits[i]->get_y(0) + Hits[i]->get_y(1))/2;
+    z = 0.5;
+    
+    position.SetXYZ(x,y,z);
+    
+    double phi=position.Phi();
+    if(position.Phi() < 0.0){
+      phi = position.Phi() + 2.0*TMath::Pi(); 
+    }
+  
+    PhiCheck->Fill(phi);
+    hPhiCheck2d->Fill(x,y,phi);
+    
+    newposition = shifter.ShiftForward(position);
+    
+    deltaR = newposition.Perp() - position.Perp();
+    hForward->Fill(x,y,deltaR);
+  
+  }
+
+  AveShift->Divide(hForward,hStripesPerBin);
   hPhiCheck2d->Divide(hStripesPerBin);
+  	  
+  int nphi = shifter.hX->GetXaxis()->GetNbins();
+  int nr = shifter.hX->GetYaxis()->GetNbins();
+  int nz = shifter.hX->GetZaxis()->GetNbins();
+  
+  double minphi = shifter.hX->GetXaxis()->GetMinimum();
+  double minr = shifter.hX->GetYaxis()->GetMinimum();
+  double minz = shifter.hX->GetZaxis()->GetMinimum();
+  
+  double maxphi = shifter.hX->GetXaxis()->GetMaximum();
+  double maxr = shifter.hX->GetYaxis()->GetMaximum();
+  double maxz = shifter.hX->GetZaxis()->GetMaximum();
+
+  TH3F *hCMModel = new TH3F("hCMModel", "Radial Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
+
+  double rshift;
+  
+  for(int i = 0; i < nphi; i++){
+    double phi = minphi + ((maxphi - minphi)/(1.0*nphi))*(i+0.5); //center of bin
+    for(int j = 0; j < nr; j++){
+      double r = minr + ((maxr - minr)/(1.0*nr))*(j+0.5); //center of bin
+
+      double x = r*cos(phi);
+      double y = r*sin(phi);
+      
+      for(int k = 0; k < nz; k++){
+	double z = minz + ((maxz - minz)/(1.0*nz))*(k+0.5); //center of bin
+
+	
+	rshift=AveShift->Interpolate(x,y,z);//coordinate of your stripe
+	
+	hCMModel->Fill(phi,r,z,rshift*z/105.5);
+      }
+    }
+  }
+
+  TH1F *hShiftDifference = new TH1F("hShiftDifference", "Difference between Radial Shift Reco and True", 300, -0.5, 0.5);
+
+  for(int i = 0; i < nphi; i++){
+    double phi = minphi + ((maxphi - minphi)/(1.0*nphi))*(i+0.5); //center of bin
+    for(int j = 0; j < nr; j++){
+      double r = minr + ((maxr - minr)/(1.0*nr))*(j+0.5); //center of bin
+      for(int k = 0; k < nz; k++){
+	double z = minz + ((maxz - minz)/(1.0*nz))*(k+0.5); //center of bin
+
+	double difference = hCMModel->Interpolate(phi,r,z) - shifter.hR->Interpolate(phi,r,z);
+	hShiftDifference->Fill(difference);
+      }
+    }
+  }
+  
   
   TCanvas *c=new TCanvas("c","RShift",1500,1000);
   c->Divide(3,2);
   c->cd(1);
-  RShift->Draw("colz");
+  hForward->Draw("colz");
   c->cd(2);
   hStripesPerBin->Draw("colz");
   c->cd(3);
@@ -170,6 +251,8 @@ int cmShiftPlots() {
   PhiCheck->Draw();
   c->cd(5);
   hPhiCheck2d->Draw("colz");
+  c->cd(6);
+  hShiftDifference->Draw();
   
   c->SaveAs("RShift.pdf");
   
