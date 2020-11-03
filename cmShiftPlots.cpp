@@ -188,17 +188,17 @@ int cmShiftPlots() {
   AveShift->Divide(hForward,hStripesPerBin);
   hPhiCheck2d->Divide(hStripesPerBin);
   	  
-  int nphi = shifter.hX->GetXaxis()->GetNbins();
-  int nr = shifter.hX->GetYaxis()->GetNbins();
-  int nz = shifter.hX->GetZaxis()->GetNbins();
+  int nphi = shifter.hR->GetXaxis()->GetNbins();
+  int nr = shifter.hR->GetYaxis()->GetNbins();
+  int nz = shifter.hR->GetZaxis()->GetNbins();
   
-  double minphi = shifter.hX->GetXaxis()->GetXmin();
-  double minr = shifter.hX->GetYaxis()->GetXmin();
-  double minz = shifter.hX->GetZaxis()->GetXmin();
+  double minphi = shifter.hR->GetXaxis()->GetXmin();
+  double minr = shifter.hR->GetYaxis()->GetXmin();
+  double minz = shifter.hR->GetZaxis()->GetXmin();
   
-  double maxphi = shifter.hX->GetXaxis()->GetXmax();
-  double maxr = shifter.hX->GetYaxis()->GetXmax();
-  double maxz = shifter.hX->GetZaxis()->GetXmax();
+  double maxphi = shifter.hR->GetXaxis()->GetXmax();
+  double maxr = shifter.hR->GetYaxis()->GetXmax();
+  double maxz = shifter.hR->GetZaxis()->GetXmax();
 
   TH3F *hCMModel = new TH3F("hCMModel", "Radial Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
 
@@ -216,7 +216,7 @@ int cmShiftPlots() {
 	double z = minz + ((maxz - minz)/(1.0*nz))*(k+0.5); //center of bin
 
 	
-	rshift=AveShift->Interpolate(x,y,z);//coordinate of your stripe
+	rshift=AveShift->Interpolate(x,y);//coordinate of your stripe
 	
 	hCMModel->Fill(phi,r,z,rshift*z/105.5);
       }
