@@ -193,12 +193,12 @@ int cmShiftPlots() {
   int nz = shifter.hX->GetZaxis()->GetNbins();
   
   double minphi = shifter.hX->GetXaxis()->GetXmin();
-  double minr = shifter.hX->GetYaxis()->GetYmin();
-  double minz = shifter.hX->GetZaxis()->GetZmin();
+  double minr = shifter.hX->GetYaxis()->GetXmin();
+  double minz = shifter.hX->GetZaxis()->GetXmin();
   
   double maxphi = shifter.hX->GetXaxis()->GetXmax();
-  double maxr = shifter.hX->GetYaxis()->GetYmax();
-  double maxz = shifter.hX->GetZaxis()->GetZmax();
+  double maxr = shifter.hX->GetYaxis()->GetXmax();
+  double maxz = shifter.hX->GetZaxis()->GetXmax();
 
   TH3F *hCMModel = new TH3F("hCMModel", "Radial Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
 
