@@ -229,6 +229,7 @@ int cmShiftPlots() {
 
   TH1F *hShiftDifference = new TH1F("hShiftDifference", "Difference between Radial Shift Reco and True", 300, -0.5, 0.5);
 
+  cout << nphi<< endl;
   for(int i = 0; i < nphi; i++){
     cout << i << endl;
     double phi = minphi + ((maxphi - minphi)/(1.0*nphi))*(i+0.5); //center of bin
