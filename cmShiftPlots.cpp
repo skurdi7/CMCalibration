@@ -213,8 +213,8 @@ int cmShiftPlots() {
       double x = r*cos(phi);
       double y = r*sin(phi);
 
-      cout << "x" << x << endl;
-      cout << "y" << y << endl;
+      //cout << "x" << x << endl;
+      //cout << "y" << y << endl;
       
       for(int k = 0; k < nz; k++){
 	double z = minz + ((maxz - minz)/(1.0*nz))*(k+0.5); //center of bin
@@ -236,8 +236,10 @@ int cmShiftPlots() {
       for(int k = 0; k < nz; k++){
 	double z = minz + ((maxz - minz)/(1.0*nz))*(k+0.5); //center of bin
 
-	double difference = hCMModel->Interpolate(phi,r,z) - shifter.hR->Interpolate(phi,r,z);
-	hShiftDifference->Fill(difference);
+	double shiftreco =  hCMModel->Interpolate(phi,r,z);
+	//double shifttrue = shifter.hR->Interpolate(phi,r,z);
+	//double difference = shiftreco - shifttrue; // try interpolation separately and check
+	//hShiftDifference->Fill(difference); 
       }
     }
   }
