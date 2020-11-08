@@ -229,16 +229,14 @@ int cmShiftPlots() {
 
   TH1F *hShiftDifference = new TH1F("hShiftDifference", "Difference between Radial Shift Reco and True", 300, -0.5, 0.5);
 
-  cout << nphi<< endl;
   for(int i = 0; i < nphi; i++){
-    cout << i << endl;
     double phi = minphi + ((maxphi - minphi)/(1.0*nphi))*(i+0.5); //center of bin
     for(int j = 0; j < nr; j++){
       double r = minr + ((maxr - minr)/(1.0*nr))*(j+0.5); //center of bin
       for(int k = 0; k < nz; k++){
 	double z = minz + ((maxz - minz)/(1.0*nz))*(k+0.5); //center of bin
 
-	//double shiftreco =  hCMModel->Interpolate(phi,r,z);
+	double shiftreco =  hCMModel->Interpolate(phi,r,z);
 	//double shifttrue = shifter.hR->Interpolate(phi,r,z);
 	//double difference = shiftreco - shifttrue; // try interpolation separately and check
 	//hShiftDifference->Fill(difference); 
