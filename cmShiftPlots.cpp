@@ -202,7 +202,6 @@ int cmShiftPlots() {
 
 
   TH3F *hCMModel = new TH3F("hCMModel", "Radial Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
-
   double rshift;
   
   for(int i = 0; i < nphi; i++){
@@ -223,11 +222,16 @@ int cmShiftPlots() {
 	rshift=AveShift->Interpolate(x,y);//coordinate of your stripe
 	
 	hCMModel->Fill(phi,r,z,rshift*(1-z/105.5));
+
+
+	
       }
     }
   }
 
-  TH1F *hShiftDifference = new TH1F("hShiftDifference", "Difference between Radial Shift Reco and True", 300, -1.0, 1.0);
+  TH1F *hShiftDifference = new TH1F("hShiftDifference", "Difference between Radial Shift Reco and True", 300, -1.5, 0.5);
+  TH2F *hBadDiffXY = new TH2F("hBadDiffXY", "Locations where Shift Difference is less than -0.8",nbins,low,high,nbins,low,high);
+  TH2F *hBadDiffRZ = new TH2F("hBadDiffRZ", "Locations where Shift Difference is less than -0.8",nr,minr,maxr, nz,minz,maxz);
 
   for(int i = 0; i < nphi; i++){
     double phi = minphi + ((maxphi - minphi)/(1.0*nphi))*(i+0.5); //center of bin
@@ -247,7 +251,17 @@ int cmShiftPlots() {
 	double shifttrue = shifter.hR->GetBinContent(bin);
 	double difference = shiftreco - shifttrue; // try interpolation separately and check
 
-	hShiftDifference->Fill(difference); 
+	hShiftDifference->Fill(difference);
+
+	double x = r*cos(phi);
+	double y = r*sin(phi);
+
+	//if difference < -0.8
+	if(difference < -0.8){
+	  hBadDiffXY->Fill(x,y);
+	  hBadDiffRZ->Fill(r,z);
+
+	}
       }
     }
   }
@@ -262,9 +276,11 @@ int cmShiftPlots() {
   c->cd(3);
   AveShift->Draw("colz");
   c->cd(4);
-  PhiCheck->Draw();
+  //PhiCheck->Draw();
+  hBadDiffRZ->Draw("colz");
   c->cd(5);
-  hPhiCheck2d->Draw("colz");
+  // hPhiCheck2d->Draw("colz");
+  hBadDiffXY->Draw("colz");
   c->cd(6);
   hShiftDifference->Draw();
   
