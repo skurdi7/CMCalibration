@@ -230,8 +230,13 @@ int cmShiftPlots() {
   }
 
   TH1F *hShiftDifference = new TH1F("hShiftDifference", "Difference between Radial Shift Reco and True", 300, -1.5, 0.5);
-  TH2F *hBadDiffXY = new TH2F("hBadDiffXY", "Locations where Shift Difference is less than -0.8",nbins,low,high,nbins,low,high);
-  TH2F *hBadDiffRZ = new TH2F("hBadDiffRZ", "Locations where Shift Difference is less than -0.8",nr,minr,maxr, nz,minz,maxz);
+  TH2F *hDiffXY = new TH2F("hDiffXY", "Difference in XY; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  TH2F *hDiffRZ = new TH2F("hDiffRZ", "Difference in RZ; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
+
+  TH2F *hSamplePerBinXY = new TH2F("hSamplePerBinXY", "Filling each xy bin; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  TH2F *hSamplePerBinRZ = new TH2F("hSamplePerBinRZ", "Filling each rz bin; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
+  TH2F *hAveDiffXY = new TH2F("hAveDiffXY", "Averaging the Difference; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  TH2F *hAveDiffRZ = new TH2F("hAveDiffRZ", "Averaging the Difference; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
 
   for(int i = 0; i < nphi; i++){
     double phi = minphi + ((maxphi - minphi)/(1.0*nphi))*(i+0.5); //center of bin
@@ -257,15 +262,19 @@ int cmShiftPlots() {
 	double y = r*sin(phi);
 
 	//if difference < -0.8
-	if(difference < -0.8){
-	  hBadDiffXY->Fill(x,y);
-	  hBadDiffRZ->Fill(r,z);
-
-	}
+	//	if(difference < -0.8){
+	  hDiffXY->Fill(x,y, difference);
+	  hSamplePerBinXY->Fill(x,y,1);
+	  
+	  hDiffRZ->Fill(z,r);
+	  hSamplePerBinRZ->Fill(z,r,1);
+	  
+	  //	}
       }
     }
   }
-  
+  hAveDiffXY->Divide(hDiffXY,hSamplePerBinXY);
+  hAveDiffRZ->Divide(hDiffRZ,hSamplePerBinRZ);
   
   TCanvas *c=new TCanvas("c","RShift",1500,1000);
   c->Divide(3,2);
@@ -277,10 +286,10 @@ int cmShiftPlots() {
   AveShift->Draw("colz");
   c->cd(4);
   //PhiCheck->Draw();
-  hBadDiffRZ->Draw("colz");
+  hAveDiffXY->Draw("colz");
   c->cd(5);
   // hPhiCheck2d->Draw("colz");
-  hBadDiffXY->Draw("colz");
+  hAveDiffRZ->Draw("colz");
   c->cd(6);
   hShiftDifference->Draw();
   
