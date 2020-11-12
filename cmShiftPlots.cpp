@@ -243,10 +243,11 @@ int cmShiftPlots() {
 
 	int bin = shifter.hR->FindBin(phi,r,z);
 	
-	//double shiftreco =  hCMModel->Interpolate(phi,r,z);
+	double shiftreco =  hCMModel->GetBinContent(bin);
 	double shifttrue = shifter.hR->GetBinContent(bin);
-	//double difference = shiftreco - shifttrue; // try interpolation separately and check
-	//hShiftDifference->Fill(difference); 
+	double difference = shiftreco - shifttrue; // try interpolation separately and check
+
+	hShiftDifference->Fill(difference); 
       }
     }
   }
