@@ -222,12 +222,12 @@ int cmShiftPlots() {
 	
 	rshift=AveShift->Interpolate(x,y);//coordinate of your stripe
 	
-	hCMModel->Fill(phi,r,z,rshift*z/105.5);
+	hCMModel->Fill(phi,r,z,rshift*(1-z/105.5));
       }
     }
   }
 
-  TH1F *hShiftDifference = new TH1F("hShiftDifference", "Difference between Radial Shift Reco and True", 300, -0.5, 0.5);
+  TH1F *hShiftDifference = new TH1F("hShiftDifference", "Difference between Radial Shift Reco and True", 300, -1.0, 1.0);
 
   for(int i = 0; i < nphi; i++){
     double phi = minphi + ((maxphi - minphi)/(1.0*nphi))*(i+0.5); //center of bin
