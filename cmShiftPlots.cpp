@@ -236,6 +236,9 @@ int cmShiftPlots() {
       for(int k = 0; k < nz; k++){
 	double z = minz + ((maxz - minz)/(1.0*nz))*(k+0.5); //center of bin
 
+	cout << "phi: " << phi;
+	cout << "r: " << r;
+	cout << "z: " << z << endl;
 	//double shiftreco =  hCMModel->Interpolate(phi,r,z);
 	double shifttrue = shifter.hR->Interpolate(phi,r,z);
 	//double difference = shiftreco - shifttrue; // try interpolation separately and check
