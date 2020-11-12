@@ -266,7 +266,7 @@ int cmShiftPlots() {
 	  hDiffXY->Fill(x,y, difference);
 	  hSamplePerBinXY->Fill(x,y,1);
 	  
-	  hDiffRZ->Fill(z,r);
+	  hDiffRZ->Fill(z,r, difference);
 	  hSamplePerBinRZ->Fill(z,r,1);
 	  
 	  //	}
