@@ -45,15 +45,15 @@ StripesClass::StripesClass()
   arc_r = 0.5 * mm;
 
   //fill in varying stripe widths
-  str_width_R1_e[][] = { // fill in 1.0 for stripes that get removed, 1.000 for stripes that dont get scaled up
-			{1.0, 1.284, 1.0, 1.076, 1.0, 1.000, 1.0, 1.147}, // stripe 0 in each row
-			{1.493, 1.243, 1.152, 1.062, 1.030, 1.001, 1.044, 1.186}, // stripe 1 in each row
-			{1.398, 1.208, 1.129, 1.050, 1.015, 1.006, 1.064, 1.232},
-			{1.334, 1.178, 1.109, 1.040, 1.007, 1.013, 1.087, 1.288},
-			{1.0, 1.0, 1.091, 1.0, 1.002, 1.023, 1.115, 1.000},
-			{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0}
-  };
+  //1.0 for stripes that get removed, 1.000 for stripes that dont get scaled up
+  str_width_R1_e[0][] = {1.0, 1.284, 1.0, 1.076, 1.0, 1.000, 1.0, 1.147}; // stripe 0 in each row
+  str_width_R1_e[1][] = {1.493, 1.243, 1.152, 1.062, 1.030, 1.001, 1.044, 1.186}; // stripe 1 in each row
+  str_width_R1_e[2][] = {1.398, 1.208, 1.129, 1.050, 1.015, 1.006, 1.064, 1.232};
+  str_width_R1_e[3][] = {1.334, 1.178, 1.109, 1.040, 1.007, 1.013, 1.087, 1.288};
+  str_width_R1_e[4][] = {1.0, 1.0, 1.091, 1.0, 1.002, 1.023, 1.115, 1.000};
+  str_width_R1_e[5][] = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
   
+    
   
   // set to 1.0 mm for all else
   for (int j=0; j<nRadii; j++){
