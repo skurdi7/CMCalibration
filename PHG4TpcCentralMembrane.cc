@@ -24,6 +24,10 @@ StripesClass::StripesClass()
     R1 {317.648082 * mm, 328.9678074 * mm, 340.2875328 * mm, 351.6072582 * mm, 362.9269836 * mm, 374.246709 * mm,  385.5664344 * mm, 396.8861597 * mm},
     R2 {421.705532 * mm, 442.119258 * mm, 462.532984 * mm, 482.9467608 * mm, 503.36069 * mm, 523.774416 * mm, 544.188015 * mm, 564.601868 * mm},
     R3 {594.6048725 * mm, 616.545823 * mm, 638.4867738 * mm, 660.4277246 * mm, 682.3686754 * mm, 704.3096262 * mm, 726.250577 * mm, 748.1915277 * mm},
+    widthmod_R1_e {1.493, 1.398, 1.334, 1.284, 1.243, 1.208, 1.178, 1.152},
+    widthmod_R1 {1.129, 1.109, 1.091, 1.076, 1.062, 1.050, 1.040, 1.030},
+    widthmod_R2 {1.015, 1.007, 1.002, 1.000, 1.001, 1.006, 1.013, 1.023},
+    widthmod_R3 {1.044, 1.064, 1.087, 1.115, 1.147, 1.186, 1.232, 1.288},
     keepThisAndAfter {1,0,1,0,1,0,1,0},
     keepUntil_R1_e {4,4,5,4,5,5,5,5},
     keepUntil_R1 {5,5,6,5,6,5,6,5},
@@ -44,69 +48,11 @@ StripesClass::StripesClass()
   //str_width = 1.0 * mm;
   arc_r = 0.5 * mm;
 
-  //fill in varying stripe widths
-  //1.0 for stripes that get removed, 1.000 for stripes that dont get scaled up
-  str_width_R1_e[0][0] = 1.0; 
-  str_width_R1_e[1][0] = 1.493; 
-  str_width_R1_e[2][0] = 1.398;
-  str_width_R1_e[3][0] = 1.334;
-  str_width_R1_e[4][0] = 1.0;
-
-  str_width_R1_e[0][1] = 1.284;
-  str_width_R1_e[1][1] = 1.243;
-  str_width_R1_e[2][1] = 1.208;
-  str_width_R1_e[3][1] = 1.178;
-  str_width_R1_e[4][1] = 1.0;
-  
-  str_width_R1_e[0][2] = 1.0;
-  str_width_R1_e[1][2] = 1.152;
-  str_width_R1_e[2][2] = 1.129;
-  str_width_R1_e[3][2] = 1.109;
-  str_width_R1_e[4][2] = 1.091;
-
-  str_width_R1_e[0][3] = 1.076;
-  str_width_R1_e[1][3] = 1.062;
-  str_width_R1_e[2][3] = 1.050;
-  str_width_R1_e[3][3] = 1.040;
-  str_width_R1_e[4][3] = 1.0;
-
-  str_width_R1_e[0][4] = 1.0;
-  str_width_R1_e[1][4] = 1.030;
-  str_width_R1_e[2][4] = 1.015;
-  str_width_R1_e[3][4] = 1.007;
-  str_width_R1_e[4][4] = 1.002;
-
-  str_width_R1_e[0][5] = 1.000;
-  str_width_R1_e[1][5] = 1.001;
-  str_width_R1_e[2][5] = 1.006;
-  str_width_R1_e[3][5] = 1.013;
-  str_width_R1_e[4][5] = 1.023;
-
-  str_width_R1_e[0][6] = 1.0;
-  str_width_R1_e[1][6] = 1.044;
-  str_width_R1_e[2][6] = 1.064;
-  str_width_R1_e[3][6] = 1.087;
-  str_width_R1_e[4][6] = 1.115;
-
-  str_width_R1_e[0][7] = 1.147; 
-  str_width_R1_e[1][7] = 1.186; 
-  str_width_R1_e[2][7] = 1.232;
-  str_width_R1_e[3][7] = 1.288;
-  str_width_R1_e[4][7] = 1.000;
-
-/*
-  str_width_R1_e[0][0] = {1.0, 1.284, 1.0, 1.076, 1.0, 1.000, 1.0, 1.147}; // stripe 0 in each row
-  str_width_R1_e[1][0] = {1.493, 1.243, 1.152, 1.062, 1.030, 1.001, 1.044, 1.186}; // stripe 1 in each row
-  str_width_R1_e[2][0] = {1.398, 1.208, 1.129, 1.050, 1.015, 1.006, 1.064, 1.232};
-  str_width_R1_e[3][0] = {1.334, 1.178, 1.109, 1.040, 1.007, 1.013, 1.087, 1.288};
-  str_width_R1_e[4][0] = {1.0, 1.0, 1.091, 1.0, 1.002, 1.023, 1.115, 1.000};
-*/
 
   // set to 1.0 mm for all else
   for (int j=0; j<nRadii; j++){
-    str_width_R1_e[5][j] = 1.0 * mm;
     for (int i=0; i<nStripes_R1; i++){
-      // str_width_R1_e[i][j] = 1.0 * mm;
+      str_width_R1_e[i][j] = 1.0 * mm;
       str_width_R1[i][j] = 1.0 * mm;
     }
     for (int i=0; i<nStripes_R2; i++){
@@ -126,10 +72,10 @@ StripesClass::StripesClass()
   nElectrons = 100;
 
     
-  CalculateVertices(nStripes_R1, nPads_R1, R1_e, spacing_R1_e, x1a_R1_e, y1a_R1_e, x1b_R1_e, y1b_R1_e, x2a_R1_e, y2a_R1_e, x2b_R1_e, y2b_R1_e, x3a_R1_e, y3a_R1_e, x3b_R1_e, y3b_R1_e, padfrac_R1, str_width_R1_e, nGoodStripes_R1_e, keepUntil_R1_e, nStripesIn_R1_e, nStripesBefore_R1_e);
-  CalculateVertices(nStripes_R1, nPads_R1, R1, spacing_R1, x1a_R1, y1a_R1, x1b_R1, y1b_R1, x2a_R1, y2a_R1, x2b_R1, y2b_R1, x3a_R1, y3a_R1, x3b_R1, y3b_R1, padfrac_R1, str_width_R1, nGoodStripes_R1, keepUntil_R1, nStripesIn_R1, nStripesBefore_R1);
-  CalculateVertices(nStripes_R2, nPads_R2, R2, spacing_R2, x1a_R2, y1a_R2, x1b_R2, y1b_R2, x2a_R2, y2a_R2, x2b_R2, y2b_R2, x3a_R2, y3a_R2, x3b_R2, y3b_R2, padfrac_R2, str_width_R2, nGoodStripes_R2, keepUntil_R2, nStripesIn_R2, nStripesBefore_R2);
-  CalculateVertices(nStripes_R3, nPads_R3, R3, spacing_R3, x1a_R3, y1a_R3, x1b_R3, y1b_R3, x2a_R3, y2a_R3, x2b_R3, y2b_R3, x3a_R3, y3a_R3, x3b_R3, y3b_R3, padfrac_R3, str_width_R3, nGoodStripes_R3, keepUntil_R3, nStripesIn_R3, nStripesBefore_R3);
+  CalculateVertices(nStripes_R1, nPads_R1, R1_e, spacing_R1_e, x1a_R1_e, y1a_R1_e, x1b_R1_e, y1b_R1_e, x2a_R1_e, y2a_R1_e, x2b_R1_e, y2b_R1_e, x3a_R1_e, y3a_R1_e, x3b_R1_e, y3b_R1_e, padfrac_R1, str_width_R1_e, nGoodStripes_R1_e, widthmod_R1_e, keepUntil_R1_e, nStripesIn_R1_e, nStripesBefore_R1_e);
+  CalculateVertices(nStripes_R1, nPads_R1, R1, spacing_R1, x1a_R1, y1a_R1, x1b_R1, y1b_R1, x2a_R1, y2a_R1, x2b_R1, y2b_R1, x3a_R1, y3a_R1, x3b_R1, y3b_R1, padfrac_R1, str_width_R1, widthmod_R1, nGoodStripes_R1, keepUntil_R1, nStripesIn_R1, nStripesBefore_R1);
+  CalculateVertices(nStripes_R2, nPads_R2, R2, spacing_R2, x1a_R2, y1a_R2, x1b_R2, y1b_R2, x2a_R2, y2a_R2, x2b_R2, y2b_R2, x3a_R2, y3a_R2, x3b_R2, y3b_R2, padfrac_R2, str_width_R2, widthmod_R2, nGoodStripes_R2, keepUntil_R2, nStripesIn_R2, nStripesBefore_R2);
+  CalculateVertices(nStripes_R3, nPads_R3, R3, spacing_R3, x1a_R3, y1a_R3, x1b_R3, y1b_R3, x2a_R3, y2a_R3, x2b_R3, y2b_R3, x3a_R3, y3a_R3, x3b_R3, y3b_R3, padfrac_R3, str_width_R3, widthmod_R3, nGoodStripes_R3, keepUntil_R3, nStripesIn_R3, nStripesBefore_R3);
 
   
   
@@ -162,7 +108,7 @@ StripesClass::StripesClass()
 }
 
 
-void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, double str_width[][nRadii], int nGoodStripes[],  int keepUntil[], int nStripesIn[], int nStripesBefore[]) {
+void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, double str_width[][nRadii], double widthmod[], int nGoodStripes[],  int keepUntil[], int nStripesIn[], int nStripesBefore[]) {
   const double phi_module = TMath::Pi()/6.0; // angle span of a module
   const int pr_mult = 3; // multiples of intrinsic resolution of pads
   const int dw_mult = 8; // multiples of diffusion width
@@ -202,10 +148,10 @@ void StripesClass::CalculateVertices(int nStripes, int nPads, double R[], double
       }
 
       TVector3 corner[4];
-      corner[0].SetXYZ(-padfrac+arc_r,-str_width[i][j]/2,0);//"1a" = length of the pad, but not including the arc piece
-      corner[1].SetXYZ(padfrac-arc_r,-str_width[i][j]/2,0);//"1b" = length of the pad, but not including the arc piece
-      corner[2].SetXYZ(-padfrac+arc_r,str_width[i][j]/2,0);//"2a" = length of the pad, but not including the arc piece
-      corner[3].SetXYZ(padfrac-arc_r,str_width[i][j]/2,0);//"2b" = length of the pad, but not including the arc piece
+      corner[0].SetXYZ(-padfrac+arc_r,-(widthmod[j]*str_width[i][j])/2,0);//"1a" = length of the pad, but not including the arc piece
+      corner[1].SetXYZ(padfrac-arc_r,-(widthmod[j]*str_width[i][j])/2,0);//"1b" = length of the pad, but not including the arc piece
+      corner[2].SetXYZ(-padfrac+arc_r,(widthmod[j]*str_width[i][j])/2,0);//"2a" = length of the pad, but not including the arc piece
+      corner[3].SetXYZ(padfrac-arc_r,(widthmod[j]*str_width[i][j])/2,0);//"2b" = length of the pad, but not including the arc piece
      
       TVector3 rotatedcorner[4];
       for (int i=0;i<4;i++){
@@ -597,7 +543,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  //cout << fabs((-m)*xcheck + ycheck) << endl;
 	  dist = fabs((-m)*xmod + ymod)/sqrt(1 + m*m);
 	  //cout << "dist:" << dist << endl;
-       	  if(dist < (str_width_R1_e[i][j]/2.0)){ 
+       	  if(dist < ((widthmod_R1_e[j]*str_width_R1_e[i][j])/2.0)){ 
 	    phiID = i;
 	    //cout << "phiID: " << phiID << endl;
 	  }
@@ -613,7 +559,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  // look at distance from center line of stripe
 	  m = (y3b_R1[i][j] - y3a_R1[i][j])/(x3b_R1[i][j] - x3a_R1[i][j]);
 	  dist = fabs(m*xmod - ymod)/sqrt(1 + m*m);
-	  if(dist < (str_width_R1[i][j]/2.0)){ 
+	  if(dist < ((widthmod_R1[j]*str_width_R1[i][j])/2.0)){ 
 	    phiID = i;
 	  }
 	}
@@ -627,7 +573,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  // look at distance from center line of stripe
 	  m = (y3b_R2[i][j] - y3a_R2[i][j])/(x3b_R2[i][j] - x3a_R2[i][j]);
 	  dist = fabs(m*xmod - ymod)/sqrt(1 + m*m);
-	  if(dist < (str_width_R2[i][j]/2.0)){ 
+	  if(dist < ((widthmod_R2[j]*str_width_R2[i][j])/2.0)){ 
 	    phiID = i;
 	  }
 	}	  
@@ -641,7 +587,7 @@ int StripesClass::getStripeID(double xcheck, double ycheck){
 	  // look at distance from center line of stripe
 	  m = (y3b_R3[i][j] - y3a_R3[i][j])/(x3b_R3[i][j] - x3a_R3[i][j]);
 	  dist = fabs(m*xmod - ymod)/sqrt(1 + m*m);
-	  if(dist < (str_width_R3[i][j]/2.0)){ 
+	  if(dist < ((widthmod_R3[j]*str_width_R3[i][j])/2.0)){ 
 	    phiID = i;
 	  }
 	}

@@ -56,6 +56,10 @@ private:
   double str_width_R1[nStripes_R1][nRadii];
   double str_width_R2[nStripes_R2][nRadii];
   double str_width_R3[nStripes_R3][nRadii];
+  double widthmod_R1_e[nRadii];
+  double widthmod_R1[nRadii];
+  double widthmod_R2[nRadii];
+  double widthmod_R3[nRadii];
  
   double spacing_R1_e[nRadii], spacing_R1[nRadii], spacing_R2[nRadii], spacing_R3[nRadii];
   
@@ -124,7 +128,7 @@ private:
   
   int nElectrons;
   
-  void CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, double str_width[][nRadii], int nGoodStripes[], int keepUntil[], int nStripesIn[], int nStripesBefore[]);
+  void CalculateVertices(int nStripes, int nPads, double R[], double spacing[], double x1a[][nRadii], double y1a[][nRadii], double x1b[][nRadii], double y1b[][nRadii], double x2a[][nRadii], double y2a[][nRadii], double x2b[][nRadii], double y2b[][nRadii], double x3a[][nRadii], double y3a[][nRadii], double x3b[][nRadii], double y3b[][nRadii], double padfrac, double str_width[][nRadii], double widthmod[], int nGoodStripes[], int keepUntil[], int nStripesIn[], int nStripesBefore[]);
 
   PHG4Hitv1* GetBotVerticesFromStripe(int moduleID, int radiusID, int stripeID);
   PHG4Hitv1* GetTopVerticesFromStripe(int moduleID, int radiusID, int stripeID);
