@@ -46,17 +46,65 @@ StripesClass::StripesClass()
 
   //fill in varying stripe widths
   //1.0 for stripes that get removed, 1.000 for stripes that dont get scaled up
-  str_width_R1_e[][] = {{1.0, 1.284, 1.0, 1.076, 1.0, 1.000, 1.0, 1.147}, // stripe 0 in each row
-			 {1.493, 1.243, 1.152, 1.062, 1.030, 1.001, 1.044, 1.186}, // stripe 1 in each row
-			 {1.398, 1.208, 1.129, 1.050, 1.015, 1.006, 1.064, 1.232},
-			 {1.334, 1.178, 1.109, 1.040, 1.007, 1.013, 1.087, 1.288},
-			 {1.0, 1.0, 1.091, 1.0, 1.002, 1.023, 1.115, 1.000},
-			 {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0}};
+  str_width_R1_e[0][0] = 1.0; 
+  str_width_R1_e[1][0] = 1.493; 
+  str_width_R1_e[2][0] = 1.398;
+  str_width_R1_e[3][0] = 1.334;
+  str_width_R1_e[4][0] = 1.0;
+
+  str_width_R1_e[0][1] = 1.284;
+  str_width_R1_e[1][1] = 1.243;
+  str_width_R1_e[2][1] = 1.208;
+  str_width_R1_e[3][1] = 1.178;
+  str_width_R1_e[4][1] = 1.0;
   
-    
-  
+  str_width_R1_e[0][2] = 1.0;
+  str_width_R1_e[1][2] = 1.152;
+  str_width_R1_e[2][2] = 1.129;
+  str_width_R1_e[3][2] = 1.109;
+  str_width_R1_e[4][2] = 1.091;
+
+  str_width_R1_e[0][3] = 1.076;
+  str_width_R1_e[1][3] = 1.062;
+  str_width_R1_e[2][3] = 1.050;
+  str_width_R1_e[3][3] = 1.040;
+  str_width_R1_e[4][3] = 1.0;
+
+  str_width_R1_e[0][4] = 1.0;
+  str_width_R1_e[1][4] = 1.030;
+  str_width_R1_e[2][4] = 1.015;
+  str_width_R1_e[3][4] = 1.007;
+  str_width_R1_e[4][4] = 1.002;
+
+  str_width_R1_e[0][5] = 1.000;
+  str_width_R1_e[1][5] = 1.001;
+  str_width_R1_e[2][5] = 1.006;
+  str_width_R1_e[3][5] = 1.013;
+  str_width_R1_e[4][5] = 1.023;
+
+  str_width_R1_e[0][6] = 1.0;
+  str_width_R1_e[1][6] = 1.044;
+  str_width_R1_e[2][6] = 1.064;
+  str_width_R1_e[3][6] = 1.087;
+  str_width_R1_e[4][6] = 1.115;
+
+  str_width_R1_e[0][7] = 1.147; 
+  str_width_R1_e[1][7] = 1.186; 
+  str_width_R1_e[2][7] = 1.232;
+  str_width_R1_e[3][7] = 1.288;
+  str_width_R1_e[4][7] = 1.000;
+
+/*
+  str_width_R1_e[0][0] = {1.0, 1.284, 1.0, 1.076, 1.0, 1.000, 1.0, 1.147}; // stripe 0 in each row
+  str_width_R1_e[1][0] = {1.493, 1.243, 1.152, 1.062, 1.030, 1.001, 1.044, 1.186}; // stripe 1 in each row
+  str_width_R1_e[2][0] = {1.398, 1.208, 1.129, 1.050, 1.015, 1.006, 1.064, 1.232};
+  str_width_R1_e[3][0] = {1.334, 1.178, 1.109, 1.040, 1.007, 1.013, 1.087, 1.288};
+  str_width_R1_e[4][0] = {1.0, 1.0, 1.091, 1.0, 1.002, 1.023, 1.115, 1.000};
+*/
+
   // set to 1.0 mm for all else
   for (int j=0; j<nRadii; j++){
+    str_width_R1_e[5][j] = 1.0 * mm;
     for (int i=0; i<nStripes_R1; i++){
       // str_width_R1_e[i][j] = 1.0 * mm;
       str_width_R1[i][j] = 1.0 * mm;
