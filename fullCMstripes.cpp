@@ -13,7 +13,7 @@ R__LOAD_LIBRARY(build/.libs/libg4tpccentralmembrane)
 int fullCMstripes() {
   StripesClass stripes;
   ofstream eagle;
-  eagle.open ("eaglestripes.txt");
+  eagle.open ("eaglestripes1.txt");
   
   vector<PHG4Hitv1*> BV = stripes.BotVertices;
   vector<PHG4Hitv1*> TV = stripes.TopVertices;
