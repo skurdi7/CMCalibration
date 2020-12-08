@@ -277,16 +277,15 @@ int cmShiftPlots() {
   hAveDiffXY->Divide(hDiffXY,hSamplePerBinXY);
   hAveDiffRZ->Divide(hDiffRZ,hSamplePerBinRZ);
 
-  /*
-hForward->SetStats(0);
+  
+  hForward->SetStats(0);
   hStripesPerBin->SetStats(0);
   AveShift->SetStats(0);
   hAveDiffXY->SetStats(0);
   hAveDiffRZ->SetStats(0);
-  hShiftDifference->SetStats(0);
-  */
-  gStyle->SetOptStat(0);
-  hShiftDifference->SetStats(1);
+ 
+  
+  // gStyle->SetOptStat(0);
   
   TCanvas *c=new TCanvas("c","RShift",1500,1000);
   c->Divide(3,2);
