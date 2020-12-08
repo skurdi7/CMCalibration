@@ -129,7 +129,7 @@ int cmShiftPlots() {
 
   TH2F *hStripesPerBin = new TH2F("hStripesPerBin","CM Stripes Per Bin; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
 
-  TH2F *AveShift = new TH2F("AveShift","Average Radial Shift in CM Model over Stripes per Bin; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+  TH2F *AveShift = new TH2F("AveShift","Average of CM Model over Stripes per Bin; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
   TH2F *hPhiCheck2d = new TH2F("hPhiCheck2d","what phi am i using; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
 
   TH1F *PhiCheck = new TH1F("PhiCheck","what phi am i using; phi (radians)",200,-10.0,10.0);
@@ -163,7 +163,7 @@ int cmShiftPlots() {
 
 
   //repeat for forward only
-  TH2F *hForward = new TH2F("hForward","Radial Shift Forward of Stripe Centers",nbins,low,high,nbins,low,high); 
+  TH2F *hForward = new TH2F("hForward","Radial Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high); 
   for (int i = 0; i < Hits.size(); i++){
     x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; //stripe center
     y = (Hits[i]->get_y(0) + Hits[i]->get_y(1))/2;
@@ -181,7 +181,7 @@ int cmShiftPlots() {
     
     newposition = shifter.ShiftForward(position);
     
-    deltaR = newposition.Perp() - position.Perp();
+    deltaR = (newposition.Perp() - position.Perp())*(pow(10.0,4.0));
     hForward->Fill(x,y,deltaR);
   
   } 
@@ -277,12 +277,16 @@ int cmShiftPlots() {
   hAveDiffXY->Divide(hDiffXY,hSamplePerBinXY);
   hAveDiffRZ->Divide(hDiffRZ,hSamplePerBinRZ);
 
-  hForward->SetStats(0);
+  /*
+hForward->SetStats(0);
   hStripesPerBin->SetStats(0);
   AveShift->SetStats(0);
   hAveDiffXY->SetStats(0);
   hAveDiffRZ->SetStats(0);
   hShiftDifference->SetStats(0);
+  */
+  gStyle->SetOptStat(0);
+  hShiftDifference->SetStats(1);
   
   TCanvas *c=new TCanvas("c","RShift",1500,1000);
   c->Divide(3,2);
