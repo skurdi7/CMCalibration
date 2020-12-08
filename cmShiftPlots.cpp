@@ -127,9 +127,9 @@ int cmShiftPlots() {
    
   TH2F *RShift = new TH2F("RShift","Radial shift of stripe centers; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
 
-  TH2F *hStripesPerBin = new TH2F("hStripesPerBin","Stripes Per Bin; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+  TH2F *hStripesPerBin = new TH2F("hStripesPerBin","CM Stripes Per Bin; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
 
-  TH2F *AveShift = new TH2F("AveShift","Divide RShift by ShiftCheck; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+  TH2F *AveShift = new TH2F("AveShift","Average Radial Shift in CM Model over Stripes per Bin; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
   TH2F *hPhiCheck2d = new TH2F("hPhiCheck2d","what phi am i using; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
 
   TH1F *PhiCheck = new TH1F("PhiCheck","what phi am i using; phi (radians)",200,-10.0,10.0);
@@ -202,7 +202,7 @@ int cmShiftPlots() {
   double maxz = shifter.hR->GetZaxis()->GetXmax();
 
 
-  TH3F *hCMModel = new TH3F("hCMModel", "Radial Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
+  TH3F *hCMModel = new TH3F("hCMModel", "CM Model: Radial Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
   double rshift;
   
   for(int i = 0; i < nphi; i++){
@@ -230,14 +230,14 @@ int cmShiftPlots() {
     }
   }
 
-  TH1F *hShiftDifference = new TH1F("hShiftDifference", "Difference between Radial Shift Reco and True", 300, -1.5, 0.5);
+  TH1F *hShiftDifference = new TH1F("hShiftDifference", "Difference between CM Model and True; (cm)", 300, -0.2, 0.2);
   TH2F *hDiffXY = new TH2F("hDiffXY", "Difference in XY; x (cm); y (cm)",nbins,low,high,nbins,low,high);
   TH2F *hDiffRZ = new TH2F("hDiffRZ", "Difference in RZ; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
 
   TH2F *hSamplePerBinXY = new TH2F("hSamplePerBinXY", "Filling each xy bin; x (cm); y (cm)",nbins,low,high,nbins,low,high);
   TH2F *hSamplePerBinRZ = new TH2F("hSamplePerBinRZ", "Filling each rz bin; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
-  TH2F *hAveDiffXY = new TH2F("hAveDiffXY", "Averaging the Difference; x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  TH2F *hAveDiffRZ = new TH2F("hAveDiffRZ", "Averaging the Difference; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
+  TH2F *hAveDiffXY = new TH2F("hAveDiffXY", "Model - Truth Averaged Over z; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  TH2F *hAveDiffRZ = new TH2F("hAveDiffRZ", "Model - Truth Averaged Over phi; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
 
   for(int i = 0; i < nphi; i++){
     double phi = minphi + ((maxphi - minphi)/(1.0*nphi))*(i+0.5); //center of bin
@@ -276,6 +276,13 @@ int cmShiftPlots() {
   }
   hAveDiffXY->Divide(hDiffXY,hSamplePerBinXY);
   hAveDiffRZ->Divide(hDiffRZ,hSamplePerBinRZ);
+
+  hForward->SetStats(0);
+  hStripesPerBin->SetStats(0);
+  AveShift->SetStats(0);
+  hAveDiffXY->SetStats(0);
+  hAveDiffRZ->SetStats(0);
+  hShiftDifference->SetStats(0);
   
   TCanvas *c=new TCanvas("c","RShift",1500,1000);
   c->Divide(3,2);
