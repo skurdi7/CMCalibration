@@ -282,8 +282,8 @@ int cmShiftPlots() {
   }
   
   TH1F *hCylindricalShiftDifference[2];
-  hCylindricalShiftDifference[0] = new TH1F("hShiftDifferenceR", "Difference between CM Model R and True; (cm)", 300, -0.2, 0.2);
-  hCylindricalShiftDifference[1] = new TH1F("hShiftDifferencePhi", "Difference between CM Model Phi and True; (cm)", 300, -0.2, 0.2);
+  hCylindricalShiftDifference[0] = new TH1F("hShiftDifferenceR", "Difference between CM Model R and True; #Delta R (#mu m)", 300, -200, 200);
+  hCylindricalShiftDifference[1] = new TH1F("hShiftDifferencePhi", "Difference between CM Model Phi and True; #Delta Phi (#mu m)", 300, -200, 200);
 
   TH2F *hCylindricalDiff[4];
   hCylindricalDiff[0] = new TH2F("hDiffXYR", "Difference in XY for CM Model R; x (cm); y (cm)",nbins,low,high,nbins,low,high);
