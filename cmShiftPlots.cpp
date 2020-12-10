@@ -168,12 +168,12 @@ int cmShiftPlots() {
   TH2F *hCartesianForward[2];
   hCartesianForward[0] = new TH2F("hForwardX","X Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
   hCartesianForward[1] = new TH2F("hForwardY","Y Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  // hCartesianForward[2] = new TH2F("hForwardZ","Z Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  hCartesianForward[2] = new TH2F("hForwardZ","Z Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
 
   TH2F *hCylindricalForward[3];
   hCylindricalForward[0] = new TH2F("hForwardR","Radial Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
   hCylindricalForward[1] = new TH2F("hForwardPhi","Phi Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  hCylindricalForward[2] = new TH2F("hForwardZ","Z Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  // hCylindricalForward[2] = new TH2F("hForwardZ","Z Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
   
   for (int i = 0; i < Hits.size(); i++){
     x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; //stripe center
@@ -192,11 +192,11 @@ int cmShiftPlots() {
       
     newposition = shifter.ShiftForward(position);
 
-    deltaX = (newposition.X() - position.X())*(pow(10.0,4.0));
-    deltaY = (newposition.Y() - position.Y())*(pow(10.0,4.0));
-    deltaZ = (newposition.Z() - position.Z())*(pow(10.0,4.0));
+    deltaX = (newposition.X() - position.X())*(1e4);
+    deltaY = (newposition.Y() - position.Y())*(1e4);
+    deltaZ = (newposition.Z() - position.Z())*(1e4);
 
-    deltaR = (newposition.Perp() - position.Perp())*(pow(10.0,4.0));
+    deltaR = (newposition.Perp() - position.Perp())*(1e4);
     deltaPhi = newposition.Phi() - position.Phi();
 
     hCartesianForward[0]->Fill(x,y,deltaX);
@@ -319,7 +319,7 @@ int cmShiftPlots() {
 	int bin = shifter.hR->FindBin(phi,r,z);
 	
 	shiftrecoCyl[0] =  hCylindricalCMModel[0]->GetBinContent(bin);
-	shifttrueCyl[0] = shifter.hR->GetBinContent(bin);
+	shifttrueCyl[0] = (shifter.hR->GetBinContent(bin))*(1e4);
 	differenceCyl[0] = shiftrecoCyl[0] - shifttrueCyl[0]; // try interpolation separately and check
 
 	hCylindricalShiftDifference[0]->Fill(differenceCyl[0]);
