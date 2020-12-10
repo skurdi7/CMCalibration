@@ -192,9 +192,9 @@ int cmShiftPlots() {
       
     newposition = shifter.ShiftForward(position);
 
-    deltaX = (newposition.X() = position.X())*(pow(10.0,4.0));
-    deltaY = (newposition.Y() = position.Y())*(pow(10.0,4.0));
-    deltaZ = (newposition.Z() = position.Z())*(pow(10.0,4.0));
+    deltaX = (newposition.X() - position.X())*(pow(10.0,4.0));
+    deltaY = (newposition.Y() - position.Y())*(pow(10.0,4.0));
+    deltaZ = (newposition.Z() - position.Z())*(pow(10.0,4.0));
 
     deltaR = (newposition.Perp() - position.Perp())*(pow(10.0,4.0));
     deltaPhi = newposition.Phi() - position.Phi();
@@ -282,20 +282,20 @@ int cmShiftPlots() {
   }
   
   TH1F *hCylindricalShiftDifference[2];
-  TH1F *hCylindricalShiftDifference[0] = new TH1F("hShiftDifferenceR", "Difference between CM Model R and True; (cm)", 300, -0.2, 0.2);
-  TH1F *hCylindricalShiftDifference[1] = new TH1F("hShiftDifferencePhi", "Difference between CM Model Phi and True; (cm)", 300, -0.2, 0.2);
+  TH1F hCylindricalShiftDifference[0] = new TH1F("hShiftDifferenceR", "Difference between CM Model R and True; (cm)", 300, -0.2, 0.2);
+  TH1F hCylindricalShiftDifference[1] = new TH1F("hShiftDifferencePhi", "Difference between CM Model Phi and True; (cm)", 300, -0.2, 0.2);
 
   TH2F *hCylindricalDiff[4];
-  TH2F *hCylindricalDiff[0] = new TH2F("hDiffXYR", "Difference in XY for CM Model R; x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  TH2F *hCylindricalDiff[1] = new TH2F("hDiffRZR", "Difference in RZ for CM Model R; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
-  TH2F *hCylindricalDiff[2] = new TH2F("hDiffXYPhi", "Difference in XY for CM Model Phi; x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  TH2F *hCylindricalDiff[3] = new TH2F("hDiffRZPhi", "Difference in RZ for CM Model Phi; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);  
+  TH2F hCylindricalDiff[0] = new TH2F("hDiffXYR", "Difference in XY for CM Model R; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  TH2F hCylindricalDiff[1] = new TH2F("hDiffRZR", "Difference in RZ for CM Model R; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
+  TH2F hCylindricalDiff[2] = new TH2F("hDiffXYPhi", "Difference in XY for CM Model Phi; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  TH2F hCylindricalDiff[3] = new TH2F("hDiffRZPhi", "Difference in RZ for CM Model Phi; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);  
 
   TH2F *hCylindricalAveDiff[4];
-  TH2F *hCylindricalAveDiff[0] = new TH2F("hAveDiffXYR", "R Model - Truth Averaged Over z; x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  TH2F *hCylindricalAveDiff[1] = new TH2F("hAveDiffRZR", "R Model - Truth Averaged Over phi; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
-  TH2F *hCylindricalAveDiff[2] = new TH2F("hAveDiffXYPHi", "Phi Model - Truth Averaged Over z; x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  TH2F *hCylindricalAveDiff[3] = new TH2F("hAveDiffRZPhi", "Phi Model - Truth Averaged Over phi; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
+  TH2F hCylindricalAveDiff[0] = new TH2F("hAveDiffXYR", "R Model - Truth Averaged Over z; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  TH2F hCylindricalAveDiff[1] = new TH2F("hAveDiffRZR", "R Model - Truth Averaged Over phi; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
+  TH2F hCylindricalAveDiff[2] = new TH2F("hAveDiffXYPHi", "Phi Model - Truth Averaged Over z; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  TH2F hCylindricalAveDiff[3] = new TH2F("hAveDiffRZPhi", "Phi Model - Truth Averaged Over phi; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
 
   TH2F *hSamplePerBinXY = new TH2F("hSamplePerBinXY", "Filling each xy bin; x (cm); y (cm)",nbins,low,high,nbins,low,high);
   TH2F *hSamplePerBinRZ = new TH2F("hSamplePerBinRZ", "Filling each rz bin; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
@@ -329,10 +329,10 @@ int cmShiftPlots() {
 
 	//if difference < -0.8
 	//	if(difference < -0.8){
-	  hCylindricalDiff[0]->Fill(x,y, difference[0]);
+	  hCylindricalDiff[0]->Fill(x,y, differenceCyl[0]);
 	  hSamplePerBinXY->Fill(x,y,1);
 	  
-	  hCylindricalDiff[1]->Fill(z,r, difference[0]);
+	  hCylindricalDiff[1]->Fill(z,r, differenceCyl[0]);
 	  hSamplePerBinRZ->Fill(z,r,1);
 	  
 	  //	}
