@@ -113,7 +113,7 @@ int cmShiftPlots() {
   TVector3 position, newposition;
   double low = -80.0;
   double high = 80.0;
-  double deltaR;
+  double deltaX, deltaY, deltaZ, deltaR, deltaPhi;
   
   nbins = 40;
   /*rsteps = 100;
@@ -129,7 +129,7 @@ int cmShiftPlots() {
 
   TH2F *hStripesPerBin = new TH2F("hStripesPerBin","CM Stripes Per Bin; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
 
-  TH2F *AveShift = new TH2F("AveShift","Average of CM Model over Stripes per Bin; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+  //TH2F *AveShift = new TH2F("AveShift","Average of CM Model over Stripes per Bin; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
   TH2F *hPhiCheck2d = new TH2F("hPhiCheck2d","what phi am i using; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
 
   TH1F *PhiCheck = new TH1F("PhiCheck","what phi am i using; phi (radians)",200,-10.0,10.0);
@@ -163,7 +163,18 @@ int cmShiftPlots() {
 
 
   //repeat for forward only
-  TH2F *hForward = new TH2F("hForward","Radial Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high); 
+  //TH2F *hForwardR = new TH2F("hForwardR","Radial Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+
+  TH2F *hCartesianForward[2];
+  hCartesianForward[0] = new TH2F("hForwardX","X Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  hCartesianForward[1] = new TH2F("hForwardY","Y Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  // hCartesianForward[2] = new TH2F("hForwardZ","Z Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+
+  TH2F *hCylindricalForward[3];
+  hCylindricalForward[0] = new TH2F("hForwardR","Radial Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  hCylindricalForward[1] = new TH2F("hForwardPhi","Phi Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  hCylindricalForward[2] = new TH2F("hForwardZ","Z Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  
   for (int i = 0; i < Hits.size(); i++){
     x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; //stripe center
     y = (Hits[i]->get_y(0) + Hits[i]->get_y(1))/2;
@@ -178,17 +189,47 @@ int cmShiftPlots() {
   
     PhiCheck->Fill(phi);
     hPhiCheck2d->Fill(x,y,phi);
-    
+      
     newposition = shifter.ShiftForward(position);
-    
+
+    deltaX = (newposition.X() = position.X())*(pow(10.0,4.0));
+    deltaY = (newposition.Y() = position.Y())*(pow(10.0,4.0));
+    deltaZ = (newposition.Z() = position.Z())*(pow(10.0,4.0));
+
     deltaR = (newposition.Perp() - position.Perp())*(pow(10.0,4.0));
-    hForward->Fill(x,y,deltaR);
+    deltaPhi = newposition.Phi() - position.Phi();
+
+    hCartesianForward[0]->Fill(x,y,deltaX);
+    hCartesianForward[1]->Fill(x,y,deltaY);
+    hCartesianForward[2]->Fill(x,y,deltaZ);
+
+    hCylindricalForward[0]->Fill(x,y,deltaR);
+    hCylindricalForward[1]->Fill(x,y,deltaPhi);
+    //hForwardR->Fill(x,y,deltaR);
   
-  } 
+  }
 
-  AveShift->Divide(hForward,hStripesPerBin);
+  TH2F *hCartesianAveShift[3];
+  hCartesianAveShift[0] = new TH2F("AveShiftX","Average of CM Model X over Stripes per Bin; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+  hCartesianAveShift[1] = new TH2F("AveShiftY","Average of CM Model Y over Stripes per Bin; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+  hCartesianAveShift[2] = new TH2F("AveShiftZ","Average of CM Model Z over Stripes per Bin; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+
+  TH2F *hCylindricalAveShift[2];
+  hCylindricalAveShift[0] = new TH2F("AveShiftR","Average of CM Model R over Stripes per Bin; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+  hCylindricalAveShift[1] = new TH2F("AveShiftPhi","Average of CM Model Phi over Stripes per Bin; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+  
+  //AveShift->Divide(hForwardR,hStripesPerBin);
+
+  for (int i = 0; i < 3; i ++){
+    hCartesianAveShift[i]->Divide(hCartesianForward[i],hStripesPerBin);
+  }
+
+  for (int i = 0; i < 2; i ++){
+    hCylindricalAveShift[i]->Divide(hCylindricalForward[i],hStripesPerBin);
+  }
+  
   hPhiCheck2d->Divide(hStripesPerBin);
-
+  
   int nphi = shifter.hR->GetXaxis()->GetNbins();
   int nr = shifter.hR->GetYaxis()->GetNbins();
   int nz = shifter.hR->GetZaxis()->GetNbins();
@@ -202,7 +243,17 @@ int cmShiftPlots() {
   double maxz = shifter.hR->GetZaxis()->GetXmax();
 
 
-  TH3F *hCMModel = new TH3F("hCMModel", "CM Model: Radial Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
+  TH3F *hCartesianCMModel[3];
+  hCartesianCMModel[0]=new TH3F("hCMModelX", "CM Model: X Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
+  hCartesianCMModel[1]=new TH3F("hCMModelY", "CM Model: Y Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
+  hCartesianCMModel[2]=new TH3F("hCMModelZ", "CM Model: Z Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
+
+  TH3F *hCylindricalCMModel[2];
+  hCylindricalCMModel[0]=new TH3F("hCMModelR", "CM Model: Radial Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
+  hCylindricalCMModel[1]=new TH3F("hCMModelPhi", "CM Model: Phi Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
+    
+  //TH3F *hCMModel = new TH3F("hCMModel", "CM Model: Radial Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
+
   double rshift;
   
   for(int i = 0; i < nphi; i++){
@@ -220,24 +271,34 @@ int cmShiftPlots() {
 	double z = minz + ((maxz - minz)/(1.0*nz))*(k+0.5); //center of bin
 
 	
-	rshift=AveShift->Interpolate(x,y);//coordinate of your stripe
+	rshift=hCylindricalAveShift[0]->Interpolate(x,y);//coordinate of your stripe
 	
-	hCMModel->Fill(phi,r,z,rshift*(1-z/105.5));
+	hCylindricalCMModel[0]->Fill(phi,r,z,rshift*(1-z/105.5));
 
 
 	
       }
     }
   }
+  
+  TH1F *hCylindricalShiftDifference[2];
+  TH1F *hCylindricalShiftDifference[0] = new TH1F("hShiftDifferenceR", "Difference between CM Model R and True; (cm)", 300, -0.2, 0.2);
+  TH1F *hCylindricalShiftDifference[1] = new TH1F("hShiftDifferencePhi", "Difference between CM Model Phi and True; (cm)", 300, -0.2, 0.2);
 
-  TH1F *hShiftDifference = new TH1F("hShiftDifference", "Difference between CM Model and True; (cm)", 300, -0.2, 0.2);
-  TH2F *hDiffXY = new TH2F("hDiffXY", "Difference in XY; x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  TH2F *hDiffRZ = new TH2F("hDiffRZ", "Difference in RZ; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
+  TH2F *hCylindricalDiff[4];
+  TH2F *hCylindricalDiff[0] = new TH2F("hDiffXYR", "Difference in XY for CM Model R; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  TH2F *hCylindricalDiff[1] = new TH2F("hDiffRZR", "Difference in RZ for CM Model R; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
+  TH2F *hCylindricalDiff[2] = new TH2F("hDiffXYPhi", "Difference in XY for CM Model Phi; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  TH2F *hCylindricalDiff[3] = new TH2F("hDiffRZPhi", "Difference in RZ for CM Model Phi; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);  
+
+  TH2F *hCylindricalAveDiff[4];
+  TH2F *hCylindricalAveDiff[0] = new TH2F("hAveDiffXYR", "R Model - Truth Averaged Over z; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  TH2F *hCylindricalAveDiff[1] = new TH2F("hAveDiffRZR", "R Model - Truth Averaged Over phi; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
+  TH2F *hCylindricalAveDiff[2] = new TH2F("hAveDiffXYPHi", "Phi Model - Truth Averaged Over z; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  TH2F *hCylindricalAveDiff[3] = new TH2F("hAveDiffRZPhi", "Phi Model - Truth Averaged Over phi; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
 
   TH2F *hSamplePerBinXY = new TH2F("hSamplePerBinXY", "Filling each xy bin; x (cm); y (cm)",nbins,low,high,nbins,low,high);
   TH2F *hSamplePerBinRZ = new TH2F("hSamplePerBinRZ", "Filling each rz bin; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
-  TH2F *hAveDiffXY = new TH2F("hAveDiffXY", "Model - Truth Averaged Over z; x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  TH2F *hAveDiffRZ = new TH2F("hAveDiffRZ", "Model - Truth Averaged Over phi; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
 
   for(int i = 0; i < nphi; i++){
     double phi = minphi + ((maxphi - minphi)/(1.0*nphi))*(i+0.5); //center of bin
@@ -246,6 +307,10 @@ int cmShiftPlots() {
       for(int k = 0; k < nz; k++){
 	double z = minz + ((maxz - minz)/(1.0*nz))*(k+0.5); //center of bin
 
+	double shiftrecoCyl[2];
+	double shifttrueCyl[2];
+	double differenceCyl[2];
+	
 	/*cout << "phi: " << phi;
 	cout << "r: " << r;
 	cout << "z: " << z << endl;
@@ -253,36 +318,36 @@ int cmShiftPlots() {
 
 	int bin = shifter.hR->FindBin(phi,r,z);
 	
-	double shiftreco =  hCMModel->GetBinContent(bin);
-	double shifttrue = shifter.hR->GetBinContent(bin);
-	double difference = shiftreco - shifttrue; // try interpolation separately and check
+	shiftrecoCyl[0] =  hCylindricalCMModel[0]->GetBinContent(bin);
+	shifttrueCyl[0] = shifter.hR->GetBinContent(bin);
+	differenceCyl[0] = shiftrecoCyl[0] - shifttrueCyl[0]; // try interpolation separately and check
 
-	hShiftDifference->Fill(difference);
+	hCylindricalShiftDifference[0]->Fill(differenceCyl[0]);
 
 	double x = r*cos(phi);
 	double y = r*sin(phi);
 
 	//if difference < -0.8
 	//	if(difference < -0.8){
-	  hDiffXY->Fill(x,y, difference);
+	  hCylindricalDiff[0]->Fill(x,y, difference[0]);
 	  hSamplePerBinXY->Fill(x,y,1);
 	  
-	  hDiffRZ->Fill(z,r, difference);
+	  hCylindricalDiff[1]->Fill(z,r, difference[0]);
 	  hSamplePerBinRZ->Fill(z,r,1);
 	  
 	  //	}
       }
     }
   }
-  hAveDiffXY->Divide(hDiffXY,hSamplePerBinXY);
-  hAveDiffRZ->Divide(hDiffRZ,hSamplePerBinRZ);
+  hCylindricalAveDiff[0]->Divide(hCylindricalDiff[0],hSamplePerBinXY);
+  hCylindricalAveDiff[1]->Divide(hCylindricalDiff[1],hSamplePerBinRZ);
 
   
-  hForward->SetStats(0);
+  hCylindricalForward[0]->SetStats(0);
   hStripesPerBin->SetStats(0);
-  AveShift->SetStats(0);
-  hAveDiffXY->SetStats(0);
-  hAveDiffRZ->SetStats(0);
+  hCylindricalAveShift[0]->SetStats(0);
+  hCylindricalAveDiff[0]->SetStats(0);
+  hCylindricalAveDiff[1]->SetStats(0);
  
   
   // gStyle->SetOptStat(0);
@@ -290,19 +355,19 @@ int cmShiftPlots() {
   TCanvas *c=new TCanvas("c","RShift",1500,1000);
   c->Divide(3,2);
   c->cd(1);
-  hForward->Draw("colz");
+  hCylindricalForward[0]->Draw("colz");
   c->cd(2);
   hStripesPerBin->Draw("colz");
   c->cd(3);
-  AveShift->Draw("colz");
+  hCylindricalAveShift[0]->Draw("colz");
   c->cd(4);
   //PhiCheck->Draw();
-  hAveDiffXY->Draw("colz");
+  hCylindricalAveDiff[0]->Draw("colz");
   c->cd(5);
   // hPhiCheck2d->Draw("colz");
-  hAveDiffRZ->Draw("colz");
+  hCylindricalAveDiff[1]->Draw("colz");
   c->cd(6);
-  hShiftDifference->Draw();
+  hCylindricalShiftDifference[0]->Draw();
   
   c->SaveAs("RShift.pdf");
   
