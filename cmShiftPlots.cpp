@@ -440,7 +440,57 @@ TH2F *hCartesianDiff[6];
   
   // gStyle->SetOptStat(0);
   
-  TCanvas *c=new TCanvas("c","RShift",1500,1000);
+  TCanvas *c=new TCanvas("c","ShiftPlots",1500,1000);
+  c->Print("ShiftPlots.pdf(","pdf");
+  // x plots
+  c->Divide(3,2);
+  c->cd(1);
+  hCartesianForward[0]->Draw("colz");
+  c->cd(2);
+  hStripesPerBin->Draw("colz");
+  c->cd(3);
+  hCartesianAveShift[0]->Draw("colz");
+  c->cd(4);
+  hCartesianAveDiff[0]->Draw("colz");
+  c->cd(5);
+  hCartesianAveDiff[1]->Draw("colz");
+  c->cd(6);
+  hCartesianShiftDifference[0]->Draw();
+
+  // y plots
+  c->Print("ShiftPlots.pdf","pdf");
+  c->Divide(3,2);
+  c->cd(1);
+  hCartesianForward[1]->Draw("colz");
+  c->cd(2);
+  hStripesPerBin->Draw("colz");
+  c->cd(3);
+  hCartesianAveShift[1]->Draw("colz");
+  c->cd(4);
+  hCartesianAveDiff[2]->Draw("colz");
+  c->cd(5);
+  hCartesianAveDiff[3]->Draw("colz");
+  c->cd(6);
+  hCartesianShiftDifference[1]->Draw();
+
+  // z plots
+  c->Print("ShiftPlots.pdf","pdf");
+  c->Divide(3,2);
+  c->cd(1);
+  hCartesianForward[2]->Draw("colz");
+  c->cd(2);
+  hStripesPerBin->Draw("colz");
+  c->cd(3);
+  hCartesianAveShift[2]->Draw("colz");
+  c->cd(4);
+  hCartesianAveDiff[4]->Draw("colz");
+  c->cd(5);
+  hCartesianAveDiff[5]->Draw("colz");
+  c->cd(6);
+  hCartesianShiftDifference[2]->Draw();
+  
+  // r plots
+  c->Print("ShiftPlots.pdf","pdf");
   c->Divide(3,2);
   c->cd(1);
   hCylindricalForward[0]->Draw("colz");
@@ -456,8 +506,40 @@ TH2F *hCartesianDiff[6];
   hCylindricalAveDiff[1]->Draw("colz");
   c->cd(6);
   hCylindricalShiftDifference[0]->Draw();
+
+  // phi plots
+  c->Print("ShiftPlots.pdf","pdf");
+  c->Divide(3,2);
+  c->cd(1);
+  hCylindricalForward[1]->Draw("colz");
+  c->cd(2);
+  hStripesPerBin->Draw("colz");
+  c->cd(3);
+  hCylindricalAveShift[1]->Draw("colz");
+  c->cd(4);
+  hCylindricalAveDiff[2]->Draw("colz");
+  c->cd(5);
+  hCylindricalAveDiff[3]->Draw("colz");
+  c->cd(6);
+  hCylindricalShiftDifference[1]->Draw();
+
+  // r plots from cart
+  c->Print("ShiftPlots.pdf)","pdf");
+  c->Divide(3,2);
+  c->cd(1);
+  hCylindricalForward[2]->Draw("colz");
+  c->cd(2);
+  hStripesPerBin->Draw("colz");
+  c->cd(3);
+  hCylindricalAveShift[2]->Draw("colz");
+  c->cd(4);
+  hCylindricalAveDiff[4]->Draw("colz");
+  c->cd(5);
+  hCylindricalAveDiff[5]->Draw("colz");
+  c->cd(6);
+  hCylindricalShiftDifference[2]->Draw();
   
-  c->SaveAs("RShift.pdf"); // replace w print
+  // c->SaveAs("RShift.pdf"); // replace w print
   
   return 0;
 }
