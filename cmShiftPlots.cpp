@@ -238,7 +238,7 @@ int cmShiftPlots() {
       double xaveshift = hCylindricalAveShift[0]->Interpolate(x,y);
       double yaveshift = hCylindricalAveShift[1]->Interpolate(x,y);
       //fill w r from x n y
-      hCylindricalAveShift[2]->Fill(sqrt(xaveshift*xaveshift + yaveshift*yaveshift));
+      hCylindricalAveShift[2]->Fill(x,y,sqrt(xaveshift*xaveshift + yaveshift*yaveshift));
     }
   }
   hPhiCheck2d->Divide(hStripesPerBin);
