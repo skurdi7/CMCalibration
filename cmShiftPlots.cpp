@@ -390,7 +390,7 @@ TH2F *hCartesianDiff[6];
 	double y = r*sin(phi);
 
 	//if difference < -0.8
-	if(r < 30.0){
+	if(r > 30.0){
 	  for(int l = 0; l < 3; l ++){
 	    for (int m = 0; m < 6; m = m+2){
 	      hCartesianDiff[m]->Fill(x,y, differenceCart[l]);
