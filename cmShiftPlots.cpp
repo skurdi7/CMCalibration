@@ -524,7 +524,7 @@ TH2F *hCartesianDiff[6];
   c->Print("ShiftPlots.pdf","pdf");
 
   // r plots from cart
-  c->Divide(3,2);
+  //c->Divide(3,2);
   c->cd(1);
   hCylindricalForward[2]->Draw("colz");
   c->cd(2);
