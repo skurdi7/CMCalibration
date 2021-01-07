@@ -238,7 +238,8 @@ int cmShiftPlots() {
       double xaveshift = hCartesianAveShift[0]->Interpolate(x,y);
       double yaveshift = hCartesianAveShift[1]->Interpolate(x,y);
       //fill with r from x n y
-      hCylindricalAveShift[2]->Fill(x,y,sqrt(xaveshift*xaveshift + yaveshift*yaveshift));
+      double raveshift = sqrt(xaveshift*xaveshift + yaveshift*yaveshift);
+      hCylindricalAveShift[2]->Fill(x,y,raveshift);
     }
   }
   hPhiCheck2d->Divide(hStripesPerBin);
