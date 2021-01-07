@@ -441,7 +441,6 @@ TH2F *hCartesianDiff[6];
   // gStyle->SetOptStat(0);
   
   TCanvas *c=new TCanvas("c","ShiftPlots",1500,1000);
-  c->Print("ShiftPlots.pdf(","pdf");
   // x plots
   c->Divide(3,2);
   c->cd(1);
@@ -456,9 +455,9 @@ TH2F *hCartesianDiff[6];
   hCartesianAveDiff[1]->Draw("colz");
   c->cd(6);
   hCartesianShiftDifference[0]->Draw();
-
+  c->Print("ShiftPlots.pdf(","pdf");
+  
   // y plots
-  c->Print("ShiftPlots.pdf","pdf");
   c->Divide(3,2);
   c->cd(1);
   hCartesianForward[1]->Draw("colz");
@@ -472,9 +471,9 @@ TH2F *hCartesianDiff[6];
   hCartesianAveDiff[3]->Draw("colz");
   c->cd(6);
   hCartesianShiftDifference[1]->Draw();
-
-  // z plots
   c->Print("ShiftPlots.pdf","pdf");
+  
+  // z plots
   c->Divide(3,2);
   c->cd(1);
   hCartesianForward[2]->Draw("colz");
@@ -488,9 +487,9 @@ TH2F *hCartesianDiff[6];
   hCartesianAveDiff[5]->Draw("colz");
   c->cd(6);
   hCartesianShiftDifference[2]->Draw();
+  c->Print("ShiftPlots.pdf","pdf");
   
   // r plots
-  c->Print("ShiftPlots.pdf","pdf");
   c->Divide(3,2);
   c->cd(1);
   hCylindricalForward[0]->Draw("colz");
@@ -506,9 +505,9 @@ TH2F *hCartesianDiff[6];
   hCylindricalAveDiff[1]->Draw("colz");
   c->cd(6);
   hCylindricalShiftDifference[0]->Draw();
+  c->Print("ShiftPlots.pdf","pdf");
 
   // phi plots
-  c->Print("ShiftPlots.pdf","pdf");
   c->Divide(3,2);
   c->cd(1);
   hCylindricalForward[1]->Draw("colz");
@@ -522,9 +521,9 @@ TH2F *hCartesianDiff[6];
   hCylindricalAveDiff[3]->Draw("colz");
   c->cd(6);
   hCylindricalShiftDifference[1]->Draw();
+  c->Print("ShiftPlots.pdf","pdf");
 
   // r plots from cart
-  c->Print("ShiftPlots.pdf)","pdf");
   c->Divide(3,2);
   c->cd(1);
   hCylindricalForward[2]->Draw("colz");
@@ -538,6 +537,7 @@ TH2F *hCartesianDiff[6];
   hCylindricalAveDiff[5]->Draw("colz");
   c->cd(6);
   hCylindricalShiftDifference[2]->Draw();
+  c->Print("ShiftPlots.pdf)","pdf");
   
   // c->SaveAs("RShift.pdf"); // replace w print
   
