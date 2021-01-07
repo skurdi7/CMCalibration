@@ -458,7 +458,7 @@ TH2F *hCartesianDiff[6];
   c->Print("ShiftPlots.pdf(","pdf");
   
   // y plots
-  c->Divide(3,2);
+  //c->Divide(3,2);
   c->cd(1);
   hCartesianForward[1]->Draw("colz");
   c->cd(2);
@@ -474,7 +474,7 @@ TH2F *hCartesianDiff[6];
   c->Print("ShiftPlots.pdf","pdf");
   
   // z plots
-  c->Divide(3,2);
+  // c->Divide(3,2);
   c->cd(1);
   hCartesianForward[2]->Draw("colz");
   c->cd(2);
@@ -490,7 +490,7 @@ TH2F *hCartesianDiff[6];
   c->Print("ShiftPlots.pdf","pdf");
   
   // r plots
-  c->Divide(3,2);
+  //c->Divide(3,2);
   c->cd(1);
   hCylindricalForward[0]->Draw("colz");
   c->cd(2);
@@ -508,7 +508,7 @@ TH2F *hCartesianDiff[6];
   c->Print("ShiftPlots.pdf","pdf");
 
   // phi plots
-  c->Divide(3,2);
+  //c->Divide(3,2);
   c->cd(1);
   hCylindricalForward[1]->Draw("colz");
   c->cd(2);
