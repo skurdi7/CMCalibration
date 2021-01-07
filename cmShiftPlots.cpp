@@ -235,9 +235,9 @@ int cmShiftPlots() {
     for(int j = 0; j < nbins; j++){
       double y = low + ((high - low)/(1.0*nbins))*(j+0.5); //center of bin
       // try interpolate
-      double xaveshift = hCylindricalAveShift[0]->Interpolate(x,y);
-      double yaveshift = hCylindricalAveShift[1]->Interpolate(x,y);
-      //fill w r from x n y
+      double xaveshift = hCartesianAveShift[0]->Interpolate(x,y);
+      double yaveshift = hCartesianAveShift[1]->Interpolate(x,y);
+      //fill with r from x n y
       hCylindricalAveShift[2]->Fill(x,y,sqrt(xaveshift*xaveshift + yaveshift*yaveshift));
     }
   }
@@ -542,7 +542,7 @@ TH2F *hCartesianDiff[6];
   // r plots from cart
   //c->Divide(3,2);
   c->cd(1);
-  hCylindricalCMModel[2]->Draw("colz");
+  
   c->cd(2);
   hStripesPerBin->Draw("colz");
   c->cd(3);
@@ -556,13 +556,12 @@ TH2F *hCartesianDiff[6];
   c->Print("ShiftPlots.pdf","pdf");
 
   // compare the two R models
-  c->Print("ShiftPlots.pdf","pdf");
   c->cd(1);
-  hCylindricalForward[0]->Draw("colz");
+  hCylindricalAveShift[0]->Draw("colz");
   c->cd(2);
-  hCylindricalCMModel[2]->Draw("colz");
-  c->cd(3);
   hCylindricalAveShift[2]->Draw("colz");
+  c->cd(3);
+  
   c->cd(4);
   hRAveDiff[0]->Draw("colz");
   c->cd(5);
