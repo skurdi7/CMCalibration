@@ -417,16 +417,21 @@ TH2F *hCartesianDiff[6];
 
 	//if difference < -0.8
 	if(r > 30.0){
-	  for(int l = 0; l < 3; l ++){
-	    for (int m = 0; m < 6; m = m+2){
-	      hCartesianDiff[m]->Fill(x,y, differenceCart[l]);
-	      hCylindricalDiff[m]->Fill(x,y, differenceCyl[l]);
-	    }
-	    for (int m = 1; m < 6; m = m+2){
-	      hCartesianDiff[m]->Fill(z,r, differenceCart[l]);
-	      hCylindricalDiff[m]->Fill(z,r, differenceCyl[l]);
-	    }
-	  }
+	  
+	  hCartesianDiff[0]->Fill(x,y, differenceCart[0]);
+	  hCylindricalDiff[0]->Fill(x,y, differenceCyl[0]);
+	  hCartesianDiff[1]->Fill(z,r, differenceCart[0]);
+	  hCylindricalDiff[1]->Fill(z,r, differenceCyl[0]);
+
+	  hCartesianDiff[2]->Fill(x,y, differenceCart[1]);
+	  hCylindricalDiff[2]->Fill(x,y, differenceCyl[1]);
+	  hCartesianDiff[3]->Fill(z,r, differenceCart[1]);
+	  hCylindricalDiff[3]->Fill(z,r, differenceCyl[1]);
+
+	  hCartesianDiff[4]->Fill(x,y, differenceCart[2]);
+	  hCylindricalDiff[4]->Fill(x,y, differenceCyl[2]);
+	  hCartesianDiff[5]->Fill(z,r, differenceCart[2]);
+	  hCylindricalDiff[5]->Fill(z,r, differenceCyl[2]);
 	  
 	  hRDiff[0]->Fill(x,y,differenceR);
 	  hRDiff[1]->Fill(z,r,differenceR);
