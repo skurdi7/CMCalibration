@@ -198,7 +198,7 @@ int cmShiftPlots() {
 
     deltaR = (newposition.Perp() - position.Perp())*(1e4);
     deltaPhi = newposition.Phi() - position.Phi();
-    //deltaRCart = sqrt(deltaX*deltaX + deltaY*deltaY); // wrong calculation
+    deltaRCart = sqrt(newposition.X()*newposition.X() + newposition.Y()*newposition.Y()) - sqrt(position.X()*position.X() + position.Y()*position.Y());
 
     hCartesianForward[0]->Fill(x,y,deltaX);
     hCartesianForward[1]->Fill(x,y,deltaY);
@@ -206,7 +206,7 @@ int cmShiftPlots() {
 
     hCylindricalForward[0]->Fill(x,y,deltaR);
     hCylindricalForward[1]->Fill(x,y,deltaPhi);
-    //hCylindricalForward[2]->Fill(x,y,deltaRCart);
+    hCylindricalForward[2]->Fill(x,y,deltaRCart);
     //hForwardR->Fill(x,y,deltaR);
   
   }
@@ -432,15 +432,14 @@ TH2F *hCartesianDiff[6];
 	  hCylindricalDiff[4]->Fill(x,y, differenceCyl[2]);
 	  hCartesianDiff[5]->Fill(z,r, differenceCart[2]);
 	  hCylindricalDiff[5]->Fill(z,r, differenceCyl[2]);
-	  
+
+	  //also compare r model to r model from cartesian
 	  hRDiff[0]->Fill(x,y,differenceR);
 	  hRDiff[1]->Fill(z,r,differenceR);
 	  
 	  hSamplePerBinXY->Fill(x,y,1);
 	  hSamplePerBinRZ->Fill(z,r,1);
 	}
-
-	  //also compare r model to r model from cartesian
       }
     }
   }
@@ -550,7 +549,7 @@ TH2F *hCartesianDiff[6];
   // r plots from cart
   //c->Divide(3,2);
   c->cd(1);
-  
+  hCylindricalForward[2]->Draw("colz");
   c->cd(2);
   hStripesPerBin->Draw("colz");
   c->cd(3);
