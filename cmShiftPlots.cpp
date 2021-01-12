@@ -170,7 +170,7 @@ int cmShiftPlots() {
   hCartesianForward[1] = new TH2F("hForwardY","Y Shift Forward of Stripe Centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
   hCartesianForward[2] = new TH2F("hForwardZ","Z Shift Forward of Stripe Centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
 
-  TH2F *hCylindricalForward[2];
+  TH2F *hCylindricalForward[3];
   hCylindricalForward[0] = new TH2F("hForwardR","Radial Shift Forward of Stripe Centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
   hCylindricalForward[1] = new TH2F("hForwardPhi","Phi Shift Forward of Stripe Centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
   hCylindricalForward[2] = new TH2F("hForwardRCart","R Shift Forward of Stripe Centers from Cartesian; x (cm); y (cm)",nbins,low,high,nbins,low,high);
