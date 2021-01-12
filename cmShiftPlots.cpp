@@ -113,7 +113,7 @@ int cmShiftPlots() {
   TVector3 position, newposition;
   double low = -80.0;
   double high = 80.0;
-  double deltaX, deltaY, deltaZ, deltaR, deltaPhi, deltaRCart;
+  double deltaX, deltaY, deltaZ, deltaR, deltaPhi, deltaRCart; 
   
   nbins = 40;
   /*rsteps = 100;
