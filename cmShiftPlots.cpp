@@ -225,11 +225,10 @@ int cmShiftPlots() {
 
   for (int i = 0; i < 3; i ++){
     hCartesianAveShift[i]->Divide(hCartesianForward[i],hStripesPerBin);
+    hCylindricalAveShift[i]->Divide(hCylindricalForward[i],hStripesPerBin);
   }
-  
-  hCylindricalAveShift[0]->Divide(hCylindricalForward[0],hStripesPerBin);
-  hCylindricalAveShift[1]->Divide(hCylindricalForward[1],hStripesPerBin);
-  //r from cart in loop over bins below
+
+  /*//r from cart in loop over bins below
   for(int i = 0; i < nbins; i++){
     double x = low + ((high - low)/(1.0*nbins))*(i+0.5); //center of bin
     for(int j = 0; j < nbins; j++){
@@ -243,7 +242,7 @@ int cmShiftPlots() {
       double raveshift = sqrt(xaveshift*xaveshift + yaveshift*yaveshift);
       hCylindricalAveShift[2]->Fill(x,y,raveshift);
     } 
-  }
+    } */
   
   hPhiCheck2d->Divide(hStripesPerBin);
 
