@@ -234,9 +234,11 @@ int cmShiftPlots() {
     double x = low + ((high - low)/(1.0*nbins))*(i+0.5); //center of bin
     for(int j = 0; j < nbins; j++){
       double y = low + ((high - low)/(1.0*nbins))*(j+0.5); //center of bin
-      // try interpolate
-      double xaveshift = hCartesianAveShift[0]->Interpolate(x,y);
-      double yaveshift = hCartesianAveShift[1]->Interpolate(x,y);
+      // tried interpolate, trying bin content now
+      int xbin = hCartesianAveShift[0]->FindBin(x,y);
+      int ybin = hCartesianAveShift[1]->FindBin(x,y);
+      double xaveshift = hCartesianAveShift[0]->GetBinContent(xbin);
+      double yaveshift = hCartesianAveShift[1]->GetBinContent(ybin);
       //fill with r from x n y
       double raveshift = sqrt(xaveshift*xaveshift + yaveshift*yaveshift);
       hCylindricalAveShift[2]->Fill(x,y,raveshift);
