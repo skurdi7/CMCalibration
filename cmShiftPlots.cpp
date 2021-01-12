@@ -295,7 +295,7 @@ int cmShiftPlots() {
 
 	
 	//rshift calculated from xshift n yshift
-	rshiftcart=hCylindricalAveShift[1]->Interpolate(x,y);
+	rshiftcart=hCylindricalAveShift[2]->Interpolate(x,y);
 
 	hCartesianCMModel[0]->Fill(phi,r,z,xshift*(1-z/105.5));
 	hCartesianCMModel[1]->Fill(phi,r,z,yshift*(1-z/105.5));
