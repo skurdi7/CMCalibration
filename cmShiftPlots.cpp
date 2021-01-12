@@ -173,7 +173,7 @@ int cmShiftPlots() {
   TH2F *hCylindricalForward[3];
   hCylindricalForward[0] = new TH2F("hForwardR","Radial Shift Forward of Stripe Centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
   hCylindricalForward[1] = new TH2F("hForwardPhi","Phi Shift Forward of Stripe Centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  hCylindricalForward[2] = new TH2F("hForwardRCart","R Shift Forward of Stripe Centers from Cartesian; x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  hCylindricalForward[2] = new TH2F("hForwardRCart","R Shift Forward of Stripe Centers from Cartesian (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
   
   for (int i = 0; i < Hits.size(); i++){
     x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; //stripe center
@@ -198,7 +198,7 @@ int cmShiftPlots() {
 
     deltaR = (newposition.Perp() - position.Perp())*(1e4);
     deltaPhi = newposition.Phi() - position.Phi();
-    deltaRCart = sqrt(newposition.X()*newposition.X() + newposition.Y()*newposition.Y()) - sqrt(position.X()*position.X() + position.Y()*position.Y());
+    deltaRCart = (sqrt(newposition.X()*newposition.X() + newposition.Y()*newposition.Y()) - sqrt(position.X()*position.X() + position.Y()*position.Y()))*(1e4);
 
     hCartesianForward[0]->Fill(x,y,deltaX);
     hCartesianForward[1]->Fill(x,y,deltaY);
