@@ -230,7 +230,7 @@ int cmShiftPlots() {
   hCylindricalAveShift[0]->Divide(hCylindricalForward[0],hStripesPerBin);
   hCylindricalAveShift[1]->Divide(hCylindricalForward[1],hStripesPerBin);
   //r from cart in loop over bins below
-  /* for(int i = 0; i < nbins; i++){
+  for(int i = 0; i < nbins; i++){
     double x = low + ((high - low)/(1.0*nbins))*(i+0.5); //center of bin
     for(int j = 0; j < nbins; j++){
       double y = low + ((high - low)/(1.0*nbins))*(j+0.5); //center of bin
@@ -241,7 +241,8 @@ int cmShiftPlots() {
       double raveshift = sqrt(xaveshift*xaveshift + yaveshift*yaveshift);
       hCylindricalAveShift[2]->Fill(x,y,raveshift);
     } 
-    }*/
+  }
+  
   hPhiCheck2d->Divide(hStripesPerBin);
 
   //same range and bins for each coordinate, can use hR for all
@@ -256,23 +257,7 @@ int cmShiftPlots() {
   double maxphi = shifter.hR->GetXaxis()->GetXmax();
   double maxr = shifter.hR->GetYaxis()->GetXmax();
   double maxz = shifter.hR->GetZaxis()->GetXmax();
-  
-  for(int i = 0; i < nphi; i++){
-    double phi = minphi + ((maxphi - minphi)/(1.0*nphi))*(i+0.5); //center of bin
-    for(int j = 0; j < nr; j++){
-      double r = minr + ((maxr - minr)/(1.0*nr))*(j+0.5); //center of bin
 
-      double x = r*cos(phi);
-      double y = r*sin(phi);
-      // try interpolate
-      double xaveshift = hCartesianAveShift[0]->Interpolate(x,y);
-      double yaveshift = hCartesianAveShift[1]->Interpolate(x,y);
-      //fill with r from x n y
-      double raveshift = sqrt(xaveshift*xaveshift + yaveshift*yaveshift);
-      hCylindricalAveShift[2]->Fill(x,y,raveshift);
-    }
-  }
-  
   TH3F *hCartesianCMModel[3];
   hCartesianCMModel[0]=new TH3F("hCMModelX", "CM Model: X Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
   hCartesianCMModel[1]=new TH3F("hCMModelY", "CM Model: Y Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
