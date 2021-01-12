@@ -230,18 +230,21 @@ int cmShiftPlots() {
   hCylindricalAveShift[0]->Divide(hCylindricalForward[0],hStripesPerBin);
   hCylindricalAveShift[1]->Divide(hCylindricalForward[1],hStripesPerBin);
   //r from cart in loop over bins below
-  for(int i = 0; i < nbins; i++){
+  /*for(int i = 0; i < nbins; i++){
     double x = low + ((high - low)/(1.0*nbins))*(i+0.5); //center of bin
     for(int j = 0; j < nbins; j++){
-      double y = low + ((high - low)/(1.0*nbins))*(j+0.5); //center of bin
+    double y = low + ((high - low)/(1.0*nbins))*(j+0.5); //center of bin */
+  for (int i = 0; i < Hits.size(); i++){
+    x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; //stripe center
+    y = (Hits[i]->get_y(0) + Hits[i]->get_y(1))/2;
       // try interpolate
-      double xaveshift = hCartesianAveShift[0]->Interpolate(x,y);
-      double yaveshift = hCartesianAveShift[1]->Interpolate(x,y);
-      //fill with r from x n y
-      double raveshift = sqrt(xaveshift*xaveshift + yaveshift*yaveshift);
-      hCylindricalAveShift[2]->Fill(x,y,raveshift);
-    }
-  }
+    double xaveshift = hCartesianAveShift[0]->Interpolate(x,y);
+    double yaveshift = hCartesianAveShift[1]->Interpolate(x,y);
+    //fill with r from x n y
+    double raveshift = sqrt(xaveshift*xaveshift + yaveshift*yaveshift);
+    hCylindricalAveShift[2]->Fill(x,y,raveshift);
+  } 
+  
   hPhiCheck2d->Divide(hStripesPerBin);
 
   //same range and bins for each coordinate, can use hR for all
@@ -256,7 +259,6 @@ int cmShiftPlots() {
   double maxphi = shifter.hR->GetXaxis()->GetXmax();
   double maxr = shifter.hR->GetYaxis()->GetXmax();
   double maxz = shifter.hR->GetZaxis()->GetXmax();
-
 
   TH3F *hCartesianCMModel[3];
   hCartesianCMModel[0]=new TH3F("hCMModelX", "CM Model: X Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
@@ -424,10 +426,10 @@ TH2F *hCartesianDiff[6];
 	      hCartesianDiff[m]->Fill(z,r, differenceCart[l]);
 	      hCylindricalDiff[m]->Fill(z,r, differenceCyl[l]);
 	    }
-
-	    hRDiff[0]->Fill(x,y,differenceR);
-	    hRDiff[1]->Fill(z,r,differenceR);
 	  }
+	  
+	  hRDiff[0]->Fill(x,y,differenceR);
+	  hRDiff[1]->Fill(z,r,differenceR);
 	  
 	  hSamplePerBinXY->Fill(x,y,1);
 	  hSamplePerBinRZ->Fill(z,r,1);
