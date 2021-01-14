@@ -251,7 +251,7 @@ int cmShiftPlots() {
 	// have x n y above for orig
 	//shifted is orig + ave shift
 	
-	double raveshift = (shifted.Perp() - original.Perp())*(1e4);
+	double raveshift = (shifted.Perp() - original.Perp());
 	double phiaveshift = shifted.Phi() - original.Phi();
 	//fill with r from x n y
 	// double raveshift = sqrt(xaveshift*xaveshift + yaveshift*yaveshift);
