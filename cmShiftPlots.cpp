@@ -30,7 +30,7 @@ public:
 };
 
 Shifter::Shifter(){
-  //forward=TFile::Open("/sphenix/user/rcorliss/distortion_maps/res_scan/Summary_bX1508071_0_10_events.root.h_Charge_evt_0.real_B1.5_E-400.0.ross_phi1_sphenix_phislice_lookup_r23xp23xz35.distortion_map.hist.root","READ"); //using temporary histogram for testing
+  //forward=TFile::Open("/sphenix/user/rcorliss/distortion_maps/res_scan/Summary_bX1508071_0_10_events.root.h_Charge_evt_0.real_B1.5_E-400.0.ross_phi1_sphenix_phislice_lookup_r23xp23xz35.distortion_map.hist.root","READ"); //using temporary histogram for testing, try running
   forward=TFile::Open("/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/elevatorpitch/fluct_single.1side.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); 
   
   back=TFile::Open("/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //tells it only to read, not to write anything you make there.
@@ -66,7 +66,7 @@ double x, y, z, xshift, yshift, zshift;
   yshift=hY->Interpolate(phi,r,z);
   zshift=hZ->Interpolate(phi,r,z);
 
-  TVector3 forwardshift(x+xshift,y+yshift,z);
+  TVector3 forwardshift(x+xshift,y+yshift,z+zshift);
 
   return forwardshift;
 }
@@ -91,7 +91,7 @@ double x, y, z, xshift, yshift, zshift;
   double yshiftback=-1*hYBack->Interpolate(phiforward,rforward,z);
   double zshiftback=-1*hZBack->Interpolate(phiforward,rforward,z);
     
-  shiftposition.SetXYZ(x+xshiftback,y+yshiftback,z);
+  shiftposition.SetXYZ(x+xshiftback,y+yshiftback,z+zshiftback);
 
   return shiftposition;
 }
@@ -113,7 +113,7 @@ int cmShiftPlots() {
   TVector3 position, newposition;
   double low = -80.0;
   double high = 80.0;
-  double deltaX, deltaY, deltaZ, deltaR, deltaPhi, deltaRCart; 
+  double deltaX, deltaY, deltaZ, deltaR, deltaPhi; 
   
   nbins = 40;
   /*rsteps = 100;
@@ -170,10 +170,10 @@ int cmShiftPlots() {
   hCartesianForward[1] = new TH2F("hForwardY","Y Shift Forward of Stripe Centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
   hCartesianForward[2] = new TH2F("hForwardZ","Z Shift Forward of Stripe Centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
 
-  TH2F *hCylindricalForward[3];
+  TH2F *hCylindricalForward[2];
   hCylindricalForward[0] = new TH2F("hForwardR","Radial Shift Forward of Stripe Centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
   hCylindricalForward[1] = new TH2F("hForwardPhi","Phi Shift Forward of Stripe Centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  hCylindricalForward[2] = new TH2F("hForwardRCart","R Shift Forward of Stripe Centers from Cartesian (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  //hCylindricalForward[2] = new TH2F("hForwardRCart","R Shift Forward of Stripe Centers from Cartesian (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
   
   for (int i = 0; i < Hits.size(); i++){
     x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; //stripe center
@@ -198,7 +198,9 @@ int cmShiftPlots() {
 
     deltaR = (newposition.Perp() - position.Perp())*(1e4);
     deltaPhi = newposition.Phi() - position.Phi();
-    deltaRCart = (sqrt(newposition.X()*newposition.X() + newposition.Y()*newposition.Y()) - sqrt(position.X()*position.X() + position.Y()*position.Y()))*(1e4);
+    //double newR = sqrt(newposition.X()*newposition.X() + newposition.Y()*newposition.Y());
+    
+    // deltaRCart = (sqrt(newposition.X()*newposition.X() + newposition.Y()*newposition.Y()) - sqrt(position.X()*position.X() + position.Y()*position.Y()))*(1e4);
 
     hCartesianForward[0]->Fill(x,y,deltaX);
     hCartesianForward[1]->Fill(x,y,deltaY);
@@ -206,7 +208,7 @@ int cmShiftPlots() {
 
     hCylindricalForward[0]->Fill(x,y,deltaR);
     hCylindricalForward[1]->Fill(x,y,deltaPhi);
-    hCylindricalForward[2]->Fill(x,y,deltaRCart);
+    // hCylindricalForward[2]->Fill(x,y,deltaRCart);
     //hForwardR->Fill(x,y,deltaR);
   
   }
@@ -225,24 +227,37 @@ int cmShiftPlots() {
 
   for (int i = 0; i < 3; i ++){
     hCartesianAveShift[i]->Divide(hCartesianForward[i],hStripesPerBin);
-    hCylindricalAveShift[i]->Divide(hCylindricalForward[i],hStripesPerBin);
   }
+  
+  hCylindricalAveShift[0]->Divide(hCylindricalForward[0],hStripesPerBin);
+  hCylindricalAveShift[1]->Divide(hCylindricalForward[1],hStripesPerBin);
 
-  /*//r from cart in loop over bins below
+  //r from cart in loop over bins below
   for(int i = 0; i < nbins; i++){
     double x = low + ((high - low)/(1.0*nbins))*(i+0.5); //center of bin
     for(int j = 0; j < nbins; j++){
       double y = low + ((high - low)/(1.0*nbins))*(j+0.5); //center of bin
-      // tried interpolate, trying bin content now
-      int xbin = hCartesianAveShift[0]->FindBin(x,y);
-      int ybin = hCartesianAveShift[1]->FindBin(x,y);
-      double xaveshift = hCartesianAveShift[0]->GetBinContent(xbin);
-      double yaveshift = hCartesianAveShift[1]->GetBinContent(ybin);
-      //fill with r from x n y
-      double raveshift = sqrt(xaveshift*xaveshift + yaveshift*yaveshift);
-      hCylindricalAveShift[2]->Fill(x,y,raveshift);
+      
+	int xbin = hCartesianAveShift[0]->FindBin(x,y);
+	int ybin = hCartesianAveShift[1]->FindBin(x,y);
+	double xaveshift = hCartesianAveShift[0]->GetBinContent(xbin);
+	double yaveshift = hCartesianAveShift[1]->GetBinContent(ybin);
+
+	TVector3 shifted, original;
+	original.SetX(x);
+	original.SetY(y);
+	shifted.SetX(x+xaveshift);
+	shifted.SetY(y+yaveshift);
+	// have x n y above for orig
+	//shifted is orig + ave shift
+	
+	double raveshift = (shifted.Perp() - original.Perp())*(1e4);
+	double phiaveshift = shifted.Phi() - original.Phi();
+	//fill with r from x n y
+	// double raveshift = sqrt(xaveshift*xaveshift + yaveshift*yaveshift);
+	hCylindricalAveShift[2]->Fill(x,y,raveshift);
+      } 
     } 
-    } */
   
   hPhiCheck2d->Divide(hStripesPerBin);
 
@@ -410,6 +425,7 @@ TH2F *hCartesianDiff[6];
 	if (k == nz/2){
 	  //cmmodelslice -> fill(shift reco)
 	  //trueslice -> fill(shift true)
+	  //compare with reco - true
 	}
 	
 	double x = r*cos(phi);
@@ -548,8 +564,8 @@ TH2F *hCartesianDiff[6];
 
   // r plots from cart
   //c->Divide(3,2);
-  c->cd(1);
-  hCylindricalForward[2]->Draw("colz");
+  c->cd(1)->Clear();
+  //hCylindricalForward[2]->Draw("colz");
   c->cd(2);
   hStripesPerBin->Draw("colz");
   c->cd(3);
@@ -567,7 +583,7 @@ TH2F *hCartesianDiff[6];
   hCylindricalAveShift[0]->Draw("colz");
   c->cd(2);
   hCylindricalAveShift[2]->Draw("colz");
-  c->cd(3);
+  c->cd(3)->Clear();
   
   c->cd(4);
   hRAveDiff[0]->Draw("colz");
