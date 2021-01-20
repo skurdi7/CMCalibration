@@ -501,12 +501,12 @@ TH2F *hCartesianDiff[6];
   TCanvas *canvas=new TCanvas("canvas","ShiftPlots",1500,1000);
   TPad *c=new TPad("c","",0.0,0.0,1.0,0.9);
   TPad *titlepad=new TPad("titlepad","",0.0,0.9,1.0,1.0);
-  TLatex * title = new TLatex(0.0,0.0,"Shift Model");
+  TLatex * title = new TLatex(0.0,0.0,"");
   title->SetNDC();
   title->SetTextSize(0.5);
   canvas->cd();
-  //c->Draw();
-  //titlepad->Draw();
+  c->Draw();
+  titlepad->Draw();
   
   // x plots
   c->Divide(3,2);
