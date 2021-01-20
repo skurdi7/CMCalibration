@@ -505,8 +505,8 @@ TH2F *hCartesianDiff[6];
   title->SetNDC();
   title->SetTextSize(0.5);
   canvas->cd();
-  c->Draw();
-  titlepad->Draw();
+  //c->Draw();
+  //titlepad->Draw();
   
   // x plots
   c->Divide(3,2);
@@ -604,7 +604,7 @@ TH2F *hCartesianDiff[6];
   hCylindricalShiftDifference[2]->Draw();
   titlepad->cd();
   titlepad->Clear();
-  title->DrawLatex(0.2,0.2,"R Shift from Cartesian Model");
+  title->DrawLatex(0.3,0.2,"R Shift from Cartesian Model");
   canvas->Print("ShiftPlots.pdf","pdf");
 
   // compare the two R models
@@ -622,7 +622,7 @@ TH2F *hCartesianDiff[6];
   hRShiftDifference->Draw();
   titlepad->cd();
   titlepad->Clear();
-  title->DrawLatex(0.2,0.2,"Comparing R Models");
+  title->DrawLatex(0.4,0.2,"Comparing R Models");
   canvas->Print("ShiftPlots.pdf","pdf");
   
   // phi plots
@@ -641,7 +641,7 @@ TH2F *hCartesianDiff[6];
   hCylindricalShiftDifference[1]->Draw();
   titlepad->cd();
   titlepad->Clear();
-  title->DrawLatex(0.2,0.2,"Phi Shift Model");
+  title->DrawLatex(0.4,0.2,"Phi Shift Model");
   canvas->Print("ShiftPlots.pdf)","pdf");
   
   // c->SaveAs("RShift.pdf"); // replace w print
