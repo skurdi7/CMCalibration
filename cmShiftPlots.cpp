@@ -30,9 +30,9 @@ public:
 };
 
 Shifter::Shifter(){
-  forward=TFile::Open("/sphenix/user/rcorliss/distortion_maps/res_scan/Summary_bX1508071_0_10_events.root.h_Charge_evt_0.real_B1.5_E-400.0.ross_phi1_sphenix_phislice_lookup_r23xp23xz35.distortion_map.hist.root","READ"); //using temporary histogram for testing, try running
+  //forward=TFile::Open("/sphenix/user/rcorliss/distortion_maps/res_scan/Summary_bX1508071_0_10_events.root.h_Charge_evt_0.real_B1.5_E-400.0.ross_phi1_sphenix_phislice_lookup_r23xp23xz35.distortion_map.hist.root","READ"); //using temporary histogram for testing, try running
   //forward=TFile::Open("/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/elevatorpitch/fluct_average.rev3.1side.3d.file0.h_negz.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //distortions due to the average amount of space charge in the TPC with effect of distortions due to the external electric and magnetic fields removed
-  //forward=TFile::Open("/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/elevatorpitch/fluct_single.1side.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //distortions due to single-event differences from the average 
+  forward=TFile::Open("/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/elevatorpitch/fluct_single.1side.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //distortions due to single-event differences from the average 
 
  
   
@@ -500,6 +500,7 @@ TH2F *hCartesianDiff[6];
   
   TCanvas *c=new TCanvas("c","ShiftPlots",1500,1000);
   // x plots
+  { TLatex * xtitle = new TLatex(0.5,0.8,"X Shift Model"); xtitle->SetNDC(); xtitle->SetTextSize(0.2); xtitle->Draw(); }
   c->Divide(3,2);
   c->cd(1);
   hCartesianForward[0]->Draw("colz");
@@ -517,6 +518,7 @@ TH2F *hCartesianDiff[6];
   
   // y plots
   //c->Divide(3,2);
+  { TLatex * ytitle = new TLatex(0.5,0.8,"Y Shift Model"); ytitle->SetNDC(); ytitle->SetTextSize(0.2); ytitle->Draw(); }
   c->cd(1);
   hCartesianForward[1]->Draw("colz");
   c->cd(2);
@@ -533,6 +535,7 @@ TH2F *hCartesianDiff[6];
   
   // z plots
   // c->Divide(3,2);
+  { TLatex * ztitle = new TLatex(0.5,0.8,"Z Shift Model"); ztitle->SetNDC(); ztitle->SetTextSize(0.2); ztitle->Draw(); }
   c->cd(1);
   hCartesianForward[2]->Draw("colz");
   c->cd(2);
@@ -549,6 +552,7 @@ TH2F *hCartesianDiff[6];
   
   // r plots
   //c->Divide(3,2);
+  { TLatex * rtitle = new TLatex(0.5,0.8,"R Shift Model"); rtitle->SetNDC(); rtitle->SetTextSize(0.2); rtitle->Draw(); }
   c->cd(1);
   hCylindricalForward[0]->Draw("colz");
   c->cd(2);
@@ -567,6 +571,7 @@ TH2F *hCartesianDiff[6];
 
   // r plots from cart
   //c->Divide(3,2);
+  { TLatex * rcarttitle = new TLatex(0.5,0.8,"R Shift from Cartesian Model"); rcarttitle->SetNDC(); rcarttitle->SetTextSize(0.2); rcarttitle->Draw(); }
   c->cd(1)->Clear();
   //hCylindricalForward[2]->Draw("colz");
   c->cd(2)->Clear();
@@ -582,6 +587,7 @@ TH2F *hCartesianDiff[6];
   c->Print("ShiftPlots.pdf","pdf");
 
   // compare the two R models
+  { TLatex * rcomptitle = new TLatex(0.5,0.8,"Comparing R Models"); rcomptitle->SetNDC(); rcomptitle->SetTextSize(0.2); rcomptitle->Draw(); }
   c->cd(1);
   hCylindricalAveShift[0]->Draw("colz");
   c->cd(2);
@@ -598,6 +604,7 @@ TH2F *hCartesianDiff[6];
   
   // phi plots
   //c->Divide(3,2);
+  { TLatex * phititle = new TLatex(0.5,0.8,"Phi Shift Model"); phititle->SetNDC(); phititle->SetTextSize(0.2); phititle->Draw(); }
   c->cd(1);
   hCylindricalForward[1]->Draw("colz");
   c->cd(2);
