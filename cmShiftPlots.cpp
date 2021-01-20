@@ -539,8 +539,8 @@ TH2F *hCartesianDiff[6];
   hCartesianAveDiff[3]->Draw("colz");
   c->cd(6);
   hCartesianShiftDifference[1]->Draw();
-  c->cd();
-  title->SetMbTitle("Y Shift Model");
+  //c->cd();
+  //title->SetMbTitle("Y Shift Model");
   c->Print("ShiftPlots.pdf","pdf");
   
   // z plots
