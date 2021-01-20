@@ -514,7 +514,7 @@ TH2F *hCartesianDiff[6];
   c->cd(6);
   hCartesianShiftDifference[0]->Draw();
   c->cd();
-  { TLatex * xtitle = new TLatex(0.35,0.9,"X Shift Model"); xtitle->SetNDC(); xtitle->SetTextSize(0.08); xtitle->Draw(); }
+  { TLatex * title = new TLatex(0.35,0.9,"X Shift Model"); title->SetNDC(); title->SetTextSize(0.08); title->Draw(); }
   c->Print("ShiftPlots.pdf(","pdf");
   
   // y plots
@@ -532,7 +532,7 @@ TH2F *hCartesianDiff[6];
   c->cd(6);
   hCartesianShiftDifference[1]->Draw();
   c->cd();
-  { TLatex * ytitle = new TLatex(0.35,0.9,"Y Shift Model"); ytitle->SetNDC(); ytitle->SetTextSize(0.08); ytitle->Draw(); }
+  title->SetMbTitle("Y Shift Model");
   c->Print("ShiftPlots.pdf","pdf");
   
   // z plots
