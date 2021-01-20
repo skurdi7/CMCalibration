@@ -500,8 +500,9 @@ TH2F *hCartesianDiff[6];
   
   TCanvas *canvas=new TCanvas("canvas","ShiftPlots",1500,1000);
   canvas->cd();
-  TPad *c=new TPad("cbulk","",0.0,0.0,1.0,0.9);
-  TPad *titlepad=new TPad("ctitle","",0.0,0.9,1.0,1.0);
+  TPad *c=new TPad("c","",0.0,0.0,1.0,0.9);
+  canvas->cd();
+  TPad *titlepad=new TPad("titlepad","",0.0,0.9,1.0,1.0);
  
   // x plots
   c->Divide(3,2);
