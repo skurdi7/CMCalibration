@@ -523,7 +523,7 @@ TH2F *hCartesianDiff[6];
   title->SetTextSize(0.08); 
   
   title->Draw();
-  c->Print("ShiftPlots.pdf(","pdf");
+  canvas->Print("ShiftPlots.pdf(","pdf");
   
   // y plots
   //c->Divide(3,2);
@@ -541,7 +541,7 @@ TH2F *hCartesianDiff[6];
   hCartesianShiftDifference[1]->Draw();
   //c->cd();
   //title->SetMbTitle("Y Shift Model");
-  c->Print("ShiftPlots.pdf","pdf");
+  canvas->Print("ShiftPlots.pdf","pdf");
   
   // z plots
   // c->Divide(3,2);
@@ -559,7 +559,7 @@ TH2F *hCartesianDiff[6];
   hCartesianShiftDifference[2]->Draw();
   //c->cd()->Clear();
   //{ TLatex * ztitle = new TLatex(0.35,0.9,"Z Shift Model"); ztitle->SetNDC(); ztitle->SetTextSize(0.08); ztitle->Draw(); }
-  c->Print("ShiftPlots.pdf","pdf");
+  canvas->Print("ShiftPlots.pdf","pdf");
   
   // r plots
   //c->Divide(3,2);
@@ -579,7 +579,7 @@ TH2F *hCartesianDiff[6];
   hCylindricalShiftDifference[0]->Draw();
   //c->cd();
   { TLatex * rtitle = new TLatex(0.35,0.9,"R Shift Model"); rtitle->SetNDC(); rtitle->SetTextSize(0.08); rtitle->Draw(); }
-  c->Print("ShiftPlots.pdf","pdf");
+  canvas->Print("ShiftPlots.pdf","pdf");
 
   // r plots from cart
   //c->Divide(3,2);
@@ -597,7 +597,7 @@ TH2F *hCartesianDiff[6];
   hCylindricalShiftDifference[2]->Draw();
   c->cd();
   { TLatex * rcarttitle = new TLatex(0.35,0.9,"R Shift from Cartesian Model"); rcarttitle->SetNDC(); rcarttitle->SetTextSize(0.08); rcarttitle->Draw(); }
-  c->Print("ShiftPlots.pdf","pdf");
+  canvas->Print("ShiftPlots.pdf","pdf");
 
   // compare the two R models
   c->cd(1);
@@ -614,7 +614,7 @@ TH2F *hCartesianDiff[6];
   hRShiftDifference->Draw();
   c->cd();
   { TLatex * rcomptitle = new TLatex(0.35,0.9,"Comparing R Models"); rcomptitle->SetNDC(); rcomptitle->SetTextSize(0.08); rcomptitle->Draw(); }
-  c->Print("ShiftPlots.pdf","pdf");
+  canvas->Print("ShiftPlots.pdf","pdf");
   
   // phi plots
   //c->Divide(3,2);
@@ -632,7 +632,7 @@ TH2F *hCartesianDiff[6];
   hCylindricalShiftDifference[1]->Draw();
   c->cd();
   { TLatex * phititle = new TLatex(0.35,0.9,"Phi Shift Model"); phititle->SetNDC(); phititle->SetTextSize(0.08); phititle->Draw(); }
-  c->Print("ShiftPlots.pdf)","pdf");
+  canvas->Print("ShiftPlots.pdf)","pdf");
   
   // c->SaveAs("RShift.pdf"); // replace w print
   
