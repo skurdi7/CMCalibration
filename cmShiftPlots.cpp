@@ -498,7 +498,7 @@ TH2F *hCartesianDiff[6];
   
   // gStyle->SetOptStat(0);
   
-  TCanvas *canvas=new TPad("canvas","ShiftPlots",1500,1000);
+  TCanvas *canvas=new TCanvas("canvas","ShiftPlots",1500,1000);
   TPad *c=new TPad("cbulk","",0,0,1,0.9);
   TPad *titlepad=new TPad("ctitle","",0,0.9,1,1);
 
