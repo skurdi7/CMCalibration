@@ -549,7 +549,7 @@ TH2F *hCartesianDiff[6];
   hCartesianAveDiff[5]->Draw("colz");
   c->cd(6);
   hCartesianShiftDifference[2]->Draw();
-  c->cd();
+  c->cd()->Clear();
   { TLatex * ztitle = new TLatex(0.35,0.9,"Z Shift Model"); ztitle->SetNDC(); ztitle->SetTextSize(0.08); ztitle->Draw(); }
   c->Print("ShiftPlots.pdf","pdf");
   
