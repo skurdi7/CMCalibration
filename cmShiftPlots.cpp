@@ -499,11 +499,13 @@ TH2F *hCartesianDiff[6];
   // gStyle->SetOptStat(0);
   
   TCanvas *canvas=new TCanvas("canvas","ShiftPlots",1500,1000);
-  canvas->cd();
-  TPad *c=new TPad("c","",0.0,0.0,1.0,0.9);
-  canvas->cd();
-  TPad *titlepad=new TPad("titlepad","",0.0,0.9,1.0,1.0);
  
+  TPad *c=new TPad("c","",0.0,0.0,1.0,0.9);
+  
+  TPad *titlepad=new TPad("titlepad","",0.0,0.9,1.0,1.0);
+  canvas->cd();
+  c->Draw();
+  titlepad->Draw();
   // x plots
   c->Divide(3,2);
   c->cd(1);
@@ -522,12 +524,11 @@ TH2F *hCartesianDiff[6];
   titlepad->cd();
   TLatex * title = new TLatex(0.35,0,"X Shift Model");
   title->SetNDC();
-  title->SetTextSize(0.08); 
+  title->SetTextSize(0.5); 
   
   title->Draw();
-  canvas->cd();
-  c->Draw();
-  titlepad->Draw();
+  
+  
   canvas->Print("ShiftPlots.pdf(","pdf");
   
   // y plots
