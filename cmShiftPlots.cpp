@@ -500,7 +500,6 @@ TH2F *hCartesianDiff[6];
   
   TCanvas *c=new TCanvas("c","ShiftPlots",1500,1000);
   // x plots
-  { TLatex * xtitle = new TLatex(0.5,0.8,"X Shift Model"); xtitle->SetNDC(); xtitle->SetTextSize(0.2); xtitle->Draw(); }
   c->Divide(3,2);
   c->cd(1);
   hCartesianForward[0]->Draw("colz");
@@ -514,11 +513,11 @@ TH2F *hCartesianDiff[6];
   hCartesianAveDiff[1]->Draw("colz");
   c->cd(6);
   hCartesianShiftDifference[0]->Draw();
+  { TLatex * xtitle = new TLatex(0.5,0.8,"X Shift Model"); xtitle->SetNDC(); xtitle->SetTextSize(0.2); xtitle->SetTextSize(0.2); xtitle->Draw(); }
   c->Print("ShiftPlots.pdf(","pdf");
   
   // y plots
   //c->Divide(3,2);
-  { TLatex * ytitle = new TLatex(0.5,0.8,"Y Shift Model"); ytitle->SetNDC(); ytitle->SetTextSize(0.2); ytitle->Draw(); }
   c->cd(1);
   hCartesianForward[1]->Draw("colz");
   c->cd(2);
@@ -531,11 +530,11 @@ TH2F *hCartesianDiff[6];
   hCartesianAveDiff[3]->Draw("colz");
   c->cd(6);
   hCartesianShiftDifference[1]->Draw();
+  { TLatex * ytitle = new TLatex(0.5,0.8,"Y Shift Model"); ytitle->SetNDC(); ytitle->SetTextSize(0.2); ytitle->SetTextSize(0.2); ytitle->Draw(); }
   c->Print("ShiftPlots.pdf","pdf");
   
   // z plots
   // c->Divide(3,2);
-  { TLatex * ztitle = new TLatex(0.5,0.8,"Z Shift Model"); ztitle->SetNDC(); ztitle->SetTextSize(0.2); ztitle->Draw(); }
   c->cd(1);
   hCartesianForward[2]->Draw("colz");
   c->cd(2);
@@ -548,11 +547,11 @@ TH2F *hCartesianDiff[6];
   hCartesianAveDiff[5]->Draw("colz");
   c->cd(6);
   hCartesianShiftDifference[2]->Draw();
+  { TLatex * ztitle = new TLatex(0.5,0.8,"Z Shift Model"); ztitle->SetNDC(); ztitle->SetTextSize(0.2); ztitle->SetTextSize(0.2); ztitle->Draw(); }
   c->Print("ShiftPlots.pdf","pdf");
   
   // r plots
   //c->Divide(3,2);
-  { TLatex * rtitle = new TLatex(0.5,0.8,"R Shift Model"); rtitle->SetNDC(); rtitle->SetTextSize(0.2); rtitle->Draw(); }
   c->cd(1);
   hCylindricalForward[0]->Draw("colz");
   c->cd(2);
@@ -567,11 +566,11 @@ TH2F *hCartesianDiff[6];
   hCylindricalAveDiff[1]->Draw("colz");
   c->cd(6);
   hCylindricalShiftDifference[0]->Draw();
+  { TLatex * rtitle = new TLatex(0.5,0.8,"R Shift Model"); rtitle->SetNDC(); rtitle->SetTextSize(0.2); rtitle->SetTextSize(0.2); rtitle->Draw(); }
   c->Print("ShiftPlots.pdf","pdf");
 
   // r plots from cart
   //c->Divide(3,2);
-  { TLatex * rcarttitle = new TLatex(0.5,0.8,"R Shift from Cartesian Model"); rcarttitle->SetNDC(); rcarttitle->SetTextSize(0.2); rcarttitle->Draw(); }
   c->cd(1)->Clear();
   //hCylindricalForward[2]->Draw("colz");
   c->cd(2)->Clear();
@@ -584,10 +583,10 @@ TH2F *hCartesianDiff[6];
   hCylindricalAveDiff[5]->Draw("colz");
   c->cd(6);
   hCylindricalShiftDifference[2]->Draw();
+  { TLatex * rcarttitle = new TLatex(0.5,0.8,"R Shift from Cartesian Model"); rcarttitle->SetNDC(); rcarttitle->SetTextSize(0.2); rcarttitle->SetTextSize(0.2); rcarttitle->Draw(); }
   c->Print("ShiftPlots.pdf","pdf");
 
   // compare the two R models
-  { TLatex * rcomptitle = new TLatex(0.5,0.8,"Comparing R Models"); rcomptitle->SetNDC(); rcomptitle->SetTextSize(0.2); rcomptitle->Draw(); }
   c->cd(1);
   hCylindricalAveShift[0]->Draw("colz");
   c->cd(2);
@@ -600,11 +599,11 @@ TH2F *hCartesianDiff[6];
   hRAveDiff[1]->Draw("colz");
   c->cd(6);
   hRShiftDifference->Draw();
+  { TLatex * rcomptitle = new TLatex(0.5,0.8,"Comparing R Models"); rcomptitle->SetNDC(); rcomptitle->SetTextSize(0.2); rcomptitle->SetTextSize(0.2); rcomptitle->Draw(); }
   c->Print("ShiftPlots.pdf","pdf");
   
   // phi plots
   //c->Divide(3,2);
-  { TLatex * phititle = new TLatex(0.5,0.8,"Phi Shift Model"); phititle->SetNDC(); phititle->SetTextSize(0.2); phititle->Draw(); }
   c->cd(1);
   hCylindricalForward[1]->Draw("colz");
   c->cd(2);
@@ -617,6 +616,7 @@ TH2F *hCartesianDiff[6];
   hCylindricalAveDiff[3]->Draw("colz");
   c->cd(6);
   hCylindricalShiftDifference[1]->Draw();
+  { TLatex * phititle = new TLatex(0.5,0.8,"Phi Shift Model"); phititle->SetNDC(); phititle->SetTextSize(0.2); phititle->SetTextSize(0.2); phititle->Draw(); }
   c->Print("ShiftPlots.pdf)","pdf");
   
   // c->SaveAs("RShift.pdf"); // replace w print
