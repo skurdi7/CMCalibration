@@ -513,7 +513,7 @@ TH2F *hCartesianDiff[6];
   hCartesianAveDiff[1]->Draw("colz");
   c->cd(6);
   hCartesianShiftDifference[0]->Draw();
-  c-cd();
+  c->cd();
   { TLatex * xtitle = new TLatex(0.5,0.9,"X Shift Model"); xtitle->SetNDC(); xtitle->SetTextSize(0.1); xtitle->Draw(); }
   c->Print("ShiftPlots.pdf(","pdf");
   
@@ -531,7 +531,7 @@ TH2F *hCartesianDiff[6];
   hCartesianAveDiff[3]->Draw("colz");
   c->cd(6);
   hCartesianShiftDifference[1]->Draw();
-  c-cd();
+  c->cd();
   { TLatex * ytitle = new TLatex(0.5,0.9,"Y Shift Model"); ytitle->SetNDC(); ytitle->SetTextSize(0.1); ytitle->Draw(); }
   c->Print("ShiftPlots.pdf","pdf");
   
@@ -549,7 +549,7 @@ TH2F *hCartesianDiff[6];
   hCartesianAveDiff[5]->Draw("colz");
   c->cd(6);
   hCartesianShiftDifference[2]->Draw();
-  c-cd();
+  c->cd();
   { TLatex * ztitle = new TLatex(0.5,0.9,"Z Shift Model"); ztitle->SetNDC(); ztitle->SetTextSize(0.1); ztitle->Draw(); }
   c->Print("ShiftPlots.pdf","pdf");
   
@@ -569,7 +569,7 @@ TH2F *hCartesianDiff[6];
   hCylindricalAveDiff[1]->Draw("colz");
   c->cd(6);
   hCylindricalShiftDifference[0]->Draw();
-  c-cd();
+  c->cd();
   { TLatex * rtitle = new TLatex(0.5,0.9,"R Shift Model"); rtitle->SetNDC(); rtitle->SetTextSize(0.1); rtitle->Draw(); }
   c->Print("ShiftPlots.pdf","pdf");
 
@@ -587,7 +587,7 @@ TH2F *hCartesianDiff[6];
   hCylindricalAveDiff[5]->Draw("colz");
   c->cd(6);
   hCylindricalShiftDifference[2]->Draw();
-  c-cd();
+  c->cd();
   { TLatex * rcarttitle = new TLatex(0.5,0.9,"R Shift from Cartesian Model"); rcarttitle->SetNDC(); rcarttitle->SetTextSize(0.1); rcarttitle->Draw(); }
   c->Print("ShiftPlots.pdf","pdf");
 
@@ -604,7 +604,7 @@ TH2F *hCartesianDiff[6];
   hRAveDiff[1]->Draw("colz");
   c->cd(6);
   hRShiftDifference->Draw();
-  c-cd();
+  c->cd();
   { TLatex * rcomptitle = new TLatex(0.5,0.9,"Comparing R Models"); rcomptitle->SetNDC(); rcomptitle->SetTextSize(0.1); rcomptitle->Draw(); }
   c->Print("ShiftPlots.pdf","pdf");
   
@@ -622,7 +622,7 @@ TH2F *hCartesianDiff[6];
   hCylindricalAveDiff[3]->Draw("colz");
   c->cd(6);
   hCylindricalShiftDifference[1]->Draw();
-  c-cd();
+  c->cd();
   { TLatex * phititle = new TLatex(0.5,0.9,"Phi Shift Model"); phititle->SetNDC(); phititle->SetTextSize(0.2); phititle->SetTextSize(0.2); phititle->Draw(); }
   c->Print("ShiftPlots.pdf)","pdf");
   
