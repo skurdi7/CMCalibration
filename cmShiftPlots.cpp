@@ -557,8 +557,8 @@ TH2F *hCartesianDiff[6];
   hCartesianAveDiff[5]->Draw("colz");
   c->cd(6);
   hCartesianShiftDifference[2]->Draw();
-  c->cd()->Clear();
-  { TLatex * ztitle = new TLatex(0.35,0.9,"Z Shift Model"); ztitle->SetNDC(); ztitle->SetTextSize(0.08); ztitle->Draw(); }
+  //c->cd()->Clear();
+  //{ TLatex * ztitle = new TLatex(0.35,0.9,"Z Shift Model"); ztitle->SetNDC(); ztitle->SetTextSize(0.08); ztitle->Draw(); }
   c->Print("ShiftPlots.pdf","pdf");
   
   // r plots
@@ -577,7 +577,7 @@ TH2F *hCartesianDiff[6];
   hCylindricalAveDiff[1]->Draw("colz");
   c->cd(6);
   hCylindricalShiftDifference[0]->Draw();
-  c->cd();
+  //c->cd();
   { TLatex * rtitle = new TLatex(0.35,0.9,"R Shift Model"); rtitle->SetNDC(); rtitle->SetTextSize(0.08); rtitle->Draw(); }
   c->Print("ShiftPlots.pdf","pdf");
 
