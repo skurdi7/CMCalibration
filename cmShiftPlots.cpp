@@ -525,6 +525,9 @@ TH2F *hCartesianDiff[6];
   title->SetTextSize(0.08); 
   
   title->Draw();
+  canvas->cd();
+  c->Draw();
+  titlepad->Draw();
   canvas->Print("ShiftPlots.pdf(","pdf");
   
   // y plots
