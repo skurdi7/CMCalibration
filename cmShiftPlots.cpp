@@ -708,6 +708,7 @@ TH2F *hCartesianDiff[6];
   titlepad->cd();
   titlepad->Clear();
   title->DrawLatex(0.3,0.2,"Phi Shift from Cartesian Model");
+  canvas->Print("ShiftPlots.pdf","pdf");
   
   //Compare X and Y diff
   c->cd(1);
