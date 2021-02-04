@@ -200,7 +200,7 @@ int cmShiftPlots() {
     deltaZ = (newposition.Z() - position.Z())*(1e4);
 
     deltaR = (newposition.Perp() - position.Perp())*(1e4);
-    deltaPhi = newposition.Phi() - position.Phi();
+    deltaPhi = newposition.DeltaPhi(position);
     //double newR = sqrt(newposition.X()*newposition.X() + newposition.Y()*newposition.Y());
     
     // deltaRCart = (sqrt(newposition.X()*newposition.X() + newposition.Y()*newposition.Y()) - sqrt(position.X()*position.X() + position.Y()*position.Y()))*(1e4);
