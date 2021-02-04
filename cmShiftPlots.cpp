@@ -256,7 +256,7 @@ int cmShiftPlots() {
 	
 	double raveshift = (shifted.Perp() - original.Perp());
 	//double phiaveshift = shifted.Phi() - original.Phi();
-	double phiaveshift = shifted.DeltaPhi(original);
+	double phiaveshift = shifted.DeltaPhi(original)*original.Perp();
 
 	//if(phiaveshift > TMath::TwoPi()){
 	// phiaveshift = phiaveshift - TMath::TwoPi(); 
