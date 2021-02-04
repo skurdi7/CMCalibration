@@ -187,7 +187,7 @@ int cmShiftPlots() {
     
     double phi=position.Phi();
     if(position.Phi() < 0.0){
-      phi = position.Phi() + 2.0*TMath::Pi(); 
+      phi = position.Phi() + TMath::TwoPi(); 
     }
   
     PhiCheck->Fill(phi);
@@ -256,6 +256,13 @@ int cmShiftPlots() {
 	
 	double raveshift = (shifted.Perp() - original.Perp());
 	double phiaveshift = shifted.Phi() - original.Phi();
+    if(phiaveshift < 0.0){
+      phiaveshift = phiaveshift + TMath::TwoPi(); 
+    }
+
+   if(phiaveshift > TMath::TwoPi()){
+      phiaveshift = phiaveshift - TMath::TwoPi(); 
+    }
 	//fill with r from x n y
 	// double raveshift = sqrt(xaveshift*xaveshift + yaveshift*yaveshift);
 	hCylindricalAveShift[2]->Fill(x,y,raveshift);
