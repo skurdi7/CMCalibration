@@ -713,6 +713,11 @@ TH2F *hCartesianDiff[6];
   //Compare X and Y diff
   c->cd(1);
   hCompareXY->Draw("colz");
+  c->cd(2)->Clear();
+  c->cd(3)->Clear();
+  c->cd(4)->Clear();
+  c->cd(5)->Clear();
+  c->cd(6)->Clear();
   titlepad->cd();
   titlepad->Clear();
   title->DrawLatex(0.4,0.2,"Comparing X and Y Models");
