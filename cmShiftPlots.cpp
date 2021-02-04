@@ -549,6 +549,8 @@ TH2F *hCartesianDiff[6];
 
   hRAveDiff[0]->SetStats(0);
   hRAveDiff[1]->SetStats(0);
+
+  hCylindricalAveShift[3]->SetStats(0);
   
   // gStyle->SetOptStat(0);
   
