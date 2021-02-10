@@ -109,7 +109,7 @@ void IDLabels();
 
 int cmShiftPlots() {
   Shifter shifter;
-  StripesClass stripes;
+  PHG4TpcCentralMembrane stripes;
   vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
   int nbins; 
   double x, y, z;
@@ -271,7 +271,7 @@ int cmShiftPlots() {
   
   hPhiCheck2d->Divide(hStripesPerBin);
 
-  //same range and bins for each coordinate, can use hR for all
+  //same range and bins for each coordinate, can use hR for all, binned in cm
   int nphi = shifter.hR->GetXaxis()->GetNbins();
   int nr = shifter.hR->GetYaxis()->GetNbins();
   int nz = shifter.hR->GetZaxis()->GetNbins();
@@ -284,6 +284,7 @@ int cmShiftPlots() {
   double maxr = shifter.hR->GetYaxis()->GetXmax();
   double maxz = shifter.hR->GetZaxis()->GetXmax();
 
+  //check that models are all in cm
   TH3F *hCartesianCMModel[3];
   hCartesianCMModel[0]=new TH3F("hCMModelX", "CM Model: X Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
   hCartesianCMModel[1]=new TH3F("hCMModelY", "CM Model: Y Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);

@@ -19,9 +19,9 @@
 
 using namespace std;
 
-class StripesClass {
+class PHG4TpcCentralMembrane {
 public:
-  StripesClass(); //default constructor
+  PHG4TpcCentralMembrane(); //default constructor
   int getSearchResult(double xcheck, double ycheck); // check if coords are in a stripe
   int getStripeID(double xcheck, double ycheck);
  
