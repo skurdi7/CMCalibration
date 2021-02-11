@@ -165,7 +165,7 @@ int cmShiftPlots() {
   //TH2F *hForwardR = new TH2F("hForwardR","Radial Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
 
   TH2F *hCartesianForward[3];
-  hCartesianForward[0] = new TH2F("hForwardX","X Shift Forward of Stripe Centers (#mu m); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  hCartesianForward[0] = new TH2F("hForwardX","X Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
   hCartesianForward[1] = new TH2F("hForwardY","Y Shift Forward of Stripe Centers (#mu m); x (cm); y (cm)",nbins,low,high,nbins,low,high);
   hCartesianForward[2] = new TH2F("hForwardZ","Z Shift Forward of Stripe Centers (#mu m); x (cm); y (cm)",nbins,low,high,nbins,low,high);
 
