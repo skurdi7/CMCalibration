@@ -220,7 +220,7 @@ int cmShiftPlots() {
   TH2F *hCylindricalAveShift[4];
   hCylindricalAveShift[0] = new TH2F("AveShiftR","Average of CM Model R over Stripes per Bin (#mu m); x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
   hCylindricalAveShift[1] = new TH2F("AveShiftPhi","Average of CM Model Phi over Stripes per Bin (rad); x (cm); y (cm)",nbins,low,high,nbins,low,high); 
-  hCylindricalAveShift[2] = new TH2F("AveShiftRCart","Average of CM Model R over Stripes per Bin from Cartesian (#mu m); x (cm); y (cm)",nbins,low,high,nbins,low,high); 
+  hCylindricalAveShift[2] = new TH2F("AveShiftRCart","Average of CM Model R over Stripes per Bin from Cartesian (cm); x (cm); y (cm)",nbins,low,high,nbins,low,high); 
   hCylindricalAveShift[3] = new TH2F("AveShiftPhiCart","Average of CM Model Phi over Stripes per Bin from Cartesian (rad); x (cm); y (cm)",nbins,low,high,nbins,low,high); 
   //AveShift->Divide(hForwardR,hStripesPerBin);
 
@@ -241,9 +241,7 @@ int cmShiftPlots() {
 	int ybin = hCartesianAveShift[1]->FindBin(x,y);
 	double xaveshift = (hCartesianAveShift[0]->GetBinContent(xbin))*(1e-4); // converts  microns to cm 
 	double yaveshift = (hCartesianAveShift[1]->GetBinContent(ybin))*(1e-4);
-	//double xaveshift = (hCartesianAveShift[0]->GetBinContent(xbin)); 
-	//double yaveshift = (hCartesianAveShift[1]->GetBinContent(ybin));
-
+	
 	TVector3 shifted, original;
 	original.SetX(x);
 	original.SetY(y);
@@ -277,7 +275,9 @@ int cmShiftPlots() {
   double minphi = shifter.hR->GetXaxis()->GetXmin();
   double minr = shifter.hR->GetYaxis()->GetXmin();
   double minz = shifter.hR->GetZaxis()->GetXmin();
-  
+
+  cout << minr << endl;
+    
   double maxphi = shifter.hR->GetXaxis()->GetXmax();
   double maxr = shifter.hR->GetYaxis()->GetXmax();
   double maxz = shifter.hR->GetZaxis()->GetXmax();
