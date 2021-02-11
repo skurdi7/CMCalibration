@@ -13,10 +13,6 @@ R__LOAD_LIBRARY(build/.libs/libg4tpccentralmembrane)
 R__LOAD_LIBRARY(libphg4hit.so)
 
 
-// all distances in mm, all angles in rad
-// class that generates stripes and dummy hit coordinates
-// stripes have width of one mm, length of one pad width, and are centered in middle of sector gaps
-
 using namespace std;
 
 class Shifter {
@@ -169,13 +165,13 @@ int cmShiftPlots() {
   //TH2F *hForwardR = new TH2F("hForwardR","Radial Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
 
   TH2F *hCartesianForward[3];
-  hCartesianForward[0] = new TH2F("hForwardX","X Shift Forward of Stripe Centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  hCartesianForward[1] = new TH2F("hForwardY","Y Shift Forward of Stripe Centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  hCartesianForward[2] = new TH2F("hForwardZ","Z Shift Forward of Stripe Centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  hCartesianForward[0] = new TH2F("hForwardX","X Shift Forward of Stripe Centers (#mu m); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  hCartesianForward[1] = new TH2F("hForwardY","Y Shift Forward of Stripe Centers (#mu m); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  hCartesianForward[2] = new TH2F("hForwardZ","Z Shift Forward of Stripe Centers (#mu m); x (cm); y (cm)",nbins,low,high,nbins,low,high);
 
   TH2F *hCylindricalForward[2];
-  hCylindricalForward[0] = new TH2F("hForwardR","Radial Shift Forward of Stripe Centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  hCylindricalForward[1] = new TH2F("hForwardPhi","Phi Shift Forward of Stripe Centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  hCylindricalForward[0] = new TH2F("hForwardR","Radial Shift Forward of Stripe Centers (#mu m); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  hCylindricalForward[1] = new TH2F("hForwardPhi","Phi Shift Forward of Stripe Centers (rad); x (cm); y (cm)",nbins,low,high,nbins,low,high);
   //hCylindricalForward[2] = new TH2F("hForwardRCart","R Shift Forward of Stripe Centers from Cartesian (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high);
   
   for (int i = 0; i < Hits.size(); i++){
@@ -195,7 +191,7 @@ int cmShiftPlots() {
       
     newposition = shifter.ShiftForward(position);
 
-    deltaX = (newposition.X() - position.X())*(1e4);
+    deltaX = (newposition.X() - position.X())*(1e4); //convert from cm to micron 
     deltaY = (newposition.Y() - position.Y())*(1e4);
     deltaZ = (newposition.Z() - position.Z())*(1e4);
 
@@ -217,15 +213,15 @@ int cmShiftPlots() {
   }
 
   TH2F *hCartesianAveShift[3];
-  hCartesianAveShift[0] = new TH2F("AveShiftX","Average of CM Model X over Stripes per Bin (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
-  hCartesianAveShift[1] = new TH2F("AveShiftY","Average of CM Model Y over Stripes per Bin (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high); 
-  hCartesianAveShift[2] = new TH2F("AveShiftZ","Average of CM Model Z over Stripes per Bin (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high); 
+  hCartesianAveShift[0] = new TH2F("AveShiftX","Average of CM Model X over Stripes per Bin (#mu m); x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+  hCartesianAveShift[1] = new TH2F("AveShiftY","Average of CM Model Y over Stripes per Bin (#mu m); x (cm); y (cm)",nbins,low,high,nbins,low,high); 
+  hCartesianAveShift[2] = new TH2F("AveShiftZ","Average of CM Model Z over Stripes per Bin (#mu m); x (cm); y (cm)",nbins,low,high,nbins,low,high); 
 
   TH2F *hCylindricalAveShift[4];
-  hCylindricalAveShift[0] = new TH2F("AveShiftR","Average of CM Model R over Stripes per Bin (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
-  hCylindricalAveShift[1] = new TH2F("AveShiftPhi","Average of CM Model Phi over Stripes per Bin (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high); 
-  hCylindricalAveShift[2] = new TH2F("AveShiftRCart","Average of CM Model R over Stripes per Bin from Cartesian (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high); 
-  hCylindricalAveShift[3] = new TH2F("AveShiftPhiCart","Average of CM Model Phi over Stripes per Bin from Cartesian (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high); 
+  hCylindricalAveShift[0] = new TH2F("AveShiftR","Average of CM Model R over Stripes per Bin (#mu m); x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+  hCylindricalAveShift[1] = new TH2F("AveShiftPhi","Average of CM Model Phi over Stripes per Bin (rad); x (cm); y (cm)",nbins,low,high,nbins,low,high); 
+  hCylindricalAveShift[2] = new TH2F("AveShiftRCart","Average of CM Model R over Stripes per Bin from Cartesian (#mu m); x (cm); y (cm)",nbins,low,high,nbins,low,high); 
+  hCylindricalAveShift[3] = new TH2F("AveShiftPhiCart","Average of CM Model Phi over Stripes per Bin from Cartesian (rad); x (cm); y (cm)",nbins,low,high,nbins,low,high); 
   //AveShift->Divide(hForwardR,hStripesPerBin);
 
   for (int i = 0; i < 3; i ++){
@@ -243,8 +239,10 @@ int cmShiftPlots() {
       
 	int xbin = hCartesianAveShift[0]->FindBin(x,y);
 	int ybin = hCartesianAveShift[1]->FindBin(x,y);
-	double xaveshift = (hCartesianAveShift[0]->GetBinContent(xbin))*(1e-4);
-	double yaveshift = (hCartesianAveShift[1]->GetBinContent(ybin))*(1e-4);
+	//double xaveshift = (hCartesianAveShift[0]->GetBinContent(xbin))*(1e-4); // converts  microns to cm 
+	//double yaveshift = (hCartesianAveShift[1]->GetBinContent(ybin))*(1e-4);
+	double xaveshift = (hCartesianAveShift[0]->GetBinContent(xbin)); 
+	double yaveshift = (hCartesianAveShift[1]->GetBinContent(ybin));
 
 	TVector3 shifted, original;
 	original.SetX(x);
