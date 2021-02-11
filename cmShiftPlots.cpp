@@ -276,11 +276,12 @@ int cmShiftPlots() {
   double minr = shifter.hR->GetYaxis()->GetXmin();
   double minz = shifter.hR->GetZaxis()->GetXmin();
 
-  cout << minz << endl;
-    
   double maxphi = shifter.hR->GetXaxis()->GetXmax();
   double maxr = shifter.hR->GetYaxis()->GetXmax();
   double maxz = shifter.hR->GetZaxis()->GetXmax();
+
+  cout << maxz << endl;
+    
 
   //check that models are all in cm
   TH3F *hCartesianCMModel[3];
@@ -302,7 +303,7 @@ int cmShiftPlots() {
     for(int j = 0; j < nr; j++){
       double r = minr + ((maxr - minr)/(1.0*nr))*(j+0.5); //center of bin
 
-      double x = r*cos(phi);
+      double x = r*cos(phi); //cm
       double y = r*sin(phi);
 
       //cout << "x" << x << endl;
