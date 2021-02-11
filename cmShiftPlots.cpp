@@ -276,7 +276,7 @@ int cmShiftPlots() {
   double minr = shifter.hR->GetYaxis()->GetXmin();
   double minz = shifter.hR->GetZaxis()->GetXmin();
 
-  cout << minr << endl;
+  cout << minz << endl;
     
   double maxphi = shifter.hR->GetXaxis()->GetXmax();
   double maxr = shifter.hR->GetYaxis()->GetXmax();
