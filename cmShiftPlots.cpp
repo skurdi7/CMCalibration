@@ -754,7 +754,7 @@ TH2F *hCartesianDiff[6];
 }
 
 void ScanHist(int nbins, double low, double high, double x, double y){
-  StripesClass stripes;
+  PHG4TpcCentralMembrane stripes;
   int stripeID; 
   //histogram from search
   TH2F *Pattern1 = new TH2F("Pattern1","X,Y Scan if in Stripe;X (mm);Y (mm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
@@ -795,7 +795,7 @@ void ScanHist(int nbins, double low, double high, double x, double y){
 }
 
 void IDLabels(){
-  StripesClass stripes;
+  PHG4TpcCentralMembrane stripes;
   int stripeID;
   vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
   const double mm = 1.0;
