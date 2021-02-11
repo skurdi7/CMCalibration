@@ -239,10 +239,10 @@ int cmShiftPlots() {
       
 	int xbin = hCartesianAveShift[0]->FindBin(x,y);
 	int ybin = hCartesianAveShift[1]->FindBin(x,y);
-	//double xaveshift = (hCartesianAveShift[0]->GetBinContent(xbin))*(1e-4); // converts  microns to cm 
-	//double yaveshift = (hCartesianAveShift[1]->GetBinContent(ybin))*(1e-4);
-	double xaveshift = (hCartesianAveShift[0]->GetBinContent(xbin)); 
-	double yaveshift = (hCartesianAveShift[1]->GetBinContent(ybin));
+	double xaveshift = (hCartesianAveShift[0]->GetBinContent(xbin))*(1e-4); // converts  microns to cm 
+	double yaveshift = (hCartesianAveShift[1]->GetBinContent(ybin))*(1e-4);
+	//double xaveshift = (hCartesianAveShift[0]->GetBinContent(xbin)); 
+	//double yaveshift = (hCartesianAveShift[1]->GetBinContent(ybin));
 
 	TVector3 shifted, original;
 	original.SetX(x);
