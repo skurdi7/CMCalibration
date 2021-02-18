@@ -39,6 +39,7 @@ Shifter::Shifter(){
   hZ=(TH3F*)forward->Get("hIntDistortionZ");
 
   hR=(TH3F*)forward->Get("hIntDistortionR");
+  hPhi=(TH3F*)forward->Get("hIntDistortionP");
    
   hXBack=(TH3F*)back->Get("hIntDistortionX");
   hYBack=(TH3F*)back->Get("hIntDistortionY");
@@ -435,50 +436,55 @@ TH2F *hCartesianDiff[6];
 
 	int bin = shifter.hR->FindBin(phi,r,z);
 
-	for(int l = 0; l < 3; l ++){
-	  shiftrecoCart[l] =  (hCartesianCMModel[l]->GetBinContent(bin))*(1e4);
-	  shifttrueCart[l] = (shifter.hR->GetBinContent(bin))*(1e4); //convert from cm to micron 
-	  differenceCart[l] = shiftrecoCart[l] - shifttrueCart[l]; 
+	if(r > 30.0){
+	  
+	  shifttrueCart[0] = (shifter.hX->GetBinContent(bin))*(1e4); //convert from cm to micron
+	  shifttrueCart[1] = (shifter.hY->GetBinContent(bin))*(1e4); //convert from cm to micron 
+	  shifttrueCart[2] = (shifter.hZ->GetBinContent(bin))*(1e4); //convert from cm to micron 
 
-	  hCartesianShiftDifference[l]->Fill(differenceCart[l]);
-	}
+	  for(int l = 0; l < 3; l ++){
+	    shiftrecoCart[l] =  (hCartesianCMModel[l]->GetBinContent(bin))*(1e4);
+	  
+	    differenceCart[l] = shiftrecoCart[l] - shifttrueCart[l]; 
+
+	    hCartesianShiftDifference[l]->Fill(differenceCart[l]);
+	  }
 	
-	for(int l = 0; l < 3; l = l + 2){  
-	  shiftrecoCyl[l] =  (hCylindricalCMModel[l]->GetBinContent(bin))*(1e4);
-	  shifttrueCyl[l] = (shifter.hR->GetBinContent(bin))*(1e4); //convert from cm to micron 
-	  differenceCyl[l] = shiftrecoCyl[l] - shifttrueCyl[l]; 
+	  for(int l = 0; l < 3; l = l + 2){  
+	    shiftrecoCyl[l] =  (hCylindricalCMModel[l]->GetBinContent(bin))*(1e4);
+	    shifttrueCyl[l] = (shifter.hR->GetBinContent(bin))*(1e4); //convert from cm to micron 
+	    differenceCyl[l] = shiftrecoCyl[l] - shifttrueCyl[l]; 
+	    
+	    hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
+	  }
+	  
+	  for(int l = 1; l < 4; l = l + 2){  
+	    shiftrecoCyl[l] = r*(hCylindricalCMModel[l]->GetBinContent(bin));
+	    shifttrueCyl[l] = shifter.hPhi->GetBinContent(bin); 
+	    differenceCyl[l] = (shiftrecoCyl[l] - shifttrueCyl[l])*(1e4); 
 
-	  hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
-	}
-
-	for(int l = 1; l < 4; l = l + 2){  
-	  shiftrecoCyl[l] =  hCylindricalCMModel[l]->GetBinContent(bin);
-	  shifttrueCyl[l] = shifter.hR->GetBinContent(bin); 
-	  differenceCyl[l] = r*(1e4)*(shiftrecoCyl[l] - shifttrueCyl[l]); 
-
-	  hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
-	}
+	    hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
+	  }
 	
-	differenceR = differenceCyl[2]-differenceCyl[0];
-	hRShiftDifference->Fill(differenceR);
+	  differenceR = differenceCyl[2]-differenceCyl[0];
+	  hRShiftDifference->Fill(differenceR);
 
-	differencePhi = differenceCyl[3]-differenceCyl[1];
-	hPhiShiftDifference->Fill(differencePhi);
+	  differencePhi = differenceCyl[3]-differenceCyl[1];
+	  hPhiShiftDifference->Fill(differencePhi);
 
-	hRShiftTrue->Fill(differenceCyl[2]);
-	hPhiShiftTrue->Fill(differenceCyl[3]);
+	  hRShiftTrue->Fill(shifttrueCyl[2]);
+	  hPhiShiftTrue->Fill(shifttrueCyl[3]);
 
 	
-	if (k == nz/2){
-	  //cmmodelslice -> fill(shift reco)
-	  //trueslice -> fill(shift true)
-	  //compare with reco - true
-	}
+	  if (k == nz/2){
+	    //cmmodelslice -> fill(shift reco)
+	    //trueslice -> fill(shift true)
+	    //compare with reco - true
+	  }
 	
-	double x = r*cos(phi);
-	double y = r*sin(phi);
-
-       	if(r > 30.0){
+	  double x = r*cos(phi);
+	  double y = r*sin(phi);
+       	
 	  hCompareXY->Fill(differenceCart[0],differenceCart[1],1); 
 
 	  hCompareRTrue->Fill(shiftrecoCyl[2],shifttrueCyl[2]);
@@ -543,7 +549,7 @@ TH2F *hCartesianDiff[6];
 
   TFile *plots;
   
-  TObjArray hXplots(0);
+  /* TObjArray hXplots(0);
   TObjArray hYplots(0);
   TObjArray hZplots(0);
   TObjArray hRplots(0);
@@ -579,14 +585,20 @@ TH2F *hCartesianDiff[6];
   hPhiplots.Add(hCartesianAveDiff[6]);
   hPhiplots.Add(hCartesianAveDiff[7]);
   hPhiplots.Add(hCartesianShiftDifference[3]);
+  */
   
   plots=TFile::Open("/sphenix/user/skurdi/CMCalibration/shift_plots.root","RECREATE");
-  hXplots->Write();
-  hYplots->Write();
-  hZplots->Write();
-  hRplots->Write();
-  hPhiplots->Write();
-  plots.Close();
+  /* hXplots.Write();
+  hYplots.Write();
+  hZplots.Write();
+  hRplots.Write();
+  hPhiplots.Write(); */
+  for(int i = 0; i < 3; i++){
+	hCartesianCMModel[i]->Write();
+  }
+  hCylindricalCMModel[2]->Write();
+  hCylindricalCMModel[3]->Write();
+  plots->Close();
  
   
   for (int i = 0; i < 3; i++){
