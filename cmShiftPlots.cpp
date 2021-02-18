@@ -437,7 +437,7 @@ TH2F *hCartesianDiff[6];
 	  hCartesianShiftDifference[l]->Fill(differenceCart[l]);
 	}
 	
-	for(int l = 0; l < 4; l ++){  
+	for(int l = 0; l < 3; l = l + 2){  
 	  shiftrecoCyl[l] =  (hCylindricalCMModel[l]->GetBinContent(bin))*(1e4);
 	  shifttrueCyl[l] = (shifter.hR->GetBinContent(bin))*(1e4); //convert from cm to micron 
 	  differenceCyl[l] = shiftrecoCyl[l] - shifttrueCyl[l]; 
@@ -445,6 +445,14 @@ TH2F *hCartesianDiff[6];
 	  hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
 	}
 
+	for(int l = 1; l < 4; l = l + 2){  
+	  shiftrecoCyl[l] =  hCylindricalCMModel[l]->GetBinContent(bin);
+	  shifttrueCyl[l] = shifter.hR->GetBinContent(bin); 
+	  differenceCyl[l] = r*(shiftrecoCyl[l] - shifttrueCyl[l]); 
+
+	  hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
+	}
+	
 	differenceR = differenceCyl[2]-differenceCyl[0];
 	hRShiftDifference->Fill(differenceR);
 
