@@ -307,17 +307,17 @@ int cmShiftPlots() {
       
       for(int k = 0; k < nz; k++){
 	double z = minz + ((maxz - minz)/(1.0*nz))*(k+0.5); //center of bin
-	
-	xshift=hCartesianAveShift[0]->Interpolate(x,y);//coordinate of your stripe
-	yshift=hCartesianAveShift[1]->Interpolate(x,y);//bin content in microns 
-	zshift=hCartesianAveShift[2]->Interpolate(x,y);
+
+	xshift=(hCartesianAveShift[0]->Interpolate(x,y))*(1e-4);//coordinate of your stripe
+	yshift=(hCartesianAveShift[1]->Interpolate(x,y))*(1e-4);//convert micron to cm
+	zshift=(hCartesianAveShift[2]->Interpolate(x,y))*(1e-4);
  
-	rshift=hCylindricalAveShift[0]->Interpolate(x,y);
-	phishift=hCylindricalAveShift[1]->Interpolate(x,y);
+	rshift=(hCylindricalAveShift[0]->Interpolate(x,y))*(1e-4);
+	phishift=(hCylindricalAveShift[1]->Interpolate(x,y));
 
 	
 	//rshift calculated from xshift n yshift
-	rshiftcart=hCylindricalAveShift[2]->Interpolate(x,y);
+	rshiftcart=(hCylindricalAveShift[2]->Interpolate(x,y))*(1e-4);
 	phishiftcart=hCylindricalAveShift[3]->Interpolate(x,y);
 
 	hCartesianCMModel[0]->Fill(phi,r,z,xshift*(1-z/105.5));
@@ -430,7 +430,7 @@ TH2F *hCartesianDiff[6];
 	int bin = shifter.hR->FindBin(phi,r,z);
 
 	for(int l = 0; l < 3; l ++){
-	  shiftrecoCart[l] =  hCartesianCMModel[l]->GetBinContent(bin);
+	  shiftrecoCart[l] =  (hCartesianCMModel[l]->GetBinContent(bin))*(1e4);
 	  shifttrueCart[l] = (shifter.hR->GetBinContent(bin))*(1e4); //convert from cm to micron 
 	  differenceCart[l] = shiftrecoCart[l] - shifttrueCart[l]; 
 
@@ -438,7 +438,7 @@ TH2F *hCartesianDiff[6];
 	}
 	
 	for(int l = 0; l < 4; l ++){  
-	  shiftrecoCyl[l] =  hCylindricalCMModel[l]->GetBinContent(bin);
+	  shiftrecoCyl[l] =  (hCylindricalCMModel[l]->GetBinContent(bin))*(1e4);
 	  shifttrueCyl[l] = (shifter.hR->GetBinContent(bin))*(1e4); //convert from cm to micron 
 	  differenceCyl[l] = shiftrecoCyl[l] - shifttrueCyl[l]; 
 

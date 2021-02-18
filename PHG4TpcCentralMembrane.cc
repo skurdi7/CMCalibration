@@ -602,3 +602,7 @@ int PHG4TpcCentralMembrane::getStripeID(double xcheck, double ycheck){
   return fullID;
       
 }
+
+TVector3 PHG4TpcCentralMembrane::getStripeCenter(double stripeID){
+
+}

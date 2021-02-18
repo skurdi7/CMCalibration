@@ -24,7 +24,8 @@ public:
   PHG4TpcCentralMembrane(); //default constructor
   int getSearchResult(double xcheck, double ycheck); // check if coords are in a stripe
   int getStripeID(double xcheck, double ycheck);
- 
+  TVector3 getStripeCenter(double stripeID);
+  
   int fullID;
   double begin_CM, end_CM; // inner and outer radii of central membrane
   
