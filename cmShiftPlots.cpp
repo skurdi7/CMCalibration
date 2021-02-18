@@ -448,7 +448,7 @@ TH2F *hCartesianDiff[6];
 	for(int l = 1; l < 4; l = l + 2){  
 	  shiftrecoCyl[l] =  hCylindricalCMModel[l]->GetBinContent(bin);
 	  shifttrueCyl[l] = shifter.hR->GetBinContent(bin); 
-	  differenceCyl[l] = r*(shiftrecoCyl[l] - shifttrueCyl[l]); 
+	  differenceCyl[l] = r*(shiftrecoCyl[l] - shifttrueCyl[l])*(1e4); 
 
 	  hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
 	}
