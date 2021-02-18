@@ -540,6 +540,54 @@ TH2F *hCartesianDiff[6];
 
   hPhiAveDiff[0]->Divide(hPhiDiff[0],hSamplePerBinXY);
   hPhiAveDiff[1]->Divide(hPhiDiff[1],hSamplePerBinRZ);
+
+  TFile *plots;
+  
+  TObjArray hX(0);
+  TObjArray hY(0);
+  TObjArray hZ(0);
+  TObjArray hR(0);
+  TObjArray hPhi(0);
+
+  hX.Add(hCartesianForward[0]);
+  hX.Add(hStripesPerBin); // is this necessary?
+  hX.Add(hCartesianAveShift[0]);
+  hX.Add(hCartesianAveDiff[0]);
+  hX.Add(hCartesianAveDiff[1]);
+  hX.Add(hCartesianShiftDifference[0]);
+  
+  hY.Add(hCartesianForward[1]);
+  hY.Add(hStripesPerBin);
+  hY.Add(hCartesianAveShift[1]);
+  hY.Add(hCartesianAveDiff[2]);
+  hY.Add(hCartesianAveDiff[3]);
+  hY.Add(hCartesianShiftDifference[1]);
+
+  hZ.Add(hCartesianForward[2]);
+  hZ.Add(hStripesPerBin);
+  hZ.Add(hCartesianAveShift[2]);
+  hZ.Add(hCartesianAveDiff[4]);
+  hZ.Add(hCartesianAveDiff[5]);
+  hZ.Add(hCartesianShiftDifference[2]);
+
+  hR.Add(hCartesianAveShift[2]);
+  hR.Add(hCartesianAveDiff[4]);
+  hR.Add(hCartesianAveDiff[5]);
+  hR.Add(hCartesianShiftDifference[2]);
+
+  hPhi.Add(hCartesianAveShift[3]);
+  hPhi.Add(hCartesianAveDiff[6]);
+  hPhi.Add(hCartesianAveDiff[7]);
+  hPhi.Add(hCartesianShiftDifference[3]);
+  
+  plots=TFile::Open("/sphenix/user/skurdi/CMCalibration/shift_plots.root","RECREATE");
+  hX->Write();
+  hY->Write();
+  hZ->Write();
+  hR->Write();
+  hPhi->Write();
+  plots.Close();
+ 
   
   for (int i = 0; i < 3; i++){
     hCartesianForward[i]->SetStats(0);
@@ -568,8 +616,8 @@ TH2F *hCartesianDiff[6];
   hPhiAveDiff[0]->SetStats(0);
   hPhiAveDiff[1]->SetStats(0);
   hCompareXY->SetStats(0);
-  
-  // gStyle->SetOptStat(0);
+  hCompareRTrue->SetStats(0);
+  hComparePhiTrue->SetStats(0);
   
   TCanvas *canvas=new TCanvas("canvas","ShiftPlots",1500,1000);
   TPad *c=new TPad("c","",0.0,0.0,1.0,0.9);
