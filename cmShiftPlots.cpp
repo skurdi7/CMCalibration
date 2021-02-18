@@ -543,49 +543,49 @@ TH2F *hCartesianDiff[6];
 
   TFile *plots;
   
-  TObjArray hX(0);
-  TObjArray hY(0);
-  TObjArray hZ(0);
-  TObjArray hR(0);
-  TObjArray hPhi(0);
+  TObjArray hXPlots(0);
+  TObjArray hYplots(0);
+  TObjArray hZplots(0);
+  TObjArray hRplots(0);
+  TObjArray hPhiplots(0);
 
-  hX.Add(hCartesianForward[0]);
-  hX.Add(hStripesPerBin); // is this necessary?
-  hX.Add(hCartesianAveShift[0]);
-  hX.Add(hCartesianAveDiff[0]);
-  hX.Add(hCartesianAveDiff[1]);
-  hX.Add(hCartesianShiftDifference[0]);
+  hXplots.Add(hCartesianForward[0]);
+  hXplots.Add(hStripesPerBin); // is this necessary?
+  hXplots.Add(hCartesianAveShift[0]);
+  hXplots.Add(hCartesianAveDiff[0]);
+  hXplots.Add(hCartesianAveDiff[1]);
+  hXplots.Add(hCartesianShiftDifference[0]);
   
-  hY.Add(hCartesianForward[1]);
-  hY.Add(hStripesPerBin);
-  hY.Add(hCartesianAveShift[1]);
-  hY.Add(hCartesianAveDiff[2]);
-  hY.Add(hCartesianAveDiff[3]);
-  hY.Add(hCartesianShiftDifference[1]);
+  hYplots.Add(hCartesianForward[1]);
+  hYplots.Add(hStripesPerBin);
+  hYplots.Add(hCartesianAveShift[1]);
+  hYplots.Add(hCartesianAveDiff[2]);
+  hYplots.Add(hCartesianAveDiff[3]);
+  hYplots.Add(hCartesianShiftDifference[1]);
 
-  hZ.Add(hCartesianForward[2]);
-  hZ.Add(hStripesPerBin);
-  hZ.Add(hCartesianAveShift[2]);
-  hZ.Add(hCartesianAveDiff[4]);
-  hZ.Add(hCartesianAveDiff[5]);
-  hZ.Add(hCartesianShiftDifference[2]);
+  hZplots.Add(hCartesianForward[2]);
+  hZplots.Add(hStripesPerBin);
+  hZplots.Add(hCartesianAveShift[2]);
+  hZplots.Add(hCartesianAveDiff[4]);
+  hZplots.Add(hCartesianAveDiff[5]);
+  hZplots.Add(hCartesianShiftDifference[2]);
 
-  hR.Add(hCartesianAveShift[2]);
-  hR.Add(hCartesianAveDiff[4]);
-  hR.Add(hCartesianAveDiff[5]);
-  hR.Add(hCartesianShiftDifference[2]);
+  hRplots.Add(hCartesianAveShift[2]);
+  hRplots.Add(hCartesianAveDiff[4]);
+  hRplots.Add(hCartesianAveDiff[5]);
+  hRplots.Add(hCartesianShiftDifference[2]);
 
-  hPhi.Add(hCartesianAveShift[3]);
-  hPhi.Add(hCartesianAveDiff[6]);
-  hPhi.Add(hCartesianAveDiff[7]);
-  hPhi.Add(hCartesianShiftDifference[3]);
+  hPhiplots.Add(hCartesianAveShift[3]);
+  hPhiplots.Add(hCartesianAveDiff[6]);
+  hPhiplots.Add(hCartesianAveDiff[7]);
+  hPhiplots.Add(hCartesianShiftDifference[3]);
   
   plots=TFile::Open("/sphenix/user/skurdi/CMCalibration/shift_plots.root","RECREATE");
-  hX->Write();
-  hY->Write();
-  hZ->Write();
-  hR->Write();
-  hPhi->Write();
+  hXplots->Write();
+  hYplots->Write();
+  hZplots->Write();
+  hRplots->Write();
+  hPhiplots->Write();
   plots.Close();
  
   
