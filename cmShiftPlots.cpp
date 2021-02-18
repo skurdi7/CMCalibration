@@ -543,7 +543,7 @@ TH2F *hCartesianDiff[6];
 
   TFile *plots;
   
-  TObjArray hXPlots(0);
+  TObjArray hXplots(0);
   TObjArray hYplots(0);
   TObjArray hZplots(0);
   TObjArray hRplots(0);
