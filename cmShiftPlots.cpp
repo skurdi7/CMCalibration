@@ -22,7 +22,7 @@ public:
   TVector3 ShiftForward(TVector3 position); //only shift with forward histogram
   TVector3 ShiftBack(TVector3 position); //
   TFile *forward, *back;
-  TH3F *hX, *hY, *hZ, *hR, *hXBack, *hYBack, *hZBack;  
+  TH3F *hX, *hY, *hZ, *hR, *hPhi, *hXBack, *hYBack, *hZBack;  
 };
 
 Shifter::Shifter(){
