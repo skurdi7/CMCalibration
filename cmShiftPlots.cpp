@@ -347,6 +347,9 @@ int cmShiftPlots() {
 
   TH1F *hRShiftDifference = new TH1F("hRShiftDifference", "Difference between CM Model R from Cartesian and CM Model R from R data (R > 30); #Delta R (#mum)", 300, -200, 200);
   TH1F *hPhiShiftDifference = new TH1F("hPhiShiftDifference", "Difference between CM Model Phi from Cartesian and CM Model Phi from Phi data (R > 30); #Delta Phi (#mum)", 300, -200, 200);
+
+  TH1F *hRShiftTrue = new TH1F("hRShiftTrue", "True R Distortion Model (R > 30); #Delta R (#mum)", 300, -200, 200);
+  TH1F *hPhiShiftTrue = new TH1F("hPhiShiftTrue", "True Phi Distortion Model (R > 30); #Delta R (#mum)", 300, -200, 200);
   
 TH2F *hCartesianDiff[6];
   hCartesianDiff[0] = new TH2F("hDiffXYX", "Difference in XY for CM Model X; x (cm); y (cm)",nbins,low,high,nbins,low,high);
@@ -404,6 +407,10 @@ TH2F *hCartesianDiff[6];
 
   TH2F *hCompareXY = new TH2F("hCompareXY", "Compare Difference in X and Y Models; x diff (#mum); y diff (#mum)",nbins,low,high,nbins,low,high);
 
+  TH2F *hCompareRTrue = new TH2F("hCompareRTrue", "Compare Difference from R Model and True (R > 30); reco diff (#mum); true diff (#mum)",nbins,low,high,nbins,low,high);
+  TH2F *hComparePhiTrue = new TH2F("hComparePhiTrue", "Compare Difference from Phi Model and True (R > 30); reco diff (#mum); true diff (#mum)",nbins,low,high,nbins,low,high);
+
+  
   for(int i = 0; i < nphi; i++){
     double phi = minphi + ((maxphi - minphi)/(1.0*nphi))*(i+0.5); //center of bin
     for(int j = 0; j < nr; j++){
@@ -457,7 +464,11 @@ TH2F *hCartesianDiff[6];
 
 	differencePhi = differenceCyl[3]-differenceCyl[1];
 	hPhiShiftDifference->Fill(differencePhi);
-	  
+
+	hRShiftTrue->Fill(differenceCyl[2]);
+	hPhiShiftTrue->Fill(differenceCyl[3]);
+
+	
 	if (k == nz/2){
 	  //cmmodelslice -> fill(shift reco)
 	  //trueslice -> fill(shift true)
@@ -469,6 +480,9 @@ TH2F *hCartesianDiff[6];
 
        	if(r > 30.0){
 	  hCompareXY->Fill(differenceCart[0],differenceCart[1],1); 
+
+	  hCompareRTrue->Fill(shiftrecoCyl[2],shifttrueCyl[2]);
+	  hComparePhiTrue->Fill(shiftrecoCyl[3],shifttrueCyl[3]);
 
 	  //x
 	  hCartesianDiff[0]->Fill(x,y, differenceCart[0]);
@@ -683,6 +697,21 @@ TH2F *hCartesianDiff[6];
   titlepad->Clear();
   title->DrawLatex(0.4,0.2,"Comparing R Models");
   canvas->Print("ShiftPlots.pdf","pdf");
+
+  //compare R cart to true
+  c->cd(1);
+  hCylindricalShiftDifference[2]->Draw();
+  c->cd(2);
+  hRShiftTrue->Draw();
+  c->cd(3);
+  hCompareRTrue->Draw("colz");
+  c->cd(4)->Clear();
+  c->cd(5)->Clear();
+  c->cd(6)->Clear();
+  titlepad->cd();
+  titlepad->Clear();
+  title->DrawLatex(0.4,0.2,"Comparing R from Cart Model to True");
+  canvas->Print("ShiftPlots.pdf","pdf");
   
   // phi plots
   //c->Divide(3,2);
@@ -727,6 +756,21 @@ TH2F *hCartesianDiff[6];
   c->cd(2);
   hCylindricalAveShift[3]->Draw("colz");
   c->cd(3)->Clear();
+
+  //compare Phi cart to true
+  c->cd(1);
+  hCylindricalShiftDifference[3]->Draw();
+  c->cd(2);
+  hPhiShiftTrue->Draw();
+  c->cd(3);
+  hComparePhiTrue->Draw("colz");
+  c->cd(4)->Clear();
+  c->cd(5)->Clear();
+  c->cd(6)->Clear();
+  titlepad->cd();
+  titlepad->Clear();
+  title->DrawLatex(0.4,0.2,"Comparing Phi from Cart Model to True");
+  canvas->Print("ShiftPlots.pdf","pdf");
   
   c->cd(4);
   hPhiAveDiff[0]->Draw("colz");
