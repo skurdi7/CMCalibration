@@ -315,7 +315,6 @@ int cmShiftPlots() {
 	rshift=(hCylindricalAveShift[0]->Interpolate(x,y))*(1e-4);
 	phishift=(hCylindricalAveShift[1]->Interpolate(x,y));
 
-	
 	//rshift calculated from xshift n yshift
 	rshiftcart=(hCylindricalAveShift[2]->Interpolate(x,y))*(1e-4);
 	phishiftcart=hCylindricalAveShift[3]->Interpolate(x,y);
@@ -344,7 +343,7 @@ int cmShiftPlots() {
   hCylindricalShiftDifference[0] = new TH1F("hShiftDifferenceR", "Difference between CM Model R and True (R > 30); #Delta R (#mum)", 300, -200, 200);
   hCylindricalShiftDifference[1] = new TH1F("hShiftDifferencePhi", "Difference between CM Model Phi and True (R > 30); #Delta Phi (#mum)", 300, -200, 200);
   hCylindricalShiftDifference[2] = new TH1F("hShiftDifferenceRCart", "Difference between CM Model R from Cartesian and True (R > 30); #Delta R (#mum)", 300, -200, 200);
-  hCylindricalShiftDifference[3] = new TH1F("hShiftDifferencePhiCart", "Difference between CM Model Phi from Cartesian and True (R > 30); #Delta R (#mum)", 300, -200, 200);
+  hCylindricalShiftDifference[3] = new TH1F("hShiftDifferencePhiCart", "Difference between CM Model Phi from Cartesian and True (R > 30); #Delta Phi (#mum)", 300, -200, 200);
 
   TH1F *hRShiftDifference = new TH1F("hRShiftDifference", "Difference between CM Model R from Cartesian and CM Model R from R data (R > 30); #Delta R (#mum)", 300, -200, 200);
   TH1F *hPhiShiftDifference = new TH1F("hPhiShiftDifference", "Difference between CM Model Phi from Cartesian and CM Model Phi from Phi data (R > 30); #Delta Phi (#mum)", 300, -200, 200);
@@ -385,12 +384,12 @@ TH2F *hCartesianDiff[6];
   TH2F *hCylindricalAveDiff[8];
   hCylindricalAveDiff[0] = new TH2F("hAveDiffXYR", "R Model - Truth Averaged Over z (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
   hCylindricalAveDiff[1] = new TH2F("hAveDiffRZR", "R Model - Truth Averaged Over phi (#mum); z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
-  hCylindricalAveDiff[2] = new TH2F("hAveDiffXYPHi", "Phi Model - Truth Averaged Over z (rad); x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  hCylindricalAveDiff[3] = new TH2F("hAveDiffRZPhi", "Phi Model - Truth Averaged Over phi (rad); z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
+  hCylindricalAveDiff[2] = new TH2F("hAveDiffXYPHi", "Phi Model - Truth Averaged Over z (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  hCylindricalAveDiff[3] = new TH2F("hAveDiffRZPhi", "Phi Model - Truth Averaged Over phi (#mum); z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
   hCylindricalAveDiff[4] = new TH2F("hAveDiffXYRCart", "R Model from Cartesian - Truth Averaged Over z (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
   hCylindricalAveDiff[5] = new TH2F("hAveDiffRZRCart", "R Model from Cartesian - Truth Averaged Over phi (#mum); z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
-  hCylindricalAveDiff[6] = new TH2F("hAveDiffXYPhiCart", "Phi Model from Cartesian - Truth Averaged Over z (rad); x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  hCylindricalAveDiff[7] = new TH2F("hAveDiffRZPhiCart", "Phi Model from Cartesian - Truth Averaged Over phi (rad); z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
+  hCylindricalAveDiff[6] = new TH2F("hAveDiffXYPhiCart", "Phi Model from Cartesian - Truth Averaged Over z (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  hCylindricalAveDiff[7] = new TH2F("hAveDiffRZPhiCart", "Phi Model from Cartesian - Truth Averaged Over phi (#mum); z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
 
   TH2F *hRAveDiff[2];
   hRAveDiff[0] = new TH2F("hRAveDiffXY", "R Model from Cartesian - Original R Averaged Over z (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
@@ -398,7 +397,7 @@ TH2F *hCartesianDiff[6];
 
   TH2F *hPhiAveDiff[2];
   hPhiAveDiff[0] = new TH2F("hPhiAveDiffXY", "Phi Model from Cartesian - Original Phi Averaged Over z (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
-  hPhiAveDiff[1] = new TH2F("hPhiAveDiffRZ", "Phi Model from Cartesian - Original Phi Averaged Over phi (rad); z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
+  hPhiAveDiff[1] = new TH2F("hPhiAveDiffRZ", "Phi Model from Cartesian - Original Phi Averaged Over phi (#mum); z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
   
   TH2F *hSamplePerBinXY = new TH2F("hSamplePerBinXY", "Filling each xy bin; x (cm); y (cm)",nbins,low,high,nbins,low,high);
   TH2F *hSamplePerBinRZ = new TH2F("hSamplePerBinRZ", "Filling each rz bin; z (cm); r (cm)", nz,minz,maxz,nr,minr,maxr);
@@ -448,9 +447,9 @@ TH2F *hCartesianDiff[6];
 	for(int l = 1; l < 4; l = l + 2){  
 	  shiftrecoCyl[l] =  hCylindricalCMModel[l]->GetBinContent(bin);
 	  shifttrueCyl[l] = shifter.hR->GetBinContent(bin); 
-	  differenceCyl[l] = shiftrecoCyl[l] - shifttrueCyl[l]; 
+	  differenceCyl[l] = r*(1e4)*(shiftrecoCyl[l] - shifttrueCyl[l]); 
 
-	  hCylindricalShiftDifference[l]->Fill(r*(1e4)*differenceCyl[l]);
+	  hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
 	}
 	
 	differenceR = differenceCyl[2]-differenceCyl[0];
