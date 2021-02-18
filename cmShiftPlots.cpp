@@ -459,9 +459,9 @@ TH2F *hCartesianDiff[6];
 	  }
 	  
 	  for(int l = 1; l < 4; l = l + 2){  
-	    shiftrecoCyl[l] = r*(hCylindricalCMModel[l]->GetBinContent(bin));
-	    shifttrueCyl[l] = shifter.hPhi->GetBinContent(bin); 
-	    differenceCyl[l] = (shiftrecoCyl[l] - shifttrueCyl[l])*(1e4); 
+	    shiftrecoCyl[l] = r*(1e4)*(hCylindricalCMModel[l]->GetBinContent(bin));
+	    shifttrueCyl[l] = (shifter.hPhi->GetBinContent(bin))*(1e4); 
+	    differenceCyl[l] = (shiftrecoCyl[l] - shifttrueCyl[l]); 
 
 	    hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
 	  }
@@ -587,7 +587,7 @@ TH2F *hCartesianDiff[6];
   hPhiplots.Add(hCartesianShiftDifference[3]);
   */
   
-  plots=TFile::Open("/sphenix/u/skurdi/CMCalibration/shift_plots.root","RECREATE");
+  plots=TFile::Open("shift_plots.root","RECREATE");
   /* hXplots.Write();
   hYplots.Write();
   hZplots.Write();
