@@ -587,7 +587,7 @@ TH2F *hCartesianDiff[6];
   hPhiplots.Add(hCartesianShiftDifference[3]);
   */
   
-  plots=TFile::Open("/sphenix/user/skurdi/CMCalibration/shift_plots.root","RECREATE");
+  plots=TFile::Open("/sphenix/u/skurdi/CMCalibration/shift_plots.root","RECREATE");
   /* hXplots.Write();
   hYplots.Write();
   hZplots.Write();
