@@ -422,7 +422,8 @@ TH2F *hCartesianDiff[6];
   TH2F *hPhiDiffvR = new TH2F("hPhiDiffvR", "Difference between Phi Model and True vs. r (R > 30); r (cm); shift difference (#mum)",nr,minr,maxr,ndiff,mindiff,maxdiff);
   TH2F *hPhiDiffvZ = new TH2F("hPhiDiffvZ", "Difference between Phi Model and True vs. z (R > 30); z (cm); shift difference (#mum)",nz,minz,maxz,ndiff,mindiff,maxdiff);
   TH2F *hPhiDiffvPhi = new TH2F("hPhiDiffvPhi", "Difference between Phi Model and True vs. phi (R > 30); phi (rad); shift difference (#mum)",nphi,minphi,maxphi,ndiff,mindiff,maxdiff);
-  
+
+  //TH1F *hCMmodelslicePhi = 
   
   for(int i = 0; i < nphi; i++){
     double phi = minphi + ((maxphi - minphi)/(1.0*nphi))*(i+0.5); //center of bin
@@ -489,9 +490,9 @@ TH2F *hCartesianDiff[6];
 
 	
 	  if (k == nz/2){
-	    //cmmodelslice -> fill(shift reco)
-	    //trueslice -> fill(shift true)
-	    //compare with reco - true
+	    //hCMmodelslicePhi->Fill(shiftrecoCyl[3]);
+	    //hTrueslicePhi->Fill(shifttrueCyl[3]);
+	    //
 	  }
 	
 	  double x = r*cos(phi);
@@ -533,13 +534,13 @@ TH2F *hCartesianDiff[6];
 	  hPhiDiff[0]->Fill(x,y,differencePhi);
 	  hPhiDiff[1]->Fill(z,r,differencePhi);
 
-	  hRDiffvR->Fill(differenceCyl[2],r,1);
-	  hRDiffvZ->Fill(differenceCyl[2],z,1);
-	  hRDiffvPhi->Fill(differenceCyl[2],phi,1);
+	  hRDiffvR->Fill(r,differenceCyl[2],1);
+	  hRDiffvZ->Fill(z,differenceCyl[2],1);
+	  hRDiffvPhi->Fill(phi,differenceCyl[2],1);
 	  
-	  hPhiDiffvR->Fill(differenceCyl[3],r,1);
-	  hPhiDiffvZ->Fill(differenceCyl[3],z,1);
-	  hPhiDiffvPhi->Fill(differenceCyl[3],phi,1);
+	  hPhiDiffvR->Fill(r,differenceCyl[3],1);
+	  hPhiDiffvZ->Fill(z,differenceCyl[3],1);
+	  hPhiDiffvPhi->Fill(phi,differenceCyl[3],1);
 	  
 	  hSamplePerBinXY->Fill(x,y,1);
 	  hSamplePerBinRZ->Fill(z,r,1);
