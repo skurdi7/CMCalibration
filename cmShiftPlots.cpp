@@ -415,13 +415,13 @@ TH2F *hCartesianDiff[6];
   TH2F *hCompareRTrue = new TH2F("hCompareRTrue", "Compare Difference from R Model and True (R > 30); reco shift (#mum); true shift (#mum)",nbins,low,high,nbins,low,high);
   TH2F *hComparePhiTrue = new TH2F("hComparePhiTrue", "Compare Difference from Phi Model and True (R > 30); reco shift (#mum); true shift (#mum)",nbins,low,high,nbins,low,high);
 
-  TH2F *hCompareRDiffR = new TH2F("hCompareRDiffR", "Difference between R Model and True vs. r (R > 30); r (cm); shift difference (#mum)",nr,minr,maxr,ndiff,mindiff,maxdiff);
-  TH2F *hCompareRDiffZ = new TH2F("hCompareRDiffZ", "Difference between R Model and True vs. z (R > 30); z (cm); shift difference (#mum)",nz,minz,maxz,ndiff,mindiff,maxdiff);
-  TH2F *hCompareRDiffPhi = new TH2F("hCompareRDiffPhi", "Difference between R Model and True vs. phi (R > 30); shift difference (#mum); phi (rad)",nphi,minphi,maxphi,ndiff,mindiff,maxdiff);
+  TH2F *hRDiffvR = new TH2F("hRDiffvR", "Difference between R Model and True vs. r (R > 30); r (cm); shift difference (#mum)",nr,minr,maxr,ndiff,mindiff,maxdiff);
+  TH2F *hRDiffvZ = new TH2F("hRDiffvZ", "Difference between R Model and True vs. z (R > 30); z (cm); shift difference (#mum)",nz,minz,maxz,ndiff,mindiff,maxdiff);
+  TH2F *hRDiffvPhi = new TH2F("hRDiffvPhi", "Difference between R Model and True vs. phi (R > 30); phi (rad); shift difference (#mum)",nphi,minphi,maxphi,ndiff,mindiff,maxdiff);
 
-  TH2F *hComparePhiDiffR = new TH2F("hComparePhiDiffR", "Difference between Phi Model and True vs. r (R > 30); r (cm); shift difference (#mum)",nr,minr,maxr,ndiff,mindiff,maxdiff);
-  TH2F *hComparePhiDiffZ = new TH2F("hComparePhiDiffR", "Difference between Phi Model and True vs. r (R > 30); z (cm); shift difference (#mum)",nz,minz,maxz,ndiff,mindiff,maxdiff);
-  TH2F *hComparePhiDiffPhi = new TH2F("hComparePhiDiffPhi", "Difference between Phi Model and True vs. r (R > 30); shift difference (#mum); phi (rad)",nphi,minphi,maxphi,ndiff,mindiff,maxdiff);
+  TH2F *hPhiDiffvR = new TH2F("hPhiDiffvR", "Difference between Phi Model and True vs. r (R > 30); r (cm); shift difference (#mum)",nr,minr,maxr,ndiff,mindiff,maxdiff);
+  TH2F *hPhiDiffvZ = new TH2F("hPhiDiffvZ", "Difference between Phi Model and True vs. z (R > 30); z (cm); shift difference (#mum)",nz,minz,maxz,ndiff,mindiff,maxdiff);
+  TH2F *hPhiDiffvPhi = new TH2F("hPhiDiffvPhi", "Difference between Phi Model and True vs. phi (R > 30); phi (rad); shift difference (#mum)",nphi,minphi,maxphi,ndiff,mindiff,maxdiff);
   
   
   for(int i = 0; i < nphi; i++){
@@ -533,13 +533,13 @@ TH2F *hCartesianDiff[6];
 	  hPhiDiff[0]->Fill(x,y,differencePhi);
 	  hPhiDiff[1]->Fill(z,r,differencePhi);
 
-	  hCompareRDiffR->Fill(differenceCyl[2],r,1);
-	  hCompareRDiffZ->Fill(differenceCyl[2],z,1);
-	  hCompareRDiffPhi->Fill(differenceCyl[2],phi,1);
+	  hRDiffvR->Fill(differenceCyl[2],r,1);
+	  hRDiffvZ->Fill(differenceCyl[2],z,1);
+	  hRDiffvPhi->Fill(differenceCyl[2],phi,1);
 	  
-	  hComparePhiDiffR->Fill(differenceCyl[3],r,1);
-	  hComparePhiDiffZ->Fill(differenceCyl[3],z,1);
-	  hComparePhiDiffPhi->Fill(differenceCyl[3],phi,1);
+	  hPhiDiffvR->Fill(differenceCyl[3],r,1);
+	  hPhiDiffvZ->Fill(differenceCyl[3],z,1);
+	  hPhiDiffvPhi->Fill(differenceCyl[3],phi,1);
 	  
 	  hSamplePerBinXY->Fill(x,y,1);
 	  hSamplePerBinRZ->Fill(z,r,1);
@@ -650,13 +650,13 @@ TH2F *hCartesianDiff[6];
   hCompareRTrue->SetStats(0);
   hComparePhiTrue->SetStats(0);
 
-  hCompareRDiffR->SetStats(0);
-  hCompareRDiffZ->SetStats(0);
-  hCompareRDiffPhi->SetStats(0);
+  hRDiffvR->SetStats(0);
+  hRDiffvZ->SetStats(0);
+  hRDiffvPhi->SetStats(0);
   
-  hComparePhiDiffR->SetStats(0);
-  hComparePhiDiffZ->SetStats(0);
-  hComparePhiDiffPhi->SetStats(0);
+  hPhiDiffvR->SetStats(0);
+  hPhiDiffvZ->SetStats(0);
+  hPhiDiffvPhi->SetStats(0);
   
   TCanvas *canvas=new TCanvas("canvas","ShiftPlots",1500,1000);
   TPad *c=new TPad("c","",0.0,0.0,1.0,0.9);
@@ -793,11 +793,11 @@ TH2F *hCartesianDiff[6];
   c->cd(3);
   hCompareRTrue->Draw("colz");
   c->cd(4);
-  hCompareRDiffR->Draw("colz");
+  hRDiffvR->Draw("colz");
   c->cd(5);
-  hCompareRDiffZ->Draw("colz");
+  hRDiffvZ->Draw("colz");
   c->cd(6);
-  hCompareRDiffPhi->Draw("colz");
+  hRDiffvPhi->Draw("colz");
   titlepad->cd();
   titlepad->Clear();
   title->DrawLatex(0.3,0.2,"Comparing R from Cart Model to True");
@@ -855,11 +855,11 @@ TH2F *hCartesianDiff[6];
   c->cd(3);
   hComparePhiTrue->Draw("colz");
   c->cd(4);
-  hComparePhiDiffR->Draw("colz");
+  hPhiDiffvR->Draw("colz");
   c->cd(5);
-  hComparePhiDiffZ->Draw("colz");
+  hPhiDiffvZ->Draw("colz");
   c->cd(6);
-  hComparePhiDiffPhi->Draw("colz");
+  hPhiDiffvPhi->Draw("colz");
   titlepad->cd();
   titlepad->Clear();
   title->DrawLatex(0.3,0.2,"Comparing Phi from Cart Model to True");
