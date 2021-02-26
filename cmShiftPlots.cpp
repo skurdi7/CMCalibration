@@ -773,7 +773,6 @@ TH2F *hCartesianDiff[6];
   c->cd(2);
   hCylindricalAveShift[2]->Draw("colz");
   c->cd(3)->Clear();
-  
   c->cd(4);
   hRAveDiff[0]->Draw("colz");
   c->cd(5);
@@ -824,9 +823,7 @@ TH2F *hCartesianDiff[6];
 
   // phi plots from cart
   c->cd(1)->Clear();
-  
   c->cd(2)->Clear();
-  
   c->cd(3);
   hCylindricalAveShift[3]->Draw("colz");
   c->cd(4);
@@ -846,7 +843,17 @@ TH2F *hCartesianDiff[6];
   c->cd(2);
   hCylindricalAveShift[3]->Draw("colz");
   c->cd(3)->Clear();
-
+  c->cd(4);
+  hPhiAveDiff[0]->Draw("colz");
+  c->cd(5);
+  hPhiAveDiff[1]->Draw("colz");
+  c->cd(6);
+  hPhiShiftDifference->Draw();
+  titlepad->cd();
+  titlepad->Clear();
+  title->DrawLatex(0.4,0.2,"Comparing Phi Models");
+  canvas->Print("ShiftPlots.pdf","pdf");
+  
   //compare Phi cart to true
   c->cd(1);
   hCylindricalShiftDifference[3]->Draw();
@@ -863,17 +870,6 @@ TH2F *hCartesianDiff[6];
   titlepad->cd();
   titlepad->Clear();
   title->DrawLatex(0.3,0.2,"Comparing Phi from Cart Model to True");
-  canvas->Print("ShiftPlots.pdf","pdf");
-  
-  c->cd(4);
-  hPhiAveDiff[0]->Draw("colz");
-  c->cd(5);
-  hPhiAveDiff[1]->Draw("colz");
-  c->cd(6);
-  hPhiShiftDifference->Draw();
-  titlepad->cd();
-  titlepad->Clear();
-  title->DrawLatex(0.4,0.2,"Comparing Phi Models");
   canvas->Print("ShiftPlots.pdf","pdf");
   
   //Compare X and Y diff
