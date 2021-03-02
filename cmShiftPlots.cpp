@@ -28,11 +28,7 @@ public:
 Shifter::Shifter(){
   //forward=TFile::Open("/sphenix/user/rcorliss/distortion_maps/res_scan/Summary_bX1508071_0_10_events.root.h_Charge_evt_0.real_B1.5_E-400.0.ross_phi1_sphenix_phislice_lookup_r23xp23xz35.distortion_map.hist.root","READ"); //using temporary histogram for testing, try running
   //forward=TFile::Open("/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/elevatorpitch/fluct_average.rev3.1side.3d.file0.h_negz.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //distortions due to the average amount of space charge in the TPC with effect of distortions due to the external electric and magnetic fields removed
-  forward=TFile::Open("/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/elevatorpitch/fluct_single.1side.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //distortions due to single-event differences from the average 
-
- 
-  
-  back=TFile::Open("/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //tells it only to read, not to write anything you make there.
+  forward=TFile::Open("/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/elevatorpitch/fluct_single.1side.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //distortions due to single-event differences from the average
 
   hX=(TH3F*)forward->Get("hIntDistortionX");
   hY=(TH3F*)forward->Get("hIntDistortionY");
@@ -40,6 +36,13 @@ Shifter::Shifter(){
 
   hR=(TH3F*)forward->Get("hIntDistortionR");
   hPhi=(TH3F*)forward->Get("hIntDistortionP");
+
+  //open ave file
+  //hXave= same as above
+
+  //hX->Add(hXave,-1);
+  
+  back=TFile::Open("/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //tells it only to read, not to write anything you make there.
    
   hXBack=(TH3F*)back->Get("hIntDistortionX");
   hYBack=(TH3F*)back->Get("hIntDistortionY");
@@ -354,7 +357,7 @@ int cmShiftPlots() {
   TH1F *hPhiShiftDifference = new TH1F("hPhiShiftDifference", "Difference between CM Model Phi from Cartesian and CM Model Phi from Phi data (R > 30); #Delta Phi (#mum)", ndiff, mindiff, maxdiff);
 
   TH1F *hRShiftTrue = new TH1F("hRShiftTrue", "True R Distortion Model (R > 30); #Delta R (#mum)", ndiff, mindiff, maxdiff);
-  TH1F *hPhiShiftTrue = new TH1F("hPhiShiftTrue", "True Phi Distortion Model (R > 30); #Delta R (#mum)", ndiff, mindiff, maxdiff);
+  TH1F *hPhiShiftTrue = new TH1F("hPhiShiftTrue", "True Phi Distortion Model (R > 30); #Delta Phi (#mum)", ndiff, mindiff, maxdiff);
   
 TH2F *hCartesianDiff[6];
   hCartesianDiff[0] = new TH2F("hDiffXYX", "Difference in XY for CM Model X; x (cm); y (cm)",nbins,low,high,nbins,low,high);
