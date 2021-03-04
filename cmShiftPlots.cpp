@@ -147,7 +147,7 @@ int cmShiftPlots() {
   //TFile *infile;
   TString sourcefilename;
   //int nEvents = filelist->GetNFiles();
-  int nEvents = 10;
+  int nEvents = 3;
 
   for (int ifile=0;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file.
@@ -168,7 +168,7 @@ int cmShiftPlots() {
     for (int i = 0; i < Hits.size(); i++){ 
       x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; //stripe center
       y = (Hits[i]->get_y(0) + Hits[i]->get_y(1))/2;
-      z = 0.5;
+      z = 5.0;
     
       position.SetXYZ(x,y,z);
 
