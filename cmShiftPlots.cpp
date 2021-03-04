@@ -369,8 +369,8 @@ int cmShiftPlots() {
     }
 
     int ndiff = 300;
-    int mindiff = -20;
-    int maxdiff = 20;
+    int mindiff = -200;
+    int maxdiff = 200;
  
     TH1F *hCartesianShiftDifference[3];
     hCartesianShiftDifference[0] = new TH1F("hShiftDifferenceX", "Difference between CM Model X and True (R > 30); #Delta X (#mum)", ndiff, mindiff, maxdiff);
@@ -488,6 +488,7 @@ int cmShiftPlots() {
 	    shifttrueCart[1] = (shifter->hY->Interpolate(phi,r,z))*(1e4); //convert from cm to micron 
 	    shifttrueCart[2] = (shifter->hZ->Interpolate(phi,r,z))*(1e4); //convert from cm to micron 
 
+	    //x y and z
 	    for(int l = 0; l < 3; l ++){
 	      shiftrecoCart[l] =  (hCartesianCMModel[l]->GetBinContent(bin))*(1e4);
 	  
@@ -495,7 +496,8 @@ int cmShiftPlots() {
 
 	      hCartesianShiftDifference[l]->Fill(differenceCart[l]);
 	    }
-	
+
+	    //r
 	    for(int l = 0; l < 3; l = l + 2){  
 	      shiftrecoCyl[l] =  (hCylindricalCMModel[l]->GetBinContent(bin))*(1e4);
 	      shifttrueCyl[l] = (shifter->hR->Interpolate(phi,r,z))*(1e4); //convert from cm to micron 
@@ -503,7 +505,8 @@ int cmShiftPlots() {
 	    
 	      hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
 	    }
-	  
+
+	    //phi 
 	    for(int l = 1; l < 4; l = l + 2){  
 	      shiftrecoCyl[l] = r*(1e4)*(hCylindricalCMModel[l]->GetBinContent(bin));
 	      shifttrueCyl[l] = (shifter->hPhi->Interpolate(phi,r,z))*(1e4); 
