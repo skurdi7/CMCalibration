@@ -445,8 +445,8 @@ int cmShiftPlots() {
 
     TH2F *hCompareXY = new TH2F("hCompareXY", "Compare Difference in X and Y Models; x diff (#mum); y diff (#mum)",nbins,low,high,nbins,low,high);
 
-    TH2F *hCompareRTrue = new TH2F("hCompareRTrue", "Compare Difference from R Model and True (R > 30); reco shift (#mum); true shift (#mum)",nbins,low,high,nbins,low,high);
-    TH2F *hComparePhiTrue = new TH2F("hComparePhiTrue", "Compare Difference from Phi Model and True (R > 30); reco shift (#mum); true shift (#mum)",nbins,low,high,nbins,low,high);
+    TH2F *hCompareRTrue = new TH2F("hCompareRTrue", "Compare Difference from R Model and True (R > 30); reco shift (#mum); true shift (#mum)",nbins,low,high,nbins,mindiff,maxdiff);
+    TH2F *hComparePhiTrue = new TH2F("hComparePhiTrue", "Compare Difference from Phi Model and True (R > 30); reco shift (#mum); true shift (#mum)",nbins,low,high,nbins,mindiff,maxdiff);
 
     TH2F *hRDiffvR = new TH2F("hRDiffvR", "Difference between R Model and True vs. r (R > 30); r (cm); shift difference (#mum)",nr,minr,maxr,ndiff,mindiff,maxdiff);
     TH2F *hRDiffvZ = new TH2F("hRDiffvZ", "Difference between R Model and True vs. z (R > 30); z (cm); shift difference (#mum)",nz,minz,maxz,ndiff,mindiff,maxdiff);
