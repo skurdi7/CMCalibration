@@ -718,7 +718,7 @@ int cmShiftPlots() {
       canvas->Print("ShiftPlotsAllEvents.pdf(","pdf");
     }
     else if (i == filelist->GetNFiles() -1){
-      canvas->Print("ShiftPlotsAllEvents.pdf)","pdf"); */
+      canvas->Print("ShiftPlotsAllEvents.pdf)","pdf"); 
     }
     else{
       canvas->Print("ShiftPlotsAllEvents.pdf","pdf");
