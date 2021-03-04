@@ -302,12 +302,14 @@ int cmShiftPlots() {
     //same range and bins for each coordinate, can use hR for all, binned in cm
     int nphi = shifter->hR->GetXaxis()->GetNbins();
     int nr = shifter->hR->GetYaxis()->GetNbins();
-    int nz = shifter->hR->GetZaxis()->GetNbins();
-  
+    //int nz = shifter->hR->GetZaxis()->GetNbins();
+    int nz = (shifter->hR->GetZaxis()->GetNbins())/2;
+    
     double minphi = shifter->hR->GetXaxis()->GetXmin();
     double minr = shifter->hR->GetYaxis()->GetXmin();
-    double minz = shifter->hR->GetZaxis()->GetXmin();
-
+    // double minz = shifter->hR->GetZaxis()->GetXmin();
+    double minz = 0.5;
+    
     double maxphi = shifter->hR->GetXaxis()->GetXmax();
     double maxr = shifter->hR->GetYaxis()->GetXmax();
     double maxz = shifter->hR->GetZaxis()->GetXmax();
@@ -478,13 +480,13 @@ int cmShiftPlots() {
 	    cout << "z: " << z << endl;
 	  */
 
-	  int bin = shifter->hR->FindBin(phi,r,z);
+	  int bin = hCartesianCMModel[0]->FindBin(phi,r,z); //same for all
 
 	  if(r > 30.0){
 	  
-	    shifttrueCart[0] = (shifter->hX->GetBinContent(bin))*(1e4); //convert from cm to micron
-	    shifttrueCart[1] = (shifter->hY->GetBinContent(bin))*(1e4); //convert from cm to micron 
-	    shifttrueCart[2] = (shifter->hZ->GetBinContent(bin))*(1e4); //convert from cm to micron 
+	    shifttrueCart[0] = (shifter->hX->Interpolate(phi,r,z))*(1e4); //convert from cm to micron
+	    shifttrueCart[1] = (shifter->hY->Interpolate(phi,r,z))*(1e4); //convert from cm to micron 
+	    shifttrueCart[2] = (shifter->hZ->Interpolate(phi,r,z))*(1e4); //convert from cm to micron 
 
 	    for(int l = 0; l < 3; l ++){
 	      shiftrecoCart[l] =  (hCartesianCMModel[l]->GetBinContent(bin))*(1e4);
@@ -496,7 +498,7 @@ int cmShiftPlots() {
 	
 	    for(int l = 0; l < 3; l = l + 2){  
 	      shiftrecoCyl[l] =  (hCylindricalCMModel[l]->GetBinContent(bin))*(1e4);
-	      shifttrueCyl[l] = (shifter->hR->GetBinContent(bin))*(1e4); //convert from cm to micron 
+	      shifttrueCyl[l] = (shifter->hR->Interpolate(phi,r,z))*(1e4); //convert from cm to micron 
 	      differenceCyl[l] = shiftrecoCyl[l] - shifttrueCyl[l]; 
 	    
 	      hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
@@ -504,7 +506,7 @@ int cmShiftPlots() {
 	  
 	    for(int l = 1; l < 4; l = l + 2){  
 	      shiftrecoCyl[l] = r*(1e4)*(hCylindricalCMModel[l]->GetBinContent(bin));
-	      shifttrueCyl[l] = (shifter->hPhi->GetBinContent(bin))*(1e4); 
+	      shifttrueCyl[l] = (shifter->hPhi->Interpolate(phi,r,z))*(1e4); 
 	      differenceCyl[l] = (shiftrecoCyl[l] - shifttrueCyl[l]); 
 
 	      hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
