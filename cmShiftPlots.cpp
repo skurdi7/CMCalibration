@@ -458,11 +458,11 @@ int cmShiftPlots() {
 
     //TH1F *hCMmodelslicePhi = 
   
-    for(int i = 0; i < nphi; i++){
+    for(int i = 1; i < nphi - 1; i++){
       double phi = minphi + ((maxphi - minphi)/(1.0*nphi))*(i+0.5); //center of bin
-      for(int j = 0; j < nr; j++){
+      for(int j = 1; j < nr - 1; j++){
 	double r = minr + ((maxr - minr)/(1.0*nr))*(j+0.5); //center of bin
-	for(int k = 0; k < nz; k++){
+	for(int k = 1; k < nz - 1; k++){
 	  double z = minz + ((maxz - minz)/(1.0*nz))*(k+0.5); //center of bin
 
 	  double shiftrecoCart[3];
