@@ -138,7 +138,8 @@ int cmShiftPlots() {
 
   //ScanHist(nbins, low, high, x, y);
   //IDLabels();
-
+  TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",2500,2000);
+  
   const char * inputpattern="/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/Oct20/full_maps/*.root";
   //find all files that match the input string (includes wildcards)
   TFileCollection *filelist=new TFileCollection();
@@ -147,14 +148,13 @@ int cmShiftPlots() {
   TString sourcefilename;
   //int nEvents = filelist->GetNFiles();
   int nEvents = 10;
+
   for (int ifile=0;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file.
     sourcefilename=((TFileInfo*)(filelist->GetList()->At(ifile)))->GetCurrentUrl()->GetFile();//gross
     //infile=TFile::Open(sourcefilename.Data(),"READ");
 
     shifter = new Shifter(sourcefilename);
-
-    TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",2500,2000);
     
     TH2F *RShift = new TH2F("RShift","Radial shift of stripe centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
 
