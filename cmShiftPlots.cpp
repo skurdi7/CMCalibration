@@ -146,7 +146,9 @@ int cmShiftPlots() {
   filelist->Add(inputpattern);
   //TFile *infile;
   TString sourcefilename;
-  for (int i=0;i<filelist->GetNFiles();i++){
+  //int nEvents = filelist->GetNFiles();
+  int nEvents = 10;
+  for (int i=0;i < nEvents;i++){
     //for each file, find all histograms in that file.
     sourcefilename=((TFileInfo*)(filelist->GetList()->At(i)))->GetCurrentUrl()->GetFile();//gross
     //infile=TFile::Open(sourcefilename.Data(),"READ");
@@ -717,7 +719,7 @@ int cmShiftPlots() {
     if(i == 0){
       canvas->Print("ShiftPlotsAllEvents.pdf(","pdf");
     }
-    else if (i == filelist->GetNFiles() -1){
+    else if (i == nEvents - 1){
       canvas->Print("ShiftPlotsAllEvents.pdf)","pdf"); 
     }
     else{
