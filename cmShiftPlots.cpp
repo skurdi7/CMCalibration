@@ -139,7 +139,6 @@ int cmShiftPlots() {
   //ScanHist(nbins, low, high, x, y);
   //IDLabels();
 
-
   const char * inputpattern="/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/Oct20/full_maps/*.root";
   //find all files that match the input string (includes wildcards)
   TFileCollection *filelist=new TFileCollection();
@@ -148,13 +147,14 @@ int cmShiftPlots() {
   TString sourcefilename;
   //int nEvents = filelist->GetNFiles();
   int nEvents = 10;
-  for (int i=0;i < nEvents;i++){
+  for (int ifile=0;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file.
-    sourcefilename=((TFileInfo*)(filelist->GetList()->At(i)))->GetCurrentUrl()->GetFile();//gross
+    sourcefilename=((TFileInfo*)(filelist->GetList()->At(ifile)))->GetCurrentUrl()->GetFile();//gross
     //infile=TFile::Open(sourcefilename.Data(),"READ");
 
     shifter = new Shifter(sourcefilename);
 
+    TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",2500,2000);
     
     TH2F *RShift = new TH2F("RShift","Radial shift of stripe centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
 
@@ -654,7 +654,7 @@ int cmShiftPlots() {
     hPhiDiffvZ->SetStats(0);
     hPhiDiffvPhi->SetStats(0);
 
-    TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",2500,2000);
+    
     TPad *c=new TPad("c","",0.0,0.0,1.0,0.9);
     TPad *titlepad=new TPad("titlepad","",0.0,0.9,1.0,1.0);
     TLatex * title = new TLatex(0.0,0.0,"");
@@ -714,19 +714,19 @@ int cmShiftPlots() {
     
     titlepad->cd();
     titlepad->Clear();
-    title->DrawLatex(0.4,0.2,Form("Event %d", i)); //how do i change the number
+    title->DrawLatex(0.4,0.2,Form("Event %d", ifile)); //how do i change the number
     title->Draw();
-    if(i == 0){
+    if(ifile == 0){
       canvas->Print("ShiftPlotsAllEvents.pdf(","pdf");
     }
-    else if (i == nEvents - 1){
+    else if (ifile == nEvents - 1){
       canvas->Print("ShiftPlotsAllEvents.pdf)","pdf"); 
     }
     else{
       canvas->Print("ShiftPlotsAllEvents.pdf","pdf");
     }
 
-    canvas->Print(Form("ShiftPlotsEvent%d.gif", i),"gif");
+    canvas->Print(Form("ShiftPlotsEvent%d.gif", ifile),"gif");
     
     /*   TCanvas *canvas=new TCanvas("canvas","ShiftPlots",1500,1000);
     TPad *c=new TPad("c","",0.0,0.0,1.0,0.9);
