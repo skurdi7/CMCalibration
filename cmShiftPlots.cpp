@@ -717,7 +717,7 @@ int cmShiftPlots() {
     stitle6->Draw();
 
     //x plots
-    c1->Divide(1,4);
+    c1->Divide(4,1);
     c1->cd(1);
     hCartesianAveDiff[0]->Draw("colz");
     c1->cd(2);
@@ -727,7 +727,7 @@ int cmShiftPlots() {
     c1->cd(4)->Clear();  
 
     //y plots
-    c2->Divide(1,4);
+    c2->Divide(4,1);
     c2->cd(1);
     hCartesianAveDiff[2]->Draw("colz");
     c2->cd(2);
@@ -737,7 +737,7 @@ int cmShiftPlots() {
     c2->cd(4)->Clear();
 
     //r cart
-    c3->Divide(1,4);
+    c3->Divide(4,1);
     c3->cd(1);
     hCylindricalAveDiff[4]->Draw("colz");
     c3->cd(2);
@@ -748,7 +748,7 @@ int cmShiftPlots() {
     hRShiftTrue->Draw();
     
     //phi cart
-    c4->Divide(1,4);
+    c4->Divide(4,1);
     c4->cd(1);
     hCylindricalAveDiff[6]->Draw("colz");
     c4->cd(2);
@@ -759,7 +759,7 @@ int cmShiftPlots() {
     hPhiShiftTrue->Draw();
 
     //r to true comparison
-    c5->Divide(1,4);
+    c5->Divide(4,1);
     c5->cd(1);
     hCompareRTrue->Draw("colz");
     c5->cd(2);
@@ -770,7 +770,7 @@ int cmShiftPlots() {
     hRDiffvPhi->Draw("colz");
 
     //phi to true comparison
-    c6->Divide(1,4);
+    c6->Divide(4,1);
     c6->cd(1);
     hComparePhiTrue->Draw("colz");
     c6->cd(2);
