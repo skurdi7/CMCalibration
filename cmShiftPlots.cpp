@@ -138,7 +138,7 @@ int cmShiftPlots() {
 
   //ScanHist(nbins, low, high, x, y);
   //IDLabels();
-  TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",2500,2000);
+  TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",3000,2000);
   
   const char * inputpattern="/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/Oct20/full_maps/*.root";
   //find all files that match the input string (includes wildcards)
@@ -445,8 +445,8 @@ int cmShiftPlots() {
 
     TH2F *hCompareXY = new TH2F("hCompareXY", "Compare Difference in X and Y Models; x diff (#mum); y diff (#mum)",nbins,low,high,nbins,low,high);
 
-    TH2F *hCompareRTrue = new TH2F("hCompareRTrue", "Compare Difference from R Model and True (R > 30); reco shift (#mum); true shift (#mum)",nbins,low,high,nbins,mindiff,maxdiff);
-    TH2F *hComparePhiTrue = new TH2F("hComparePhiTrue", "Compare Difference from Phi Model and True (R > 30); reco shift (#mum); true shift (#mum)",nbins,low,high,nbins,mindiff,maxdiff);
+    TH2F *hCompareRTrue = new TH2F("hCompareRTrue", "Compare Difference from R Model and True (R > 30); reco shift (#mum); true shift (#mum)",nbins,-500,500,nbins,-500,500);
+    TH2F *hComparePhiTrue = new TH2F("hComparePhiTrue", "Compare Difference from Phi Model and True (R > 30); reco shift (#mum); true shift (#mum)",nbins,-500,500,nbins,-500,500);
 
     TH2F *hRDiffvR = new TH2F("hRDiffvR", "Difference between R Model and True vs. r (R > 30); r (cm); shift difference (#mum)",nr,minr,maxr,ndiff,mindiff,maxdiff);
     TH2F *hRDiffvZ = new TH2F("hRDiffvZ", "Difference between R Model and True vs. z (R > 30); z (cm); shift difference (#mum)",nz,minz,maxz,ndiff,mindiff,maxdiff);
@@ -660,67 +660,161 @@ int cmShiftPlots() {
     hPhiDiffvPhi->SetStats(0);
 
     
-    TPad *c=new TPad("c","",0.0,0.0,1.0,0.9);
-    TPad *titlepad=new TPad("titlepad","",0.0,0.9,1.0,1.0);
-    TLatex * title = new TLatex(0.0,0.0,"");
-    title->SetNDC();
-    title->SetTextSize(0.5);
-    canvas->cd();
-    c->Draw();
-    titlepad->Draw();
+    TPad *c1=new TPad("c1","",0.0,0.775,1.0,0.89); //can i do an array of pads?
+    TPad *c2=new TPad("c2","",0.0,0.62,1.0,0.735);
+    TPad *c3=new TPad("c3","",0.0,0.465,1.0,0.58);
+    TPad *c4=new TPad("c4","",0.0,0.31,1.0,0.425);
+    TPad *c5=new TPad("c5","",0.0,0.155,1.0,0.27);
+    TPad *c6=new TPad("c6","",0.0,0.0,1.0,0.115);
+    
+    TPad *titlepad=new TPad("titlepad","",0.0,0.93,1.0,1.0);
 
-    c->Divide(5,4);
+    TPad *stitlepad1=new TPad("stitlepad1","",0.0,0.89,1.0,0.93);
+    TPad *stitlepad2=new TPad("stitlepad2","",0.0,0.735,1.0,0.775);
+    TPad *stitlepad3=new TPad("stitlepad3","",0.0,0.58,1.0,0.62);
+    TPad *stitlepad4=new TPad("stitlepad4","",0.0,0.425,1.0,0.465);
+    TPad *stitlepad5=new TPad("stitlepad5","",0.0,0.27,1.0,0.31);
+    TPad *stitlepad6=new TPad("stitlepad6","",0.0,0.115,1.0,0.155);
+    
+    TLatex * title = new TLatex(0.0,0.0,"");
+
+    TLatex * stitle1 = new TLatex(0.0,0.0,""); //array?
+    TLatex * stitle2 = new TLatex(0.0,0.0,"");
+    TLatex * stitle3 = new TLatex(0.0,0.0,"");
+    TLatex * stitle4 = new TLatex(0.0,0.0,"");
+    TLatex * stitle5 = new TLatex(0.0,0.0,"");
+    TLatex * stitle6 = new TLatex(0.0,0.0,"");
+    
+    title->SetNDC();
+    stitle1->SetNDC();
+    stitle2->SetNDC();
+    stitle3->SetNDC();
+    stitle4->SetNDC();
+    stitle5->SetNDC();
+    stitle6->SetNDC();
+    
+    title->SetTextSize(0.4);
+    stitle1->SetTextSize(0.2);
+    stitle2->SetTextSize(0.2);
+    stitle3->SetTextSize(0.2);
+    stitle4->SetTextSize(0.2);
+    stitle5->SetTextSize(0.2);
+    stitle6->SetTextSize(0.2);
+    
+    canvas->cd();
+    c1->Draw();
+    c2->Draw();
+    c3->Draw();
+    c4->Draw();
+    c5->Draw();
+    c6->Draw();
+    titlepad->Draw();
+    stitle1->Draw();
+    stitle2->Draw();
+    stitle3->Draw();
+    stitle4->Draw();
+    stitle5->Draw();
+    stitle6->Draw();
+
     //x plots
-    c->cd(1);
+    c1->Divide(1,4);
+    c1->cd(1);
     hCartesianAveDiff[0]->Draw("colz");
-    c->cd(2);
+    c1->cd(2);
     hCartesianAveDiff[1]->Draw("colz");
-    c->cd(3);
+    c1->cd(3);
     hCartesianShiftDifference[0]->Draw();
+    c1->cd(4)->Clear();  
+
     //y plots
-    c->cd(4);
+    c2->Divide(1,4);
+    c2->cd(1);
     hCartesianAveDiff[2]->Draw("colz");
-    c->cd(5);
+    c2->cd(2);
     hCartesianAveDiff[3]->Draw("colz");
-    c->cd(6);
+    c2->cd(3);
     hCartesianShiftDifference[1]->Draw();
+    c2->cd(4)->Clear();
+
     //r cart
-    c->cd(7);
+    c3->Divide(1,4);
+    c3->cd(1);
     hCylindricalAveDiff[4]->Draw("colz");
-    c->cd(8);
+    c3->cd(2);
     hCylindricalAveDiff[5]->Draw("colz");
-    c->cd(9);
+    c3->cd(3);
     hCylindricalShiftDifference[2]->Draw();
+    c3->cd(4);
+    hRShiftTrue->Draw();
+    
     //phi cart
-    c->cd(10);
+    c4->Divide(1,4);
+    c4->cd(1);
     hCylindricalAveDiff[6]->Draw("colz");
-    c->cd(11);
+    c4->cd(2);
     hCylindricalAveDiff[7]->Draw("colz");
-    c->cd(12);
+    c4->cd(3);
     hCylindricalShiftDifference[3]->Draw();
+    c4->cd(4);
+    hPhiShiftTrue->Draw();
+
     //r to true comparison
-    c->cd(13);
+    c5->Divide(1,4);
+    c5->cd(1);
     hCompareRTrue->Draw("colz");
-    c->cd(14);
+    c5->cd(2);
     hRDiffvR->Draw("colz");
-    c->cd(15);
+    c5->cd(3);
     hRDiffvZ->Draw("colz");
-    c->cd(16);
+    c5->cd(4);
     hRDiffvPhi->Draw("colz");
+
     //phi to true comparison
-    c->cd(17);
+    c6->Divide(1,4);
+    c6->cd(1);
     hComparePhiTrue->Draw("colz");
-    c->cd(18);
+    c6->cd(2);
     hPhiDiffvR->Draw("colz");
-    c->cd(19);
+    c6->cd(3);
     hPhiDiffvZ->Draw("colz");
-    c->cd(20);
+    c6->cd(4);
     hPhiDiffvPhi->Draw("colz");
     
     titlepad->cd();
     titlepad->Clear();
-    title->DrawLatex(0.4,0.2,Form("Event %d", ifile)); //how do i change the number
+    title->DrawLatex(0.4,0.2,Form("Event %d", ifile)); 
     title->Draw();
+
+    stitlepad1->cd();
+    stitlepad1->Clear();
+    stitle1->DrawLatex(0.4,0.2,"X Model"); 
+    stitle1->Draw();
+
+    stitlepad2->cd();
+    stitlepad2->Clear();
+    stitle2->DrawLatex(0.4,0.2,"Y Model"); 
+    stitle2->Draw();
+
+    stitlepad3->cd();
+    stitlepad3->Clear();
+    stitle3->DrawLatex(0.4,0.2,"R Model"); 
+    stitle3->Draw();
+
+    stitlepad4->cd();
+    stitlepad4->Clear();
+    stitle4->DrawLatex(0.4,0.2,"Phi Model"); 
+    stitle4->Draw();
+
+    stitlepad5->cd();
+    stitlepad5->Clear();
+    stitle5->DrawLatex(0.4,0.2,"Comparing R Model to True"); 
+    stitle5->Draw();
+
+    stitlepad6->cd();
+    stitlepad6->Clear();
+    stitle6->DrawLatex(0.4,0.2,"Comparing Phi Model to True"); 
+    stitle6->Draw();
+    
     if(ifile == 0){
       canvas->Print("ShiftPlotsAllEvents.pdf(","pdf");
     }
