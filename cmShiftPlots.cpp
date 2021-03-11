@@ -147,7 +147,7 @@ int cmShiftPlots() {
   //TFile *infile;
   TString sourcefilename;
   //int nEvents = filelist->GetNFiles();
-  int nEvents = 3;
+  int nEvents = 4;
 
   for (int ifile=1;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file.
@@ -820,7 +820,8 @@ int cmShiftPlots() {
     stitle6->DrawLatex(0.4,0.2,"Comparing Phi Model to True"); 
     stitle6->Draw();
 
-    if(ifile == 0){
+    //if(ifile == 0){
+    if(ifile == 1){
       canvas->Print("ShiftPlotsAllEvents.pdf(","pdf");
     }
     else if (ifile == nEvents - 1){
