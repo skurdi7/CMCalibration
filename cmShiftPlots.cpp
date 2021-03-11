@@ -138,7 +138,7 @@ int cmShiftPlots() {
 
   //ScanHist(nbins, low, high, x, y);
   //IDLabels();
-  TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",2000,3720);
+  TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",2000,3000);
   
   const char * inputpattern="/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/Oct20/full_maps/*.root";
   //find all files that match the input string (includes wildcards)
@@ -659,22 +659,27 @@ int cmShiftPlots() {
     hPhiDiffvZ->SetStats(0);
     hPhiDiffvPhi->SetStats(0);
 
+    /*double tsize = 0.07;
+    double stsize = 0.03;
+    double plotsize;
+
+    plotsize = 1 - tsize - (6.0*stsize); */
     
-    TPad *c1=new TPad("c1","",0.0,0.775,1.0,0.89); //can i do an array of pads?
-    TPad *c2=new TPad("c2","",0.0,0.62,1.0,0.735);
-    TPad *c3=new TPad("c3","",0.0,0.465,1.0,0.58);
-    TPad *c4=new TPad("c4","",0.0,0.31,1.0,0.425);
-    TPad *c5=new TPad("c5","",0.0,0.155,1.0,0.27);
-    TPad *c6=new TPad("c6","",0.0,0.0,1.0,0.115);
+    TPad *c1=new TPad("c1","",0.0,0.8,1.0,0.93); //can i do an array of pads?
+    TPad *c2=new TPad("c2","",0.0,0.64,1.0,0.77);
+    TPad *c3=new TPad("c3","",0.0,0.48,1.0,0.61);
+    TPad *c4=new TPad("c4","",0.0,0.32,1.0,0.45);
+    TPad *c5=new TPad("c5","",0.0,0.16,1.0,0.29);
+    TPad *c6=new TPad("c6","",0.0,0.0,1.0,0.13);
     
     TPad *titlepad=new TPad("titlepad","",0.0,0.93,1.0,1.0);
 
-    TPad *stitlepad1=new TPad("stitlepad1","",0.0,0.89,1.0,0.93);
-    TPad *stitlepad2=new TPad("stitlepad2","",0.0,0.735,1.0,0.775);
-    TPad *stitlepad3=new TPad("stitlepad3","",0.0,0.58,1.0,0.62);
-    TPad *stitlepad4=new TPad("stitlepad4","",0.0,0.425,1.0,0.465);
-    TPad *stitlepad5=new TPad("stitlepad5","",0.0,0.27,1.0,0.31);
-    TPad *stitlepad6=new TPad("stitlepad6","",0.0,0.115,1.0,0.155);
+    TPad *stitlepad1=new TPad("stitlepad1","",0.0,0.93,1.0,0.96);
+    TPad *stitlepad2=new TPad("stitlepad2","",0.0,0.77,1.0,0.8);
+    TPad *stitlepad3=new TPad("stitlepad3","",0.0,0.61,1.0,0.64);
+    TPad *stitlepad4=new TPad("stitlepad4","",0.0,0.45,1.0,0.48);
+    TPad *stitlepad5=new TPad("stitlepad5","",0.0,0.29,1.0,0.32);
+    TPad *stitlepad6=new TPad("stitlepad6","",0.0,0.13,1.0,0.16);
     
     TLatex * title = new TLatex(0.0,0.0,"");
 
@@ -694,12 +699,12 @@ int cmShiftPlots() {
     stitle6->SetNDC();
     
     title->SetTextSize(0.4);
-    stitle1->SetTextSize(0.1);
-    stitle2->SetTextSize(0.1);
-    stitle3->SetTextSize(0.1);
-    stitle4->SetTextSize(0.1);
-    stitle5->SetTextSize(0.1);
-    stitle6->SetTextSize(0.1);
+    stitle1->SetTextSize(0.3);
+    stitle2->SetTextSize(0.3);
+    stitle3->SetTextSize(0.3);
+    stitle4->SetTextSize(0.3);
+    stitle5->SetTextSize(0.3);
+    stitle6->SetTextSize(0.3);
     
     canvas->cd();
     c1->Draw();
