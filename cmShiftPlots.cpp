@@ -369,8 +369,8 @@ int cmShiftPlots() {
     }
 
     int ndiff = 300;
-    int mindiff = -200;
-    int maxdiff = 200;
+    int mindiff = -500;
+    int maxdiff = 500;
  
     TH1F *hCartesianShiftDifference[3];
     hCartesianShiftDifference[0] = new TH1F("hShiftDifferenceX", "Difference between CM Model X and True (R > 30); #Delta X (#mum)", ndiff, mindiff, maxdiff);
@@ -445,8 +445,8 @@ int cmShiftPlots() {
 
     TH2F *hCompareXY = new TH2F("hCompareXY", "Compare Difference in X and Y Models; x diff (#mum); y diff (#mum)",nbins,low,high,nbins,low,high);
 
-    TH2F *hCompareRTrue = new TH2F("hCompareRTrue", "Compare Difference from R Model and True (R > 30); reco shift (#mum); true shift (#mum)",nbins,-500,500,nbins,-500,500);
-    TH2F *hComparePhiTrue = new TH2F("hComparePhiTrue", "Compare Difference from Phi Model and True (R > 30); reco shift (#mum); true shift (#mum)",nbins,-500,500,nbins,-500,500);
+    TH2F *hCompareRTrue = new TH2F("hCompareRTrue", "Compare Difference from R Model and True (R > 30); reco shift (#mum); true shift (#mum)",nbins,-550,550,nbins,-550,550);
+    TH2F *hComparePhiTrue = new TH2F("hComparePhiTrue", "Compare Difference from Phi Model and True (R > 30); reco shift (#mum); true shift (#mum)",nbins,-550,550,nbins,-550,550);
 
     TH2F *hRDiffvR = new TH2F("hRDiffvR", "Difference between R Model and True vs. r (R > 30); r (cm); shift difference (#mum)",nr,minr,maxr,ndiff,mindiff,maxdiff);
     TH2F *hRDiffvZ = new TH2F("hRDiffvZ", "Difference between R Model and True vs. z (R > 30); z (cm); shift difference (#mum)",nz,minz,maxz,ndiff,mindiff,maxdiff);
@@ -699,12 +699,12 @@ int cmShiftPlots() {
     stitle6->SetNDC();
     
     title->SetTextSize(0.4);
-    stitle1->SetTextSize(0.3);
-    stitle2->SetTextSize(0.3);
-    stitle3->SetTextSize(0.3);
-    stitle4->SetTextSize(0.3);
-    stitle5->SetTextSize(0.3);
-    stitle6->SetTextSize(0.3);
+    stitle1->SetTextSize(0.35);
+    stitle2->SetTextSize(0.35);
+    stitle3->SetTextSize(0.35);
+    stitle4->SetTextSize(0.35);
+    stitle5->SetTextSize(0.35);
+    stitle6->SetTextSize(0.35);
     
     canvas->cd();
     c1->Draw();
@@ -792,22 +792,22 @@ int cmShiftPlots() {
     
     stitlepad1->cd();
     stitlepad1->Clear();
-    stitle1->DrawLatex(0.5,0.2,"X Model"); 
+    stitle1->DrawLatex(0.45,0.2,"X Model"); 
     stitle1->Draw();
      
     stitlepad2->cd();
     stitlepad2->Clear();
-    stitle2->DrawLatex(0.5,0.2,"Y Model"); 
+    stitle2->DrawLatex(0.45,0.2,"Y Model"); 
     stitle2->Draw();
 
     stitlepad3->cd();
     stitlepad3->Clear();
-    stitle3->DrawLatex(0.5,0.2,"R Model"); 
+    stitle3->DrawLatex(0.45,0.2,"R Model"); 
     stitle3->Draw();
 
     stitlepad4->cd();
     stitlepad4->Clear();
-    stitle4->DrawLatex(0.5,0.2,"Phi Model"); 
+    stitle4->DrawLatex(0.45,0.2,"Phi Model"); 
     stitle4->Draw();
 
     stitlepad5->cd();
