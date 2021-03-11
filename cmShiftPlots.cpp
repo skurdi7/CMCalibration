@@ -138,7 +138,7 @@ int cmShiftPlots() {
 
   //ScanHist(nbins, low, high, x, y);
   //IDLabels();
-  TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",3450,2000);
+  TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",2000,3000);
   
   const char * inputpattern="/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/Oct20/full_maps/*.root";
   //find all files that match the input string (includes wildcards)
@@ -694,12 +694,12 @@ int cmShiftPlots() {
     stitle6->SetNDC();
     
     title->SetTextSize(0.4);
-    stitle1->SetTextSize(0.2);
-    stitle2->SetTextSize(0.2);
-    stitle3->SetTextSize(0.2);
-    stitle4->SetTextSize(0.2);
-    stitle5->SetTextSize(0.2);
-    stitle6->SetTextSize(0.2);
+    stitle1->SetTextSize(0.1);
+    stitle2->SetTextSize(0.1);
+    stitle3->SetTextSize(0.1);
+    stitle4->SetTextSize(0.1);
+    stitle5->SetTextSize(0.1);
+    stitle6->SetTextSize(0.1);
     
     canvas->cd();
     c1->Draw();
