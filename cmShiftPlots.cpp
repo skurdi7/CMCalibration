@@ -787,27 +787,27 @@ int cmShiftPlots() {
 
     titlepad->cd();
     titlepad->Clear();
-    title->DrawLatex(0.4,0.2,Form("Event %d", ifile)); 
+    title->DrawLatex(0.4,0.4,Form("Event %d", ifile)); 
     title->Draw();
     
     stitlepad1->cd();
     stitlepad1->Clear();
-    stitle1->DrawLatex(0.4,0.2,"X Model"); 
+    stitle1->DrawLatex(0.5,0.2,"X Model"); 
     stitle1->Draw();
      
     stitlepad2->cd();
     stitlepad2->Clear();
-    stitle2->DrawLatex(0.4,0.2,"Y Model"); 
+    stitle2->DrawLatex(0.5,0.2,"Y Model"); 
     stitle2->Draw();
 
     stitlepad3->cd();
     stitlepad3->Clear();
-    stitle3->DrawLatex(0.4,0.2,"R Model"); 
+    stitle3->DrawLatex(0.5,0.2,"R Model"); 
     stitle3->Draw();
 
     stitlepad4->cd();
     stitlepad4->Clear();
-    stitle4->DrawLatex(0.4,0.2,"Phi Model"); 
+    stitle4->DrawLatex(0.5,0.2,"Phi Model"); 
     stitle4->Draw();
 
     stitlepad5->cd();
