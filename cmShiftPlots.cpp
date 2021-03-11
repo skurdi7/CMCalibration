@@ -703,17 +703,17 @@ int cmShiftPlots() {
     
     canvas->cd();
     c1->Draw();
-    stitle1->Draw();
+    stitlepad1->Draw();
     c2->Draw();
-    stitle2->Draw();
+    stitlepad2->Draw();
     c3->Draw();
-    stitle3->Draw();
+    stitlepad3->Draw();
     c4->Draw();
-    stitle4->Draw();
+    stitlepad4->Draw();
     c5->Draw();
-    stitle5->Draw();
+    stitlepad5->Draw();
     c6->Draw();
-    stitle6->Draw();
+    stitlepad6->Draw();
     titlepad->Draw();
 
     //x plots
