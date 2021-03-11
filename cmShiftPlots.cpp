@@ -703,18 +703,18 @@ int cmShiftPlots() {
     
     canvas->cd();
     c1->Draw();
-    c2->Draw();
-    c3->Draw();
-    c4->Draw();
-    c5->Draw();
-    c6->Draw();
-    titlepad->Draw();
     stitle1->Draw();
+    c2->Draw();
     stitle2->Draw();
+    c3->Draw();
     stitle3->Draw();
+    c4->Draw();
     stitle4->Draw();
+    c5->Draw();
     stitle5->Draw();
+    c6->Draw();
     stitle6->Draw();
+    titlepad->Draw();
 
     //x plots
     c1->Divide(4,1);
@@ -725,6 +725,11 @@ int cmShiftPlots() {
     c1->cd(3);
     hCartesianShiftDifference[0]->Draw();
     c1->cd(4)->Clear();  
+
+    stitlepad1->cd();
+    stitlepad1->Clear();
+    stitle1->DrawLatex(0.4,0.2,"X Model"); 
+    stitle1->Draw();
 
     //y plots
     c2->Divide(4,1);
@@ -780,11 +785,7 @@ int cmShiftPlots() {
     c6->cd(4);
     hPhiDiffvPhi->Draw("colz");
 
-    stitlepad1->cd();
-    stitlepad1->Clear();
-    stitle1->DrawLatex(0.4,0.2,"X Model"); 
-    stitle1->Draw();
-
+  
     stitlepad2->cd();
     stitlepad2->Clear();
     stitle2->DrawLatex(0.4,0.2,"Y Model"); 
