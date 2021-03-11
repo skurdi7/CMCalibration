@@ -149,7 +149,7 @@ int cmShiftPlots() {
   //int nEvents = filelist->GetNFiles();
   int nEvents = 3;
 
-  for (int ifile=0;ifile < nEvents;ifile++){
+  for (int ifile=1;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file.
     sourcefilename=((TFileInfo*)(filelist->GetList()->At(ifile)))->GetCurrentUrl()->GetFile();//gross
     //infile=TFile::Open(sourcefilename.Data(),"READ");
