@@ -138,7 +138,7 @@ int cmShiftPlots() {
 
   //ScanHist(nbins, low, high, x, y);
   //IDLabels();
-  TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",2000,3000);
+  TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",2000,3720);
   
   const char * inputpattern="/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/Oct20/full_maps/*.root";
   //find all files that match the input string (includes wildcards)
@@ -726,11 +726,6 @@ int cmShiftPlots() {
     hCartesianShiftDifference[0]->Draw();
     c1->cd(4)->Clear();  
 
-    stitlepad1->cd();
-    stitlepad1->Clear();
-    stitle1->DrawLatex(0.4,0.2,"X Model"); 
-    stitle1->Draw();
-
     //y plots
     c2->Divide(4,1);
     c2->cd(1);
@@ -785,7 +780,16 @@ int cmShiftPlots() {
     c6->cd(4);
     hPhiDiffvPhi->Draw("colz");
 
-  
+    titlepad->cd();
+    titlepad->Clear();
+    title->DrawLatex(0.4,0.2,Form("Event %d", ifile)); 
+    title->Draw();
+    
+    stitlepad1->cd();
+    stitlepad1->Clear();
+    stitle1->DrawLatex(0.4,0.2,"X Model"); 
+    stitle1->Draw();
+     
     stitlepad2->cd();
     stitlepad2->Clear();
     stitle2->DrawLatex(0.4,0.2,"Y Model"); 
@@ -811,11 +815,6 @@ int cmShiftPlots() {
     stitle6->DrawLatex(0.4,0.2,"Comparing Phi Model to True"); 
     stitle6->Draw();
 
-    titlepad->cd();
-    titlepad->Clear();
-    title->DrawLatex(0.4,0.2,Form("Event %d", ifile)); 
-    title->Draw();
-    
     if(ifile == 0){
       canvas->Print("ShiftPlotsAllEvents.pdf(","pdf");
     }
