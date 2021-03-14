@@ -149,7 +149,7 @@ int cmShiftPlots() {
   //int nEvents = filelist->GetNFiles();
   int nEvents = 4;
 
-  for (int ifile=1;ifile < nEvents;ifile++){
+  for (int ifile=0;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file.
     sourcefilename=((TFileInfo*)(filelist->GetList()->At(ifile)))->GetCurrentUrl()->GetFile();//gross
     //infile=TFile::Open(sourcefilename.Data(),"READ");
@@ -568,7 +568,7 @@ int cmShiftPlots() {
 	    hPhiDiff[1]->Fill(z,r,differencePhi);
 
 	    //exclude ends
-	    if ((z > 10) && (z < 90)){
+	    //if ((z > 10) && (z < 90)){
 	      hCompareRTrue->Fill(shiftrecoCyl[2],shifttrueCyl[2]);
 	      hComparePhiTrue->Fill(shiftrecoCyl[3],shifttrueCyl[3]);
 
@@ -577,7 +577,7 @@ int cmShiftPlots() {
 
 	      hPhiDiffvR->Fill(r,differenceCyl[3],1);
 	      hPhiDiffvPhi->Fill(phi,differenceCyl[3],1);
-	    }
+	      //}
 	    
 	    hRDiffvZ->Fill(z,differenceCyl[2],1);
 	    
