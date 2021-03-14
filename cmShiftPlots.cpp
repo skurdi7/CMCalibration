@@ -828,8 +828,8 @@ int cmShiftPlots() {
     stitle6->DrawLatex(0.4,0.2,"Comparing Phi Model to True"); 
     stitle6->Draw();
 
-    //if(ifile == 0){
-    if(ifile == 1){
+    if(ifile == 0){
+      //if(ifile == 1){
       canvas->Print("ShiftPlotsAllEvents.pdf(","pdf");
     }
     else if (ifile == nEvents - 1){
