@@ -445,16 +445,16 @@ int cmShiftPlots() {
 
     TH2F *hCompareXY = new TH2F("hCompareXY", "Compare Difference in X and Y Models; x diff (#mum); y diff (#mum)",nbins,low,high,nbins,low,high);
 
-    TH2F *hCompareRTrue = new TH2F("hCompareRTrue", "Compare Difference from R Model and True (R > 30); reco shift (#mum); true shift (#mum)",nbins,-550,550,nbins,-550,550);
-    TH2F *hComparePhiTrue = new TH2F("hComparePhiTrue", "Compare Difference from Phi Model and True (R > 30); reco shift (#mum); true shift (#mum)",nbins,-550,550,nbins,-550,550);
+    TH2F *hCompareRTrue = new TH2F("hCompareRTrue", "Compare Difference from R Model and True (R > 30, 10 < z < 90); reco shift (#mum); true shift (#mum)",nbins,-550,550,nbins,-550,550);
+    TH2F *hComparePhiTrue = new TH2F("hComparePhiTrue", "Compare Difference from Phi Model and True (R > 30, 10 < z < 90); reco shift (#mum); true shift (#mum)",nbins,-550,550,nbins,-550,550);
 
-    TH2F *hRDiffvR = new TH2F("hRDiffvR", "Difference between R Model and True vs. r (R > 30); r (cm); shift difference (#mum)",nr,minr,maxr,ndiff,mindiff,maxdiff);
+    TH2F *hRDiffvR = new TH2F("hRDiffvR", "Difference between R Model and True vs. r (R > 30, 10 < z < 90); r (cm); shift difference (#mum)",nr,minr,maxr,ndiff,mindiff,maxdiff);
     TH2F *hRDiffvZ = new TH2F("hRDiffvZ", "Difference between R Model and True vs. z (R > 30); z (cm); shift difference (#mum)",nz,minz,maxz,ndiff,mindiff,maxdiff);
-    TH2F *hRDiffvPhi = new TH2F("hRDiffvPhi", "Difference between R Model and True vs. phi (R > 30); phi (rad); shift difference (#mum)",nphi,minphi,maxphi,ndiff,mindiff,maxdiff);
+    TH2F *hRDiffvPhi = new TH2F("hRDiffvPhi", "Difference between R Model and True vs. phi (R > 30, 10 < z < 90); phi (rad); shift difference (#mum)",nphi,minphi,maxphi,ndiff,mindiff,maxdiff);
 
-    TH2F *hPhiDiffvR = new TH2F("hPhiDiffvR", "Difference between Phi Model and True vs. r (R > 30); r (cm); shift difference (#mum)",nr,minr,maxr,ndiff,mindiff,maxdiff);
+    TH2F *hPhiDiffvR = new TH2F("hPhiDiffvR", "Difference between Phi Model and True vs. r (R > 30, 10 < z < 90); r (cm); shift difference (#mum)",nr,minr,maxr,ndiff,mindiff,maxdiff);
     TH2F *hPhiDiffvZ = new TH2F("hPhiDiffvZ", "Difference between Phi Model and True vs. z (R > 30); z (cm); shift difference (#mum)",nz,minz,maxz,ndiff,mindiff,maxdiff);
-    TH2F *hPhiDiffvPhi = new TH2F("hPhiDiffvPhi", "Difference between Phi Model and True vs. phi (R > 30); phi (rad); shift difference (#mum)",nphi,minphi,maxphi,ndiff,mindiff,maxdiff);
+    TH2F *hPhiDiffvPhi = new TH2F("hPhiDiffvPhi", "Difference between Phi Model and True vs. phi (R > 30, 10 < z < 90); phi (rad); shift difference (#mum)",nphi,minphi,maxphi,ndiff,mindiff,maxdiff);
 
     //TH1F *hCMmodelslicePhi = 
   
@@ -536,9 +536,6 @@ int cmShiftPlots() {
        	
 	    hCompareXY->Fill(differenceCart[0],differenceCart[1],1); 
 
-	    hCompareRTrue->Fill(shiftrecoCyl[2],shifttrueCyl[2]);
-	    hComparePhiTrue->Fill(shiftrecoCyl[3],shifttrueCyl[3]);
-
 	    //x
 	    hCartesianDiff[0]->Fill(x,y, differenceCart[0]);
 	    hCartesianDiff[1]->Fill(z,r, differenceCart[0]);
@@ -570,13 +567,24 @@ int cmShiftPlots() {
 	    hPhiDiff[0]->Fill(x,y,differencePhi);
 	    hPhiDiff[1]->Fill(z,r,differencePhi);
 
-	    hRDiffvR->Fill(r,differenceCyl[2],1);
+	    //exclude ends
+	    if ((z < 10) || (z > 90)){
+	      hCompareRTrue->Fill(shiftrecoCyl[2],shifttrueCyl[2]);
+	      hComparePhiTrue->Fill(shiftrecoCyl[3],shifttrueCyl[3]);
+
+	      hRDiffvR->Fill(r,differenceCyl[2],1);
+	      hRDiffvPhi->Fill(phi,differenceCyl[2],1);
+
+	      hPhiDiffvR->Fill(r,differenceCyl[3],1);
+	      hPhiDiffvPhi->Fill(phi,differenceCyl[3],1);
+	    }
+	    
 	    hRDiffvZ->Fill(z,differenceCyl[2],1);
-	    hRDiffvPhi->Fill(phi,differenceCyl[2],1);
+	    
 	  
-	    hPhiDiffvR->Fill(r,differenceCyl[3],1);
+	    
 	    hPhiDiffvZ->Fill(z,differenceCyl[3],1);
-	    hPhiDiffvPhi->Fill(phi,differenceCyl[3],1);
+	    
 	  
 	    hSamplePerBinXY->Fill(x,y,1);
 	    hSamplePerBinRZ->Fill(z,r,1);
