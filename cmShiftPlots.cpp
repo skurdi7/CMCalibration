@@ -568,7 +568,7 @@ int cmShiftPlots() {
 	    hPhiDiff[1]->Fill(z,r,differencePhi);
 
 	    //exclude ends
-	    if ((z < 10) || (z > 90)){
+	    if ((z < 10) && (z > 90)){
 	      hCompareRTrue->Fill(shiftrecoCyl[2],shifttrueCyl[2]);
 	      hComparePhiTrue->Fill(shiftrecoCyl[3],shifttrueCyl[3]);
 
