@@ -528,7 +528,7 @@ int cmShiftPlots() {
 
 	
 	    if (k == 1){
-	      hCMmodelSliceRvTrue->Fill(phi,r,differenceCyl[2]);
+	      hCMmodelSliceRvTrue->Fill(r,phi,differenceCyl[2]);
 	      //hCMmodelslicePhi->Fill(shiftrecoCyl[3]);
 	      //hTrueslicePhi->Fill(shifttrueCyl[3]);
 	      //
