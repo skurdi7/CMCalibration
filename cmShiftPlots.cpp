@@ -458,7 +458,7 @@ int cmShiftPlots() {
     TH2F *hPhiDiffvZ = new TH2F("hPhiDiffvZ", "Difference between Phi Model and True vs. z (R > 30); z (cm); shift difference (#mum)",nz,minz,maxz,ndiff,mindiff,maxdiff);
     TH2F *hPhiDiffvPhi = new TH2F("hPhiDiffvPhi", "Difference between Phi Model and True vs. phi (R > 30, 10 < z < 90); phi (rad); shift difference (#mum)",nphi,minphi,maxphi,ndiff,mindiff,maxdiff);
 
-    //TH1F *hCMmodelslicePhi = 
+    TH2F *hCMmodelSliceRvTrue = new TH2F("hCMmodelSliceRvTrue", "Difference between R Model and True as a function of R and Phi; r (cm); phi (rad)",nr,minr,maxr,nphi,minphi,maxphi);
   
     for(int i = 1; i < nphi - 1; i++){
       double phi = minphi + ((maxphi - minphi)/(1.0*nphi))*(i+0.5); //center of bin
@@ -527,7 +527,8 @@ int cmShiftPlots() {
 	    hPhiShiftTrue->Fill(shifttrueCyl[3]);
 
 	
-	    if (k == nz/2){
+	    if (k == 1){
+	      hCMmodelSliceRvTrue->Fill(phi,r,differenceCyl[2]);
 	      //hCMmodelslicePhi->Fill(shiftrecoCyl[3]);
 	      //hTrueslicePhi->Fill(shifttrueCyl[3]);
 	      //
@@ -739,8 +740,10 @@ int cmShiftPlots() {
     hCartesianAveDiff[1]->Draw("colz");
     c1->cd(3);
     hCartesianShiftDifference[0]->Draw();
-    c1->cd(4)->Clear();  
-
+    //c1->cd(4)->Clear();  
+    c1->cd(4);
+    hCMmodelSliceRvTrue->Draw("colz");
+    
     //y plots
     c2->Divide(4,1);
     c2->cd(1);
