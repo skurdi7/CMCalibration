@@ -140,7 +140,9 @@ int cmShiftPlots() {
   //IDLabels();
   TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",2000,3000);
   
-  const char * inputpattern="/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/Oct20/full_maps/*.root";
+  const char * inputpattern="/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/Oct20/full_maps/*h_Charge_evt_*.root";
+  // const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*.root";
+  
   //find all files that match the input string (includes wildcards)
   TFileCollection *filelist=new TFileCollection();
   filelist->Add(inputpattern);
@@ -209,7 +211,7 @@ int cmShiftPlots() {
     for (int i = 0; i < Hits.size(); i++){
       x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; //stripe center
       y = (Hits[i]->get_y(0) + Hits[i]->get_y(1))/2;
-      z = 0.5;
+      z = 5.0;
     
       position.SetXYZ(x,y,z);
     
@@ -308,7 +310,7 @@ int cmShiftPlots() {
     double minphi = shifter->hR->GetXaxis()->GetXmin();
     double minr = shifter->hR->GetYaxis()->GetXmin();
     // double minz = shifter->hR->GetZaxis()->GetXmin();
-    double minz = 0.5;
+    double minz = 5.0;
     
     double maxphi = shifter->hR->GetXaxis()->GetXmax();
     double maxr = shifter->hR->GetYaxis()->GetXmax();
@@ -680,7 +682,7 @@ int cmShiftPlots() {
     TPad *c5=new TPad("c5","",0.0,0.16,1.0,0.29);
     TPad *c6=new TPad("c6","",0.0,0.0,1.0,0.13);
     
-    TPad *titlepad=new TPad("titlepad","",0.0,0.93,1.0,1.0);
+    TPad *titlepad=new TPad("titlepad","",0.0,0.96,1.0,1.0);
 
     TPad *stitlepad1=new TPad("stitlepad1","",0.0,0.93,1.0,0.96);
     TPad *stitlepad2=new TPad("stitlepad2","",0.0,0.77,1.0,0.8);
@@ -795,7 +797,7 @@ int cmShiftPlots() {
 
     titlepad->cd();
     titlepad->Clear();
-    title->DrawLatex(0.4,0.4,Form("Event %d", ifile)); 
+    title->DrawLatex(0.01,0.4,Form("Event %d; %s", ifile, sourcefilename.Data())); 
     title->Draw();
     
     stitlepad1->cd();
@@ -839,7 +841,7 @@ int cmShiftPlots() {
       canvas->Print("ShiftPlotsAllEvents.pdf","pdf");
     }
 
-    canvas->Print(Form("ShiftPlotsEvent%d.gif", ifile),"gif");
+    canvas->Print(Form("ShiftPlotsEvent%d.gif", ifile),"gif"); //look up left padding
     
     /*   TCanvas *canvas=new TCanvas("canvas","ShiftPlots",1500,1000);
     TPad *c=new TPad("c","",0.0,0.0,1.0,0.9);
