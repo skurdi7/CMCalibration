@@ -131,7 +131,7 @@ int cmShiftPlots() {
   double high = 80.0;
   double deltaX, deltaY, deltaZ, deltaR, deltaPhi; 
   
-  nbins = 40;
+  nbins = 32;
   /*rsteps = 100;
   phisteps = 100;
   
@@ -712,7 +712,7 @@ int cmShiftPlots() {
     stitle5->SetNDC();
     stitle6->SetNDC();
     
-    title->SetTextSize(0.4);
+    title->SetTextSize(0.35);
     stitle1->SetTextSize(0.35);
     stitle2->SetTextSize(0.35);
     stitle3->SetTextSize(0.35);
