@@ -139,7 +139,7 @@ int cmShiftPlots() {
   double high = 80.0;
   double deltaX, deltaY, deltaZ, deltaR, deltaPhi; 
   
-  nbins = 31;
+  nbins = 33;
   /*rsteps = 100;
   phisteps = 100;
   
@@ -720,7 +720,7 @@ int cmShiftPlots() {
     stitle5->SetNDC();
     stitle6->SetNDC();
     
-    title->SetTextSize(0.35);
+    title->SetTextSize(0.32);
     stitle1->SetTextSize(0.35);
     stitle2->SetTextSize(0.35);
     stitle3->SetTextSize(0.35);
@@ -857,7 +857,7 @@ int cmShiftPlots() {
       canvas->Print("ShiftPlotsAllEvents.pdf","pdf");
     }
 
-    canvas->Print(Form("ShiftPlotsEvent%d.gif", ifile),"gif"); //look up left padding
+    //canvas->Print(Form("ShiftPlotsEvent%d.gif", ifile),"gif"); //look up left padding
     
     /*   TCanvas *canvas=new TCanvas("canvas","ShiftPlots",1500,1000);
     TPad *c=new TPad("c","",0.0,0.0,1.0,0.9);
