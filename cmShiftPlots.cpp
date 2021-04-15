@@ -754,8 +754,8 @@ int cmShiftPlots() {
     hCartesianShiftDifference[0]->Draw();
     //c1->cd(4)->Clear();  
     c1->cd(4);
-    hCMmodelSliceRvTrue->Draw("colz");
-    
+    //hCMmodelSliceRvTrue->Draw("colz");
+    hSamplePerBinRZ->Draw("colz");
     //y plots
     c2->Divide(4,1);
     c2->cd(1);
