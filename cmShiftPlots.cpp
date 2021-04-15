@@ -857,7 +857,7 @@ int cmShiftPlots() {
       canvas->Print("ShiftPlotsAllEvents.pdf","pdf");
     }
 
-    canvas->Print(Form("ShiftPlotsEvent%04i\n.gif", ifile),"gif"); //look up left padding
+    canvas->Print(Form("ShiftPlotsEvent%03i\n.gif", ifile),"gif"); //left padding for up to 4 digits
     
     /*   TCanvas *canvas=new TCanvas("canvas","ShiftPlots",1500,1000);
     TPad *c=new TPad("c","",0.0,0.0,1.0,0.9);
