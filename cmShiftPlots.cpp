@@ -38,8 +38,8 @@ Shifter::Shifter(TString sourcefilename){
   hR=(TH3F*)forward->Get("hIntDistortionPosR");
   hPhi=(TH3F*)forward->Get("hIntDistortionPosP");
 
-  average=TFile::Open("/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); 
-  //average=TFile::Open("/sphenix/user/rcorliss/distortion_maps/2021.04/apr07.average.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //updated average
+  //average=TFile::Open("/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); 
+  average=TFile::Open("/sphenix/user/rcorliss/distortion_maps/2021.04/apr07.average.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //updated average
   
   hXave=(TH3F*)average->Get("hIntDistortionX");
   hYave=(TH3F*)average->Get("hIntDistortionY");
