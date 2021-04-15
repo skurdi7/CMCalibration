@@ -142,8 +142,8 @@ int cmShiftPlots() {
   //IDLabels();
   TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",2000,3000);
   
-  const char * inputpattern="/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/Oct20/full_maps/*h_Charge_evt_*.root";
-  // const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*h_Charge_*.root";
+  //const char * inputpattern="/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/Oct20/full_maps/*h_Charge_evt_*.root";
+  const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*h_Charge_*.root";
   // const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*.root";
   
   //find all files that match the input string (includes wildcards)
