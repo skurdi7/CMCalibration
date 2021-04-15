@@ -31,14 +31,16 @@ Shifter::Shifter(TString sourcefilename){
   //forward=TFile::Open("/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/elevatorpitch/fluct_single.1side.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //distortions due to single-event differences from the average
   forward=TFile::Open(sourcefilename,"READ"); //single event distortion
 
-  hX=(TH3F*)forward->Get("hIntDistortionX");
-  hY=(TH3F*)forward->Get("hIntDistortionY");
-  hZ=(TH3F*)forward->Get("hIntDistortionZ");
+  hX=(TH3F*)forward->Get("hIntDistortionPosX");
+  hY=(TH3F*)forward->Get("hIntDistortionPosY");
+  hZ=(TH3F*)forward->Get("hIntDistortionPosZ");
 
-  hR=(TH3F*)forward->Get("hIntDistortionR");
-  hPhi=(TH3F*)forward->Get("hIntDistortionP");
+  hR=(TH3F*)forward->Get("hIntDistortionPosR");
+  hPhi=(TH3F*)forward->Get("hIntDistortionPosP");
 
-  average=TFile::Open("/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); 
+  //average=TFile::Open("/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); 
+  average=TFile::Open("/sphenix/user/rcorliss/distortion_maps/2021.04/apr07.average.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ");
+  
   hXave=(TH3F*)average->Get("hIntDistortionX");
   hYave=(TH3F*)average->Get("hIntDistortionY");
   hZave=(TH3F*)average->Get("hIntDistortionZ");
@@ -141,6 +143,7 @@ int cmShiftPlots() {
   TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",2000,3000);
   
   const char * inputpattern="/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/Oct20/full_maps/*h_Charge_evt_*.root";
+  // const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*h_Charge_*.root";
   // const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*.root";
   
   //find all files that match the input string (includes wildcards)
@@ -153,8 +156,8 @@ int cmShiftPlots() {
 
   for (int ifile=0;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file.
-    sourcefilename=((TFileInfo*)(filelist->GetList()->At(ifile)))->GetCurrentUrl()->GetFile();//gross
-    //infile=TFile::Open(sourcefilename.Data(),"READ");
+    sourcefilename=((TFileInfo*)(filelist->GetList()->At(ifile)))->GetCurrentUrl()->GetFile();
+    //infile=TFile::Open(sourcefilename.Data(),"READ"); //moved to shifter
 
     shifter = new Shifter(sourcefilename);
     
