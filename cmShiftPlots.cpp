@@ -140,7 +140,7 @@ int cmShiftPlots() {
   double high = 80.0;
   double deltaX, deltaY, deltaZ, deltaR, deltaPhi; 
   
-  nbins = 35;
+  nbins = 33;
   /*rsteps = 100;
   phisteps = 100;
   
