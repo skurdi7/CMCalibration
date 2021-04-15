@@ -31,13 +31,21 @@ Shifter::Shifter(TString sourcefilename){
   //forward=TFile::Open("/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/elevatorpitch/fluct_single.1side.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //distortions due to single-event differences from the average
   forward=TFile::Open(sourcefilename,"READ"); //single event distortion
 
-  hX=(TH3F*)forward->Get("hIntDistortionPosX");
+  /* hX=(TH3F*)forward->Get("hIntDistortionPosX");
   hY=(TH3F*)forward->Get("hIntDistortionPosY");
   hZ=(TH3F*)forward->Get("hIntDistortionPosZ");
 
   hR=(TH3F*)forward->Get("hIntDistortionPosR");
   hPhi=(TH3F*)forward->Get("hIntDistortionPosP");
+  */
 
+   hX=(TH3F*)forward->Get("hIntDistortionX");
+  hY=(TH3F*)forward->Get("hIntDistortionY");
+  hZ=(TH3F*)forward->Get("hIntDistortionZ");
+
+  hR=(TH3F*)forward->Get("hIntDistortionR");
+  hPhi=(TH3F*)forward->Get("hIntDistortionP");
+  
   average=TFile::Open("/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); 
   //average=TFile::Open("/sphenix/user/rcorliss/distortion_maps/2021.04/apr07.average.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //updated average
   
