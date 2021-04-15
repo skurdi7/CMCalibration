@@ -755,7 +755,9 @@ int cmShiftPlots() {
     hCartesianAveDiff[3]->Draw("colz");
     c2->cd(3);
     hCartesianShiftDifference[1]->Draw();
-    c2->cd(4)->Clear();
+    //c2->cd(4)->Clear();
+    c2->cd(4);
+    hStripesPerBin->Draw("colz");
 
     //r cart
     c3->Divide(4,1);
