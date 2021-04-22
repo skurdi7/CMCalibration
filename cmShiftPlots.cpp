@@ -643,7 +643,6 @@ int cmShiftPlots() {
     hPhiAveDiff[1]->Divide(hPhiDiff[1],hSamplePerBinRZ);
 
     //summary plots
-
     hDifferenceMeanR->Fill(hCylindricalShiftDifference[2]->GetMean(1));
     hDifferenceStdDevR->Fill(hCylindricalShiftDifference[2]->GetStdDev(1));
 
@@ -937,7 +936,10 @@ int cmShiftPlots() {
   sumplots->cd(22)->Clear();
   sumplots->cd(23)->Clear();
   sumplots->cd(24)->Clear();
-  
+
+  sumtitlepad->cd();
+  sumtitlepad->Clear();
+  sumtitle->DrawLatex(0.01,0.4,"Summary of Events"); 
   summary->Print("ShiftPlotsAllEvents.pdf)","pdf");
 
 
