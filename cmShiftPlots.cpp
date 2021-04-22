@@ -537,7 +537,7 @@ int cmShiftPlots() {
 	    hRShiftTrue->Fill(shifttrueCyl[2]);
 	    hPhiShiftTrue->Fill(shifttrueCyl[3]);
 
-	     if ((z > 20) && (z < 90)){
+	     if ((z > 20) && (z < 80)){
 	      if((r > 30) && (r < 75)){
 		hRDiff[1]->Fill(z,r,differenceR);
 		hPhiDiff[1]->Fill(z,r,differencePhi);
