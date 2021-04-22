@@ -154,7 +154,7 @@ int cmShiftPlots() {
   //IDLabels();
   TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",2000,3000);
 
-  nsumbins = 20;
+  int nsumbins = 20;
   //set up summary plots
   TH1F *hDifferenceMeanR = new TH1F("hDifferenceMeanR", "Average Difference between R Model and True of All Events (R > 30); #Delta R (#mum)", nsumbins, mindiff, maxdiff);
     TH1F *hDifferenceStdDevR = new TH1F("hDifferenceStdDevR", "Std Dev of Difference between R Model and True of All Events (R > 30); #Delta R (#mum)", nsumbins, mindiff, maxdiff);
