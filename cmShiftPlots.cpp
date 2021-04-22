@@ -516,8 +516,12 @@ int cmShiftPlots() {
 	      shiftrecoCyl[l] =  (hCylindricalCMModel[l]->GetBinContent(bin))*(1e4);
 	      shifttrueCyl[l] = (shifter->hR->Interpolate(phi,r,z))*(1e4); //convert from cm to micron 
 	      differenceCyl[l] = shiftrecoCyl[l] - shifttrueCyl[l]; 
-	    
-	      hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
+
+	      if ((z > 20) && (z < 90)){
+		if((r > 30) && (r < 75)){
+		  hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
+		}
+	      }
 	    }
 
 	    //phi 
@@ -526,27 +530,22 @@ int cmShiftPlots() {
 	      shifttrueCyl[l] = (shifter->hPhi->Interpolate(phi,r,z))*(1e4); 
 	      differenceCyl[l] = (shiftrecoCyl[l] - shifttrueCyl[l]); 
 
-	      hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
+	      if ((z > 20) && (z < 90)){
+		if((r > 30) && (r < 75)){
+		  hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
+		}
+	      }
 	    }
 	
 	    differenceR = differenceCyl[2]-differenceCyl[0];
-	    
+	    hRShiftDifference->Fill(differenceR);
+
 	    differencePhi = differenceCyl[3]-differenceCyl[1];
-	    
+	    hPhiShiftDifference->Fill(differencePhi);
 
 	    hRShiftTrue->Fill(shifttrueCyl[2]);
 	    hPhiShiftTrue->Fill(shifttrueCyl[3]);
 
-	     if ((z > 20) && (z < 80)){
-	      if((r > 30) && (r < 75)){
-		hRDiff[1]->Fill(z,r,differenceR);
-		hPhiDiff[1]->Fill(z,r,differencePhi);
-		hSamplePerBinRZ->Fill(z,r,1);
-
-		hRShiftDifference->Fill(differenceR);
-		hPhiShiftDifference->Fill(differencePhi);
-	      }
-	    }
 	
 	    if (k == 1){
 	      hCMmodelSliceRvTrue->Fill(r,phi,differenceCyl[2]);
@@ -588,7 +587,13 @@ int cmShiftPlots() {
 	    hRDiff[0]->Fill(x,y,differenceR);
 	    hPhiDiff[0]->Fill(x,y,differencePhi);
 
-	   
+	    if ((z > 20) && (z < 90)){
+	      if((r > 30) && (r < 75)){
+		hRDiff[1]->Fill(z,r,differenceR);
+		hPhiDiff[1]->Fill(z,r,differencePhi);
+		hSamplePerBinRZ->Fill(z,r,1);
+	      }
+	    }
 	    //exclude ends
 	    //if ((z > 10) && (z < 90)){
 	      hCompareRTrue->Fill(shiftrecoCyl[2],shifttrueCyl[2]);
