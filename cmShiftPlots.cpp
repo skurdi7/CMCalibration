@@ -497,7 +497,7 @@ int cmShiftPlots() {
 	  int bin = hCartesianCMModel[0]->FindBin(phi,r,z); //same for all
 
 	  if((r > 30.0) && (r < 76.0)){
-	    
+	    if ((z > 20) && (z < 90)){
 	    shifttrueCart[0] = (shifter->hX->Interpolate(phi,r,z))*(1e4); //convert from cm to micron
 	    shifttrueCart[1] = (shifter->hY->Interpolate(phi,r,z))*(1e4); //convert from cm to micron 
 	    shifttrueCart[2] = (shifter->hZ->Interpolate(phi,r,z))*(1e4); //convert from cm to micron 
@@ -517,11 +517,9 @@ int cmShiftPlots() {
 	      shifttrueCyl[l] = (shifter->hR->Interpolate(phi,r,z))*(1e4); //convert from cm to micron 
 	      differenceCyl[l] = shiftrecoCyl[l] - shifttrueCyl[l]; 
 
-	      if ((z > 20) && (z < 90)){
-		if((r > 30) && (r < 75)){
-		  hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
-		}
-	      }
+	      //if ((z > 20) && (z < 90)){
+		hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
+		//}
 	    }
 
 	    //phi 
@@ -530,11 +528,9 @@ int cmShiftPlots() {
 	      shifttrueCyl[l] = (shifter->hPhi->Interpolate(phi,r,z))*(1e4); 
 	      differenceCyl[l] = (shiftrecoCyl[l] - shifttrueCyl[l]); 
 
-	      if ((z > 20) && (z < 90)){
-		if((r > 30) && (r < 75)){
-		  hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
-		}
-	      }
+	      //if ((z > 20) && (z < 90)){
+		hCylindricalShiftDifference[l]->Fill(differenceCyl[l]);
+		//}
 	    }
 	
 	    differenceR = differenceCyl[2]-differenceCyl[0];
@@ -587,13 +583,11 @@ int cmShiftPlots() {
 	    hRDiff[0]->Fill(x,y,differenceR);
 	    hPhiDiff[0]->Fill(x,y,differencePhi);
 
-	    if ((z > 20) && (z < 90)){
-	      if((r > 30) && (r < 75)){
-		hRDiff[1]->Fill(z,r,differenceR);
+	    //if ((z > 20) && (z < 90)){
+	      hRDiff[1]->Fill(z,r,differenceR);
 		hPhiDiff[1]->Fill(z,r,differencePhi);
 		hSamplePerBinRZ->Fill(z,r,1);
-	      }
-	    }
+		// }
 	    //exclude ends
 	    //if ((z > 10) && (z < 90)){
 	      hCompareRTrue->Fill(shiftrecoCyl[2],shifttrueCyl[2]);
@@ -608,13 +602,10 @@ int cmShiftPlots() {
 	    
 	    hRDiffvZ->Fill(z,differenceCyl[2],1);
 	    
-	  
-	    
 	    hPhiDiffvZ->Fill(z,differenceCyl[3],1);
 	    
-	  
 	    hSamplePerBinXY->Fill(x,y,1);
-	    
+	    }
 	  }
 	}
       }
