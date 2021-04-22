@@ -471,7 +471,7 @@ int cmShiftPlots() {
     TH2F *hPhiDiffvPhi = new TH2F("hPhiDiffvPhi", "Difference between Phi Model and True vs. phi (R > 30, 10 < z < 90); phi (rad); shift difference (#mum)",nphi,minphi,maxphi,ndiff,mindiff,maxdiff);
 
     TH2F *hCMmodelSliceRvTrue = new TH2F("hCMmodelSliceRvTrue", "Difference between R Model and True as a function of R and Phi; r (cm); phi (rad)",nr,minr,maxr,nphi,minphi,maxphi);
-  
+
     for(int i = 1; i < nphi - 1; i++){
       double phi = minphi + ((maxphi - minphi)/(1.0*nphi))*(i+0.5); //center of bin
       for(int j = 1; j < nr - 1; j++){
@@ -497,7 +497,7 @@ int cmShiftPlots() {
 	  int bin = hCartesianCMModel[0]->FindBin(phi,r,z); //same for all
 
 	  if((r > 30.0) && (r < 76.0)){
-	    //if ((z > 20) && (z < 90)){
+	    if ((z > 20) && (z < 90)){
 	    shifttrueCart[0] = (shifter->hX->Interpolate(phi,r,z))*(1e4); //convert from cm to micron
 	    shifttrueCart[1] = (shifter->hY->Interpolate(phi,r,z))*(1e4); //convert from cm to micron 
 	    shifttrueCart[2] = (shifter->hZ->Interpolate(phi,r,z))*(1e4); //convert from cm to micron 
@@ -605,7 +605,7 @@ int cmShiftPlots() {
 	    hPhiDiffvZ->Fill(z,differenceCyl[3],1);
 	    
 	    hSamplePerBinXY->Fill(x,y,1);
-	    
+	  }
 	  }
 	}
       }
@@ -629,6 +629,32 @@ int cmShiftPlots() {
     hPhiAveDiff[0]->Divide(hPhiDiff[0],hSamplePerBinXY);
     hPhiAveDiff[1]->Divide(hPhiDiff[1],hSamplePerBinRZ);
 
+    //summary plots
+
+    TH1F *hDifferenceMeanR = new TH1F("hDifferenceMeanR", "Average Difference between R Model and True of All Events (R > 30); #Delta R (#mum)", ndiff, mindiff, maxdiff);
+    TH1F *hDifferenceStdDevR = new TH1F("hDifferenceStdDevR", "Std Dev of Difference between R Model and True of All Events (R > 30); #Delta R (#mum)", ndiff, mindiff, maxdiff);
+    
+    TH1F *hTrueMeanR = new TH1F("hTrueMeanR", "Mean True R Distortion Model of All Events (R > 30); #Delta R (#mum)", ndiff, mindiff, maxdiff);
+    TH1F *hTrueStdDevR = new TH1F("hTrueStdDevR", "Std Dev of True R Distortion Model of All Events (R > 30); #Delta R (#mum)", ndiff, mindiff, maxdiff);
+    
+    TH1F *hDifferenceMeanPhi = new TH1F("hDifferenceMeanPhi", "Average Difference between Phi Model and True of All Events (R > 30); #Delta Phi (#mum)", ndiff, mindiff, maxdiff);
+    TH1F *hDifferenceStdDevPhi = new TH1F("hDifferenceStdDevPhi", "Std Dev of Difference between Phi Model and True of All Events (R > 30); #Delta Phi (#mum)", ndiff, mindiff, maxdiff);
+    
+    TH1F *hTrueMeanPhi = new TH1F("hTrueMeanPhi", "Mean True Phi Distortion Model of All Events (R > 30); #Delta Phi (#mum)", ndiff, mindiff, maxdiff);
+    TH1F *hTrueStdDevPhi = new TH1F("hTrueStdDevPhi", "Std Dev of True Phi Distortion Model of All Events (R > 30); #Delta Phi (#mum)", ndiff, mindiff, maxdiff);
+
+    hDifferenceMeanR->fill(hCylindricalShiftDifference[2]->GetMean(1));
+    hDifferenceStdDevR->fill(hCylindricalShiftDifference[2]->GetStdDev(1));
+
+    hTrueMeanR->fill(hRShiftTrue->GetMean(1));
+    hTrueStdDevR->fill(hRShiftTrue->GetStdDev(1));
+    
+    hDifferenceMeanPhi->fill(hCylindricalShiftDifference[3]->GetMean(1));
+    hDifferenceStdDevPhi->fill(hCylindricalShiftDifference[3]->GetStdDev(1));
+
+    hTrueMeanPhi->fill(hPhiShiftTrue->GetMean(1));
+    hTrueStdDevPhi->fill(hPhiShiftTrue->GetStdDev(1));
+   
     //  TFile *plots;
 
   
@@ -855,21 +881,63 @@ int cmShiftPlots() {
       //if(ifile == 1){
       canvas->Print("ShiftPlotsAllEvents.pdf(","pdf");
     }
-    else if (ifile == nEvents - 1){
-      canvas->Print("ShiftPlotsAllEvents.pdf)","pdf");
-    }
+    //else if (ifile == nEvents - 1){
+    //canvas->Print("ShiftPlotsAllEvents.pdf)","pdf");
+    //}
     else{
       canvas->Print("ShiftPlotsAllEvents.pdf","pdf");
     }
   }
 
-  /*TCanvas *summary=new TCanvas("summary","ShiftPlotsSummary",2000,3000);
+  TCanvas *summary = new TCanvas("summary","ShiftPlotsSummary",2000,3000);
 
-  TPad *sumtitle=new TPad("sumtitle","",0.0,0.96,1.0,1.0);
+  TPad *sumtitlepad = new TPad("sumtitlepad","",0.0,0.96,1.0,1.0);
+  TPad *sumplots = new TPad("sumplotspad","",0.0,0.0,1.0,0.96);
 
-  //set up summary plots
+  TLatex *sumtitle = new TLatex(0.0,0.0,"");
+
+  sumtitle->SetNDC();
+  sumtitle->SetTextSize(0.35);
+
+  summary->cd();
+  sumplots->Draw();
+  sumtitlepad->Draw();
+
+  sumplots->Divide(4,6);
+  sumplots->cd(1);
+  hDifferenceMeanR->Draw();
+  sumplots->cd(2);
+  hDifferenceStdDevR->Draw();
+  sumplots->cd(3);
+  hTrueMeanR->Draw();
+  sumplots->cd(4);
+  hTrueStdDevR->Draw();
+  sumplots->cd(5);
+  hDifferenceMeanPhi->Draw();
+  sumplots->cd(6);
+  hDifferenceStdDevPhi->Draw();
+  sumplots->cd(7);
+  hTrueMeanPhi->Draw();
+  sumplots->cd(8);
+  hTrueStdDevPhi->Draw();
+  sumplots->cd(9);
+  sumplots->cd(10)->Clear();
+  sumplots->cd(11)->Clear();
+  sumplots->cd(12)->Clear();
+  sumplots->cd(13)->Clear();
+  sumplots->cd(14)->Clear();
+  sumplots->cd(15)->Clear();
+  sumplots->cd(16)->Clear();
+  sumplots->cd(17)->Clear();
+  sumplots->cd(18)->Clear();
+  sumplots->cd(19)->Clear();
+  sumplots->cd(20)->Clear();
+  sumplots->cd(21)->Clear();
+  sumplots->cd(22)->Clear();
+  sumplots->cd(23)->Clear();
+  sumplots->cd(24)->Clear();
   
-  summary->Print("ShiftPlotsAllEvents.pdf)","pdf");*/
+  summary->Print("ShiftPlotsAllEvents.pdf)","pdf");
 
 
   
