@@ -643,17 +643,17 @@ int cmShiftPlots() {
     TH1F *hTrueMeanPhi = new TH1F("hTrueMeanPhi", "Mean True Phi Distortion Model of All Events (R > 30); #Delta Phi (#mum)", ndiff, mindiff, maxdiff);
     TH1F *hTrueStdDevPhi = new TH1F("hTrueStdDevPhi", "Std Dev of True Phi Distortion Model of All Events (R > 30); #Delta Phi (#mum)", ndiff, mindiff, maxdiff);
 
-    hDifferenceMeanR->fill(hCylindricalShiftDifference[2]->GetMean(1));
-    hDifferenceStdDevR->fill(hCylindricalShiftDifference[2]->GetStdDev(1));
+    hDifferenceMeanR->Fill(hCylindricalShiftDifference[2]->GetMean(1));
+    hDifferenceStdDevR->Fill(hCylindricalShiftDifference[2]->GetStdDev(1));
 
-    hTrueMeanR->fill(hRShiftTrue->GetMean(1));
-    hTrueStdDevR->fill(hRShiftTrue->GetStdDev(1));
+    hTrueMeanR->Fill(hRShiftTrue->GetMean(1));
+    hTrueStdDevR->Fill(hRShiftTrue->GetStdDev(1));
     
-    hDifferenceMeanPhi->fill(hCylindricalShiftDifference[3]->GetMean(1));
-    hDifferenceStdDevPhi->fill(hCylindricalShiftDifference[3]->GetStdDev(1));
+    hDifferenceMeanPhi->Fill(hCylindricalShiftDifference[3]->GetMean(1));
+    hDifferenceStdDevPhi->Fill(hCylindricalShiftDifference[3]->GetStdDev(1));
 
-    hTrueMeanPhi->fill(hPhiShiftTrue->GetMean(1));
-    hTrueStdDevPhi->fill(hPhiShiftTrue->GetStdDev(1));
+    hTrueMeanPhi->Fill(hPhiShiftTrue->GetMean(1));
+    hTrueStdDevPhi->Fill(hPhiShiftTrue->GetStdDev(1));
    
     //  TFile *plots;
 
