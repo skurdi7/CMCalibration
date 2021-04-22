@@ -583,7 +583,6 @@ int cmShiftPlots() {
 	      if((r > 30) && (r < 75)){
 		hRDiff[1]->Fill(z,r,differenceR);
 		hPhiDiff[1]->Fill(z,r,differencePhi);
-		hSamplePerBinXY->Fill(x,y,1);
 		hSamplePerBinRZ->Fill(z,r,1);
 	      }
 	    }
@@ -606,6 +605,7 @@ int cmShiftPlots() {
 	    hPhiDiffvZ->Fill(z,differenceCyl[3],1);
 	    
 	  
+	    hSamplePerBinXY->Fill(x,y,1);
 	    
 	  }
 	}
