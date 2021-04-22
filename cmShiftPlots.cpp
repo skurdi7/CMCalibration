@@ -939,7 +939,7 @@ int cmShiftPlots() {
 
   sumtitlepad->cd();
   sumtitlepad->Clear();
-  sumtitle->DrawLatex(0.01,0.4,"Summary of Events"); 
+  sumtitle->DrawLatex(0.4,0.4,"Summary of Events"); 
   summary->Print("ShiftPlotsAllEvents.pdf)","pdf");
 
 
