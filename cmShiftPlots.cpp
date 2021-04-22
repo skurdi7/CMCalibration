@@ -497,7 +497,7 @@ int cmShiftPlots() {
 	  int bin = hCartesianCMModel[0]->FindBin(phi,r,z); //same for all
 
 	  if((r > 30.0) && (r < 76.0)){
-	  
+	    
 	    shifttrueCart[0] = (shifter->hX->Interpolate(phi,r,z))*(1e4); //convert from cm to micron
 	    shifttrueCart[1] = (shifter->hY->Interpolate(phi,r,z))*(1e4); //convert from cm to micron 
 	    shifttrueCart[2] = (shifter->hZ->Interpolate(phi,r,z))*(1e4); //convert from cm to micron 
@@ -577,11 +577,14 @@ int cmShiftPlots() {
 	  
 	    //compare r and phi models from cartesian to originals
 	    hRDiff[0]->Fill(x,y,differenceR);
-	    hRDiff[1]->Fill(z,r,differenceR);
-
 	    hPhiDiff[0]->Fill(x,y,differencePhi);
-	    hPhiDiff[1]->Fill(z,r,differencePhi);
 
+	    if ((z > 20) && (z < 90)){
+	      if((r > 30) && (r < 75)){
+		hRDiff[1]->Fill(z,r,differenceR);
+		hPhiDiff[1]->Fill(z,r,differencePhi);
+	      }
+	    }
 	    //exclude ends
 	    //if ((z > 10) && (z < 90)){
 	      hCompareRTrue->Fill(shiftrecoCyl[2],shifttrueCyl[2]);
@@ -853,12 +856,23 @@ int cmShiftPlots() {
       canvas->Print("ShiftPlotsAllEvents.pdf(","pdf");
     }
     else if (ifile == nEvents - 1){
-      canvas->Print("ShiftPlotsAllEvents.pdf)","pdf"); 
+      canvas->Print("ShiftPlotsAllEvents.pdf)","pdf");
     }
     else{
       canvas->Print("ShiftPlotsAllEvents.pdf","pdf");
     }
+  }
 
+  /*TCanvas *summary=new TCanvas("summary","ShiftPlotsSummary",2000,3000);
+
+  TPad *sumtitle=new TPad("sumtitle","",0.0,0.96,1.0,1.0);
+
+  //set up summary plots
+  
+  summary->Print("ShiftPlotsAllEvents.pdf)","pdf");*/
+
+
+  
     //canvas->Print(Form("ShiftPlotsEvent%03i\n.gif", ifile),"gif"); //left padding for up to 3 digits
     
     /*   TCanvas *canvas=new TCanvas("canvas","ShiftPlots",1500,1000);
@@ -1089,7 +1103,9 @@ int cmShiftPlots() {
     canvas->Print("ShiftPlots.pdf)","pdf"); */
   
     // c->SaveAs("RShift.pdf"); // replace w print
-  }
+  
+
+  
   return 0;
 }
 
