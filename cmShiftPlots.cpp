@@ -497,7 +497,7 @@ int cmShiftPlots() {
 	  int bin = hCartesianCMModel[0]->FindBin(phi,r,z); //same for all
 
 	  if((r > 30.0) && (r < 76.0)){
-	    if ((z > 20) && (z < 90)){
+	    //if ((z > 20) && (z < 90)){
 	    shifttrueCart[0] = (shifter->hX->Interpolate(phi,r,z))*(1e4); //convert from cm to micron
 	    shifttrueCart[1] = (shifter->hY->Interpolate(phi,r,z))*(1e4); //convert from cm to micron 
 	    shifttrueCart[2] = (shifter->hZ->Interpolate(phi,r,z))*(1e4); //convert from cm to micron 
@@ -605,7 +605,7 @@ int cmShiftPlots() {
 	    hPhiDiffvZ->Fill(z,differenceCyl[3],1);
 	    
 	    hSamplePerBinXY->Fill(x,y,1);
-	    }
+	    
 	  }
 	}
       }
