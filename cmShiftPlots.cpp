@@ -139,7 +139,10 @@ int cmShiftPlots() {
   double low = -80.0;
   double high = 80.0;
   double deltaX, deltaY, deltaZ, deltaR, deltaPhi; 
-  
+  int ndiff = 300;
+  int mindiff = -20;
+  int maxdiff = 20;
+    
   nbins = 35;
   /*rsteps = 100;
   phisteps = 100;
@@ -395,10 +398,6 @@ int cmShiftPlots() {
 	}
       }
     }
-
-    int ndiff = 300;
-    int mindiff = -20;
-    int maxdiff = 20;
  
     TH1F *hCartesianShiftDifference[3];
     hCartesianShiftDifference[0] = new TH1F("hShiftDifferenceX", "Difference between CM Model X and True (R > 30); #Delta X (#mum)", ndiff, mindiff, maxdiff);
