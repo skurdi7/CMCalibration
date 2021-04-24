@@ -57,7 +57,7 @@ Shifter::Shifter(TString sourcefilename){
   hRave=(TH3F*)average->Get("hIntDistortionR");
   hPhiave=(TH3F*)average->Get("hIntDistortionP");*/
 
-  hXave=0;
+  /*hXave=0;
   hYave=0;
   hZave=0;
   hRave=0;
@@ -68,7 +68,7 @@ Shifter::Shifter(TString sourcefilename){
   hZ->Add(hZave,-1);
   //dont add to see total dist
   hR->Add(hRave,-1);
-  hPhi->Add(hPhiave,-1);
+  hPhi->Add(hPhiave,-1);*/
   
   back=TFile::Open("/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //tells it only to read, not to write anything you make there.
    
