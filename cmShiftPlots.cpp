@@ -70,7 +70,7 @@ Shifter::Shifter(TString sourcefilename){
   hZ=(TH3F*)average->Get("hIntDistortionZ");
   //set aves to 0 to see just fluct
   hR=(TH3F*)average->Get("hIntDistortionR");
-  hPhi=(TH3F*)average->Get("hIntDistortionP")
+  hPhi=(TH3F*)average->Get("hIntDistortionP");
   
   back=TFile::Open("/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //tells it only to read, not to write anything you make there.
    
