@@ -142,8 +142,8 @@ int cmShiftPlots() {
   double high = 80.0;
   double deltaX, deltaY, deltaZ, deltaR, deltaPhi; 
   int ndiff = 300;
-  int mindiff = -500;
-  int maxdiff = 500;
+  int mindiff = -800;
+  int maxdiff = 800;
     
   nbins = 35;
   /*rsteps = 100;
