@@ -181,7 +181,7 @@ int cmShiftPlots() {
   //TFile *infile;
   TString sourcefilename;
   //int nEvents = filelist->GetNFiles();
-  int nEvents = 2;
+  int nEvents = 30;
 
   for (int ifile=0;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file.
