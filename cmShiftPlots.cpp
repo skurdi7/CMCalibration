@@ -31,13 +31,14 @@ Shifter::Shifter(TString sourcefilename){
   //forward=TFile::Open("/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/elevatorpitch/fluct_single.1side.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //distortions due to single-event differences from the average
   forward=TFile::Open(sourcefilename,"READ"); //single event distortion
 
-  /*hX=(TH3F*)forward->Get("hIntDistortionPosX");
+  hX=(TH3F*)forward->Get("hIntDistortionPosX");
   hY=(TH3F*)forward->Get("hIntDistortionPosY");
   hZ=(TH3F*)forward->Get("hIntDistortionPosZ");
 
   hR=(TH3F*)forward->Get("hIntDistortionPosR");
   hPhi=(TH3F*)forward->Get("hIntDistortionPosP");
-  */ 
+  
+  
   /*
   hX=(TH3F*)forward->Get("hIntDistortionX");
   hY=(TH3F*)forward->Get("hIntDistortionY");
@@ -50,7 +51,7 @@ Shifter::Shifter(TString sourcefilename){
   //average=TFile::Open("/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); 
   average=TFile::Open("/sphenix/user/rcorliss/distortion_maps/2021.04/apr07.average.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //updated average
   
-  /* hXave=(TH3F*)average->Get("hIntDistortionX");
+  hXave=(TH3F*)average->Get("hIntDistortionX");
   hYave=(TH3F*)average->Get("hIntDistortionY");
   hZave=(TH3F*)average->Get("hIntDistortionZ");
   //set aves to 0 to see just fluct
@@ -61,16 +62,9 @@ Shifter::Shifter(TString sourcefilename){
   hY->Add(hYave,-1);
   hZ->Add(hZave,-1);
   //dont add to see total dist
-  hR->Add(hRave,-1);
-  hPhi->Add(hPhiave,-1);*/
+   hR->Add(hRave,-1);
+  hPhi->Add(hPhiave,-1);
 
-
-  hX=(TH3F*)average->Get("hIntDistortionPosX");
-  hY=(TH3F*)average->Get("hIntDistortionPosY");
-  hZ=(TH3F*)average->Get("hIntDistortionPosZ");
-  //set aves to 0 to see just fluct
-  hR=(TH3F*)average->Get("hIntDistortionPosR");
-  hPhi=(TH3F*)average->Get("hIntDistortionPosP");
   
   back=TFile::Open("/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); //tells it only to read, not to write anything you make there.
    
