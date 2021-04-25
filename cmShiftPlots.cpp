@@ -141,9 +141,6 @@ int cmShiftPlots() {
   double low = -80.0;
   double high = 80.0;
   double deltaX, deltaY, deltaZ, deltaR, deltaPhi; 
-  int ndiff = 300;
-  int mindiff = -20;
-  int maxdiff = 20;
     
   nbins = 35;
   /*rsteps = 100;
@@ -157,18 +154,20 @@ int cmShiftPlots() {
   TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",2000,3000);
 
   int nsumbins = 20;
+  int minsum = -10;
+  int maxsum = 10;
   //set up summary plots
-  TH1F *hDifferenceMeanR = new TH1F("hDifferenceMeanR", "Average Difference between R Model and True of All Events (R > 30); #Delta R (#mum)", nsumbins, mindiff, maxdiff);
-    TH1F *hDifferenceStdDevR = new TH1F("hDifferenceStdDevR", "Std Dev of Difference between R Model and True of All Events (R > 30); #Delta R (#mum)", nsumbins, mindiff, maxdiff);
+  TH1F *hDifferenceMeanR = new TH1F("hDifferenceMeanR", "Average Difference between R Model and True of All Events (R > 30); #Delta R (#mum)", nsumbins, minsum, maxsum);
+    TH1F *hDifferenceStdDevR = new TH1F("hDifferenceStdDevR", "Std Dev of Difference between R Model and True of All Events (R > 30); #Delta R (#mum)", nsumbins, minsum, maxsum);
     
-    TH1F *hTrueMeanR = new TH1F("hTrueMeanR", "Mean True R Distortion Model of All Events (R > 30); #Delta R (#mum)", nsumbins, mindiff, maxdiff);
-    TH1F *hTrueStdDevR = new TH1F("hTrueStdDevR", "Std Dev of True R Distortion Model of All Events (R > 30); #Delta R (#mum)", nsumbins, mindiff, maxdiff);
+    TH1F *hTrueMeanR = new TH1F("hTrueMeanR", "Mean True R Distortion Model of All Events (R > 30); #Delta R (#mum)", nsumbins, minsum, maxsum);
+    TH1F *hTrueStdDevR = new TH1F("hTrueStdDevR", "Std Dev of True R Distortion Model of All Events (R > 30); #Delta R (#mum)", nsumbins, minsum, maxsum);
     
-    TH1F *hDifferenceMeanPhi = new TH1F("hDifferenceMeanPhi", "Average Difference between Phi Model and True of All Events (R > 30); #Delta Phi (#mum)", nsumbins, mindiff, maxdiff);
-    TH1F *hDifferenceStdDevPhi = new TH1F("hDifferenceStdDevPhi", "Std Dev of Difference between Phi Model and True of All Events (R > 30); #Delta Phi (#mum)", nsumbins, mindiff, maxdiff);
+    TH1F *hDifferenceMeanPhi = new TH1F("hDifferenceMeanPhi", "Average Difference between Phi Model and True of All Events (R > 30); #Delta Phi (#mum)", nsumbins, minsum, maxsum);
+    TH1F *hDifferenceStdDevPhi = new TH1F("hDifferenceStdDevPhi", "Std Dev of Difference between Phi Model and True of All Events (R > 30); #Delta Phi (#mum)", nsumbins, minsum, maxsum);
     
-    TH1F *hTrueMeanPhi = new TH1F("hTrueMeanPhi", "Mean True Phi Distortion Model of All Events (R > 30); #Delta Phi (#mum)", nsumbins, mindiff, maxdiff);
-    TH1F *hTrueStdDevPhi = new TH1F("hTrueStdDevPhi", "Std Dev of True Phi Distortion Model of All Events (R > 30); #Delta Phi (#mum)", nsumbins, mindiff, maxdiff);
+    TH1F *hTrueMeanPhi = new TH1F("hTrueMeanPhi", "Mean True Phi Distortion Model of All Events (R > 30); #Delta Phi (#mum)", nsumbins, minsum, maxsum);
+    TH1F *hTrueStdDevPhi = new TH1F("hTrueStdDevPhi", "Std Dev of True Phi Distortion Model of All Events (R > 30); #Delta Phi (#mum)", nsumbins, minsum, maxsum);
 
     //take in events
   //const char * inputpattern="/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/Oct20/full_maps/*h_Charge_evt_*.root";
@@ -401,7 +400,11 @@ int cmShiftPlots() {
 	}
       }
     }
- 
+
+    int ndiff = 300;
+    int mindiff = -20;
+    int maxdiff = 20;
+  
     TH1F *hCartesianShiftDifference[3];
     hCartesianShiftDifference[0] = new TH1F("hShiftDifferenceX", "Difference between CM Model X and True (R > 30); #Delta X (#mum)", ndiff, mindiff, maxdiff);
     hCartesianShiftDifference[1] = new TH1F("hShiftDifferenceY", "Difference between CM Model Y and True (R > 30); #Delta Y (#mum)", ndiff, mindiff, maxdiff);
