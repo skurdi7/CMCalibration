@@ -118,7 +118,7 @@ TVector3 Shifter::Shift(TVector3 position){
   return ShiftBack(ShiftForward(position));
 }
 
-int cmShiftPlots() {
+int DistortCMHits() {
   Shifter *shifter;
   PHG4TpcCentralMembrane stripes;
   vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
