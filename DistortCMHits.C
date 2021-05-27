@@ -124,11 +124,6 @@ int DistortCMHits() {
   vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
   double x, y, z;
   TVector3 position, newposition;
-
-  //set up TTree to store position and newposition
-  TTree *cmHitsTree=new TTree("tree","cmHitsTree");
-  cmHitsTree->Branch("position","TVector3",&position);
-  cmHitsTree->Branch("newposition","TVector3",&newposition);
   
   //take in events
   const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*h_Charge_*.root"; 
@@ -142,9 +137,14 @@ int DistortCMHits() {
   for (int ifile=0;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file
     sourcefilename=((TFileInfo*)(filelist->GetList()->At(ifile)))->GetCurrentUrl()->GetFile();
-    
+
     //create shifter
     shifter = new Shifter(sourcefilename);
+
+    //set up TTree to store position and newposition
+    TTree *cmHitsTree=new TTree("tree","cmDistHitsTree");
+    cmHitsTree->Branch("position","TVector3",&position);
+    cmHitsTree->Branch("newposition","TVector3",&newposition);
   
     for (int i = 0; i < Hits.size(); i++){
       //store each stripe center's coordinates in position vector
@@ -159,10 +159,10 @@ int DistortCMHits() {
       //store pos and newpos in tree
       cmHitsTree->Fill();  
     }
-  }
 
-  //save tree
-  cmHitsTree->SaveAs("cmDistortedHitsTree.root");
+    //save tree
+    cmHitsTree->SaveAs(Form("cmDistHitsTree_Event%d.root", ifile));
+  }
   
   return 0;
 }
