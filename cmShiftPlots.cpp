@@ -170,9 +170,10 @@ int cmShiftPlots() {
     TH1F *hTrueStdDevPhi = new TH1F("hTrueStdDevPhi", "Std Dev of True Phi Distortion Model of All Events (R > 30); #Delta Phi (#mum)", nsumbins, minsum, maxsum);
 
     //take in events
-  //const char * inputpattern="/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/Oct20/full_maps/*h_Charge_evt_*.root";
-  const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*h_Charge_*.root"; //updated
-  // const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*.root";
+    //const char * inputpattern="/gpfs/mnt/gpfs02/sphenix/user/rcorliss/distortion_maps/Oct20/full_maps/*h_Charge_evt_*.root";
+    // const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*.root";
+    const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*h_Charge_*.root"; //updated
+  
   
   //find all files that match the input string (includes wildcards)
   TFileCollection *filelist=new TFileCollection();
@@ -191,14 +192,12 @@ int cmShiftPlots() {
     
     TH2F *RShift = new TH2F("RShift","Radial shift of stripe centers (z in cm); x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
 
-    TH2F *hStripesPerBin = new TH2F("hStripesPerBin","CM Stripes Per Bin (z in stripes); x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
-
     //TH2F *AveShift = new TH2F("AveShift","Average of CM Model over Stripes per Bin; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
     TH2F *hPhiCheck2d = new TH2F("hPhiCheck2d","what phi am i using; x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
 
     TH1F *PhiCheck = new TH1F("PhiCheck","what phi am i using; phi (radians)",200,-10.0,10.0);
   
-    for (int i = 0; i < Hits.size(); i++){ 
+    /*  for (int i = 0; i < Hits.size(); i++){ 
       x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; //stripe center
       y = (Hits[i]->get_y(0) + Hits[i]->get_y(1))/2;
       z = 5.0;
@@ -217,18 +216,25 @@ int cmShiftPlots() {
 
       deltaR = newposition.Perp() - position.Perp();
       RShift->Fill(x,y,deltaR);
+      
       hStripesPerBin->Fill(x,y,1);
 	  
       // cout << i << endl;
-    }
+      }*/
 
     //AveShift->Divide(RShift,hStripesPerBin);
     //hPhiCheck2d->Divide(hStripesPerBin);
 
+    // 0 to 2pi for phi, 0 to 90 for r
 
+    
     //repeat for forward only
     //TH2F *hForwardR = new TH2F("hForwardR","Radial Shift Forward of Stripe Centers; x (cm); y (cm)",nbins,low,high,nbins,low,high);
 
+    TH2F *hStripesPerBin = new TH2F("hStripesPerBin","CM Stripes Per Bin (z in stripes); x (cm); y (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+
+    TH2F *hStripesPerBinRPhi = new TH2F("hStripesPerBinRPhi","CM Stripes Per Bin (z in stripes); phi (rad); r (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+    
     TH2F *hCartesianForward[3];
     hCartesianForward[0] = new TH2F("hForwardX","X Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
     hCartesianForward[1] = new TH2F("hForwardY","Y Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
@@ -245,21 +251,25 @@ int cmShiftPlots() {
       z = 5.0;
     
       position.SetXYZ(x,y,z);
+
+      double r = position.Perp();
     
       double phi=position.Phi();
       if(position.Phi() < 0.0){
 	phi = position.Phi() + TMath::TwoPi(); 
       }
-  
+    
       PhiCheck->Fill(phi);
       hPhiCheck2d->Fill(x,y,phi);
+
+      hStripesPerBin->Fill(x,y,1);
       
       newposition = shifter->ShiftForward(position);
 
       deltaX = (newposition.X() - position.X())*(1e4); //convert from cm to micron 
       deltaY = (newposition.Y() - position.Y())*(1e4);
       deltaZ = (newposition.Z() - position.Z())*(1e4);
-
+    
       deltaR = (newposition.Perp() - position.Perp())*(1e4);
       deltaPhi = newposition.DeltaPhi(position);
       //double newR = sqrt(newposition.X()*newposition.X() + newposition.Y()*newposition.Y());
