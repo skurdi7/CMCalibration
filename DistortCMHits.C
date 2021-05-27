@@ -141,6 +141,9 @@ int DistortCMHits() {
     //create shifter
     shifter = new Shifter(sourcefilename);
 
+    //set up TFile for TTree
+    TFile *output = TFile::Open(Form("cmDistHitsTree_Event%d.root", ifile),"RECREATE");
+    
     //set up TTree to store position and newposition
     TTree *cmHitsTree=new TTree("tree","cmDistHitsTree");
     cmHitsTree->Branch("position","TVector3",&position);
@@ -161,7 +164,8 @@ int DistortCMHits() {
     }
 
     //save tree
-    cmHitsTree->SaveAs(Form("cmDistHitsTree_Event%d.root", ifile));
+    cmHitsTree->Write();
+    output->Close();
   }
   
   return 0;
