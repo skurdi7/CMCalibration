@@ -126,9 +126,9 @@ int DistortCMHits() {
   TVector3 position, newposition;
 
   //set up TTree to store position and newposition
-  TTree *cmHitsTree=new TTree("tree","cmHits");
-  cmHitsTree->Branch("position",&position);
-  cmHitsTree->Branch("newposition",&newposition);
+  TTree *cmHitsTree=new TTree("tree","cmHitsTree");
+  cmHitsTree->Branch("position","TVector3",&position);
+  cmHitsTree->Branch("newposition","TVector3",&newposition);
   
   //take in events
   const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*h_Charge_*.root"; 
