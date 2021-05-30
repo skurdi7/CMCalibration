@@ -368,7 +368,7 @@ int cmShiftPlots() {
     hCylindricalCMModel[2]=new TH3F("hCMModelRCart", "CM Model: Radial Shift Forward of Stripe Centers from Cartesian", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
     hCylindricalCMModel[3]=new TH3F("hCMModelPhiCart", "CM Model: Phi Shift Forward of Stripe Centers from Cartesian", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);  
     //TH3F *hCMModel = new TH3F("hCMModel", "CM Model: Radial Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
-
+  
     double xshift, yshift, zshift, rshift, phishift, rshiftcart, phishiftcart;
   
     for(int i = 0; i < nphi; i++){
@@ -639,7 +639,7 @@ int cmShiftPlots() {
 	}
       }
     }
-
+  
     for (int m = 0; m < 6; m = m+2){
       hCartesianAveDiff[m]->Divide(hCartesianDiff[m],hSamplePerBinXY);
       hCylindricalAveDiff[m]->Divide(hCylindricalDiff[m],hSamplePerBinXY);

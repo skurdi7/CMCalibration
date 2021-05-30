@@ -134,6 +134,23 @@ int DistortCMHits() {
   TString sourcefilename;
   int nEvents = 30; //change based on number of event files available in source directory
 
+
+
+  
+  //from here to next comment is just to test the trees but should be put into step 2 code later
+  int nbins = 35;
+  double low = -80.0;
+  double high = 80.0;
+  double deltaX, deltaY, deltaZ, deltaR, deltaPhi; 
+
+  TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",1200,800);
+
+    
+  //end of test code here
+
+
+
+    
   for (int ifile=0;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file
     sourcefilename=((TFileInfo*)(filelist->GetList()->At(ifile)))->GetCurrentUrl()->GetFile();
@@ -145,7 +162,7 @@ int DistortCMHits() {
     TFile *output = TFile::Open(Form("cmDistHitsTree_Event%d.root", ifile),"RECREATE");
     
     //set up TTree to store position and newposition
-    TTree *cmHitsTree=new TTree("tree","cmDistHitsTree");
+    TTree *cmHitsTree = new TTree("tree","cmDistHitsTree");
     cmHitsTree->Branch("position","TVector3",&position);
     cmHitsTree->Branch("newposition","TVector3",&newposition);
   
@@ -166,7 +183,82 @@ int DistortCMHits() {
     //save tree
     cmHitsTree->Write();
     output->Close();
+
+  
+
+
+
+    
+    //from here to "end of test code" comment is just to test the trees but should be put into step 2 code later
+    //setup for models
+    TH2F *hStripesPerBin = new TH2F("hStripesPerBin","CM Stripes Per Bin (z in stripes); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+
+    TH2F *hStripesPerBinRPhi = new TH2F("hStripesPerBinRPhi","CM Stripes Per Bin (z in stripes); phi (rad); r (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
+    
+    TH2F *hCartesianForward[3];
+    hCartesianForward[0] = new TH2F("hForwardX","X Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+    hCartesianForward[1] = new TH2F("hForwardY","Y Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+    hCartesianForward[2] = new TH2F("hForwardZ","Z Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+    
+    TH2F *hCylindricalForward[2];
+    hCylindricalForward[0] = new TH2F("hForwardR","Radial Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+    hCylindricalForward[1] = new TH2F("hForwardPhi","Phi Shift Forward of Stripe Centers (rad); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+    
+    
+    //Get data from TTree
+    TVector3 positionT, newpositionT;
+    
+    char const *treename="cmDistHitsTree";
+    TFile *input=TFile::Open("cmDistHitsTree_Event%d.root");
+    TTree *inTree=(TTree*)input->Get("tree");
+    
+    inTree->SetBranchAddress("pos",&position);
+    inTree->SetBranchAddress("pos",&newposition);
+    
+    for (int i=0;i<inTree->GetEntries();i++){
+      inTree->GetEntry(i);
+      positionT = position;
+      newpositionT = newposition;      
+      
+      deltaX = (newpositionT.X() - positionT.X())*(1e4); //convert from cm to micron 
+      deltaY = (newpositionT.Y() - positionT.Y())*(1e4);
+      deltaZ = (newpositionT.Z() - positionT.Z())*(1e4);
+
+      deltaR = (newpositionT.Perp() - positionT.Perp())*(1e4);
+      deltaPhi = newpositionT.DeltaPhi(positionT);
+
+      hCartesianForward[0]->Fill(x,y,deltaX);
+      hCartesianForward[1]->Fill(x,y,deltaY);
+      hCartesianForward[2]->Fill(x,y,deltaZ);
+
+      hCylindricalForward[0]->Fill(x,y,deltaR);
+      hCylindricalForward[1]->Fill(x,y,deltaPhi);
+
+    }
+    
+    input->Close();
+    canvas->Divide(3,2);
+    canvas->cd(1);
+    hCartesianForward[0]->Draw("colz");
+    canvas->cd(2);
+    hCartesianForward[1]->Draw("colz");
+    canvas->cd(3);
+    hCartesianForward[2]->Draw("colz");
+    canvas->cd(4);
+    hCylindricalForward[0]->Draw("colz");
+    canvas->cd(5);
+    hCylindricalForward[1]->Draw("colz");
+    
+    
+    if(ifile == 0){ 
+      canvas->Print("DistortCMHitsTest.pdf(","pdf");
+    }
+    else{
+      canvas->Print("DistortCMHitsTest.pdf","pdf");
+    }
   }
+  //end of test code here
+
   
   return 0;
 }
