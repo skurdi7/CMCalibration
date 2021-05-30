@@ -132,7 +132,7 @@ int DistortCMHits() {
   TFileCollection *filelist=new TFileCollection();
   filelist->Add(inputpattern);
   TString sourcefilename;
-  int nEvents = 30; //change based on number of event files available in source directory
+  int nEvents = 3; //change based on number of event files available in source directory
 
 
 
@@ -143,7 +143,7 @@ int DistortCMHits() {
   double high = 80.0;
   double deltaX, deltaY, deltaZ, deltaR, deltaPhi; 
 
-  TCanvas *canvas=new TCanvas("canvas","ShiftPlotsAllEvents",1200,800);
+  TCanvas *canvas=new TCanvas("canvas","DistortCMHitsTest",1200,800);
 
     
   //end of test code here
