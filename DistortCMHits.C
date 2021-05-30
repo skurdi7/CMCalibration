@@ -209,7 +209,7 @@ int DistortCMHits() {
     TVector3 positionT, newpositionT;
     
     char const *treename="cmDistHitsTree";
-    TFile *input=TFile::Open("cmDistHitsTree_Event%d.root");
+    TFile *input=TFile::Open(Form("cmDistHitsTree_Event%d.root", ifile));
     TTree *inTree=(TTree*)input->Get("tree");
     
     inTree->SetBranchAddress("pos",&position);
