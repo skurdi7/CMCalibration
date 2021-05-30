@@ -212,8 +212,8 @@ int DistortCMHits() {
     TFile *input=TFile::Open(Form("cmDistHitsTree_Event%d.root", ifile));
     TTree *inTree=(TTree*)input->Get("tree");
     
-    inTree->SetBranchAddress("pos",&position);
-    inTree->SetBranchAddress("pos",&newposition);
+    inTree->SetBranchAddress("position",&position);
+    inTree->SetBranchAddress("newposition",&newposition);
     
     for (int i=0;i<inTree->GetEntries();i++){
       inTree->GetEntry(i);
