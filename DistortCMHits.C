@@ -243,7 +243,7 @@ int DistortCMHits() {
       hCylindricalForward[1]->Fill(positionT->X(),positionT->Y(),deltaPhi);
     }
     
-    input->Close();
+   
     
     canvas->Divide(3,2);
     canvas->cd(1);
