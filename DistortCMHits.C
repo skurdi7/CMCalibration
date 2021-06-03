@@ -127,19 +127,9 @@ int DistortCMHits() {
 
   position = new TVector3(1.,1.,1.);
   newposition = new TVector3(1.,1.,1.);
-  
-  //take in events
-  const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*h_Charge_*.root"; 
-  
-  //find all files that match the input string (includes wildcards)
-  TFileCollection *filelist=new TFileCollection();
-  filelist->Add(inputpattern);
-  TString sourcefilename;
-  int nEvents = 3; //change based on number of event files available in source directory
 
 
-
-  
+    
   //from here to next comment is just to test the trees but should be put into step 2 code later
   int nbins = 35;
   double low = -80.0;
@@ -151,7 +141,15 @@ int DistortCMHits() {
     
   //end of test code here
 
-
+  
+  //take in events
+  const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*h_Charge_*.root"; 
+  
+  //find all files that match the input string (includes wildcards)
+  TFileCollection *filelist=new TFileCollection();
+  filelist->Add(inputpattern);
+  TString sourcefilename;
+  int nEvents = 3; //change based on number of event files available in source directory
 
     
   for (int ifile=0;ifile < nEvents;ifile++){
@@ -186,7 +184,6 @@ int DistortCMHits() {
     //save tree
     cmHitsTree->Write();
     output->Close();
-
   
 
 
@@ -205,12 +202,12 @@ int DistortCMHits() {
     hCylindricalForward[0] = new TH2F("hForwardR","Radial Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
     hCylindricalForward[1] = new TH2F("hForwardPhi","Phi Shift Forward of Stripe Centers (rad); x (cm); y (cm)",nbins,low,high,nbins,low,high);
     
-    
+  
     //Get data from TTree
     TVector3 *positionT, *newpositionT;
 
-     positionT = new TVector3(1.,1.,1.);
-     newpositionT = new TVector3(1.,1.,1.);
+    positionT = new TVector3(1.,1.,1.);
+    newpositionT = new TVector3(1.,1.,1.);
   
     char const *treename="cmDistHitsTree";
     TFile *input=TFile::Open(Form("cmDistHitsTree_Event%d.root", ifile));
@@ -247,6 +244,7 @@ int DistortCMHits() {
     }
     
     input->Close();
+    
     canvas->Divide(3,2);
     canvas->cd(1);
     hCartesianForward[0]->Draw("colz");
@@ -258,6 +256,7 @@ int DistortCMHits() {
     hCylindricalForward[0]->Draw("colz");
     canvas->cd(5);
     hCylindricalForward[1]->Draw("colz");
+    canvas->cd(6)->Clear();
     
   
     if(ifile == 0){ 
