@@ -186,23 +186,28 @@ int DistortCMHits() {
     output->Close();
   }
 
-
+  //setup for models
+  TH2F *hStripesPerBin = new TH2F("hStripesPerBin","CM Stripes Per Bin (z in stripes); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+    
+  TH2F *hCartesianForward[3];
+  hCartesianForward[0] = new TH2F("hForwardX","X Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  hCartesianForward[1] = new TH2F("hForwardY","Y Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  hCartesianForward[2] = new TH2F("hForwardZ","Z Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+    
+  TH2F *hCylindricalForward[2];
+  hCylindricalForward[0] = new TH2F("hForwardR","Radial Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+  hCylindricalForward[1] = new TH2F("hForwardPhi","Phi Shift Forward of Stripe Centers (rad); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+    
 
   for (int ifile=0;ifile < nEvents;ifile++){ 
     //from here to "end of test code" comment is just to test the trees but should be put into step 2 code later
-    //setup for models
-    TH2F *hStripesPerBin = new TH2F("hStripesPerBin","CM Stripes Per Bin (z in stripes); x (cm); y (cm)",nbins,low,high,nbins,low,high);
+    hStripesPerBin->Reset();
+    hCartesianForward[0]->Reset();
+    hCartesianForward[1]->Reset();
+    hCartesianForward[2]->Reset();
+    hCylindricalForward[0]->Reset();
+    hCylindricalForward[1]->Reset();
     
-    TH2F *hCartesianForward[3];
-    hCartesianForward[0] = new TH2F("hForwardX","X Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
-    hCartesianForward[1] = new TH2F("hForwardY","Y Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
-    hCartesianForward[2] = new TH2F("hForwardZ","Z Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
-    
-    TH2F *hCylindricalForward[2];
-    hCylindricalForward[0] = new TH2F("hForwardR","Radial Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
-    hCylindricalForward[1] = new TH2F("hForwardPhi","Phi Shift Forward of Stripe Centers (rad); x (cm); y (cm)",nbins,low,high,nbins,low,high);
-    
-  
     //Get data from TTree
     TVector3 *positionT, *newpositionT;
 
@@ -242,9 +247,7 @@ int DistortCMHits() {
       hCylindricalForward[0]->Fill(positionT->X(),positionT->Y(),deltaR);
       hCylindricalForward[1]->Fill(positionT->X(),positionT->Y(),deltaPhi);
     }
-    
-   
-    
+ 
     canvas->Divide(3,2);
     canvas->cd(1);
     hCartesianForward[0]->Draw("colz");
