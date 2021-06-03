@@ -235,7 +235,7 @@ void TestPlots(int nEvents){
 	phi = positionT->Phi() + TMath::TwoPi(); 
       }
 
-      hStripesPerBin->Fill(positionT->X(),positionT->X(),1);
+      hStripesPerBin->Fill(positionT->X(),positionT->Y(),1);
       
       deltaX = (newpositionT->X() - positionT->X())*(1e4); //convert from cm to micron 
       deltaY = (newpositionT->Y() - positionT->Y())*(1e4);

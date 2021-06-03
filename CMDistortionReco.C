@@ -137,7 +137,7 @@ int CMDistortionReco() {
 	phi = position->Phi() + TMath::TwoPi(); 
       }
 
-      hStripesPerBin->Fill(position->X(),position->X(),1);
+      hStripesPerBin->Fill(position->X(),position->Y(),1);
       
       deltaX = (newposition->X() - position->X())*(1e4); //convert from cm to micron 
       deltaY = (newposition->Y() - position->Y())*(1e4);
