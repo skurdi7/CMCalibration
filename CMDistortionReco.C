@@ -198,11 +198,11 @@ int CMDistortionReco() {
     
   
     if(ifile == 0){ 
-      canvas->Print("DistortCMHitsTest.pdf(","pdf");
+      canvas->Print("CMDistortionReco1.pdf(","pdf");
     } else if (ifile == nEvents - 1){
-      canvas->Print("DistortCMHitsTest.pdf)","pdf");
+      canvas->Print("CMDistortionReco1.pdf)","pdf");
     } else{
-      canvas->Print("DistortCMHitsTest.pdf","pdf");
+      canvas->Print("CMDistortionReco1.pdf","pdf");
     }
   }
 
