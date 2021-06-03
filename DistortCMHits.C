@@ -163,8 +163,8 @@ int DistortCMHits() {
     
     //set up TTree to store position and newposition
     TTree *cmHitsTree = new TTree("tree","cmDistHitsTree");
-    cmHitsTree->Branch("position",&position,"TVector3");
-    cmHitsTree->Branch("newposition",&newposition,"TVector3");
+    cmHitsTree->Branch("position",&position,"TVector3/D");
+    cmHitsTree->Branch("newposition",&newposition,"TVector3/D");
   
     for (int i = 0; i < Hits.size(); i++){
       //store each stripe center's coordinates in position vector
@@ -252,8 +252,9 @@ int DistortCMHits() {
     
     if(ifile == 0){ 
       canvas->Print("DistortCMHitsTest.pdf(","pdf");
-    }
-    else{
+    } else if (ifile == nEvents - 1){
+      canvas->Print("DistortCMHitsTest.pdf)","pdf");
+    } else{
       canvas->Print("DistortCMHitsTest.pdf","pdf");
     }
   }
