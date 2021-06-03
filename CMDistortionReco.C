@@ -192,10 +192,8 @@ int CMDistortionReco() {
     hCartesianForward[1]->Draw("colz");
     canvas->cd(3);
     hCartesianForward[2]->Draw("colz");
-    canvas->cd(4);
-    hCylindricalForward[0]->Draw("colz");
-    canvas->cd(5);
-    hCylindricalForward[1]->Draw("colz");
+    canvas->cd(4)->Clear();
+    canvas->cd(5)->Clear();
     canvas->cd(6)->Clear();
     
   
