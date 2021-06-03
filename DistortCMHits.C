@@ -118,7 +118,7 @@ TVector3 Shifter::Shift(TVector3 position){
   return ShiftBack(ShiftForward(position));
 }
 
-void TestPlots();
+void TestPlots(int nEvents);
 
 int DistortCMHits() {
   Shifter *shifter;
@@ -178,7 +178,7 @@ int DistortCMHits() {
 }
 
 
-void TestPlots(){
+void TestPlots(int nEvents){
   //setup for models
   int nbins = 35;
   double low = -80.0;
