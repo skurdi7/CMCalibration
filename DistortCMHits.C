@@ -149,7 +149,7 @@ int DistortCMHits() {
   TFileCollection *filelist=new TFileCollection();
   filelist->Add(inputpattern);
   TString sourcefilename;
-  int nEvents = 3; //change based on number of event files available in source directory
+  int nEvents = 4; //change based on number of event files available in source directory
 
     
   for (int ifile=0;ifile < nEvents;ifile++){
