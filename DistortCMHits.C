@@ -154,7 +154,7 @@ int DistortCMHits() {
     
   for (int ifile=0;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file
-    sourcefilename=((TFileInfo*)(filelist->GetList()->At(ifile)))->GetCurrentUrl()->GetFile();
+    sourcefilename=((TFileInfo*)(filelist->GetList()->At(ifile+1)))->GetCurrentUrl()->GetFile();
 
     //create shifter
     shifter = new Shifter(sourcefilename);
@@ -272,6 +272,6 @@ int DistortCMHits() {
   }
   //end of test code here
 
-  
+
   return 0;
 }
