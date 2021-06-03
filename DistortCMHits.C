@@ -163,8 +163,8 @@ int DistortCMHits() {
     
     //set up TTree to store position and newposition
     TTree *cmHitsTree = new TTree("tree","cmDistHitsTree");
-    cmHitsTree->Branch("position",&position,"TVector3/D");
-    cmHitsTree->Branch("newposition",&newposition,"TVector3/D");
+    cmHitsTree->Branch("position",&position,"TVector3/E");
+    cmHitsTree->Branch("newposition",&newposition,"TVector3/E");
   
     for (int i = 0; i < Hits.size(); i++){
       //store each stripe center's coordinates in position vector
