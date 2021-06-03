@@ -118,6 +118,8 @@ TVector3 Shifter::Shift(TVector3 position){
   return ShiftBack(ShiftForward(position));
 }
 
+void TestPlots();
+
 int DistortCMHits() {
   Shifter *shifter;
   PHG4TpcCentralMembrane stripes;
@@ -128,24 +130,11 @@ int DistortCMHits() {
   position = new TVector3(1.,1.,1.);
   newposition = new TVector3(1.,1.,1.);
 
-
-    
-  //from here to next comment is just to test the trees but should be put into step 2 code later
-  int nbins = 35;
-  double low = -80.0;
-  double high = 80.0;
-  double deltaX, deltaY, deltaZ, deltaR, deltaPhi; 
-
-  
-    
-  //end of test code here
-
-  
   //take in events
   const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*h_Charge_*.root"; 
   
   //find all files that match the input string (includes wildcards)
-  TFileCollection *filelist=new TFileCollection();
+  TFileCollection *filelist=new TFileCollection(); //look up how to get # of entries for nEvents
   filelist->Add(inputpattern);
   TString sourcefilename;
   int nEvents = 3; //change based on number of event files available in source directory
@@ -185,7 +174,17 @@ int DistortCMHits() {
     output->Close();
   }
 
+  return 0;
+}
+
+
+void TestPlots(){
   //setup for models
+  int nbins = 35;
+  double low = -80.0;
+  double high = 80.0;
+  double deltaX, deltaY, deltaZ, deltaR, deltaPhi; 
+
   TH2F *hStripesPerBin = new TH2F("hStripesPerBin","CM Stripes Per Bin (z in stripes); x (cm); y (cm)",nbins,low,high,nbins,low,high);
     
   TH2F *hCartesianForward[3];
@@ -206,7 +205,8 @@ int DistortCMHits() {
   newpositionT = new TVector3(1.,1.,1.);
   
   for (int ifile=0;ifile < nEvents;ifile++){ 
-    //from here to "end of test code" comment is just to test the trees but should be put into step 2 code later
+
+    //Clear out histograms
     hStripesPerBin->Reset();
     hCartesianForward[0]->Reset();
     hCartesianForward[1]->Reset();
@@ -214,8 +214,7 @@ int DistortCMHits() {
     hCylindricalForward[0]->Reset();
     hCylindricalForward[1]->Reset();
     
-    //Get data from TTree
-    
+    //Get data from TTree  
     char const *treename="cmDistHitsTree";
     TFile *input=TFile::Open(Form("cmDistHitsTree_Event%d.root", ifile),"READ");
     TTree *inTree=(TTree*)input->Get("tree");
@@ -250,7 +249,7 @@ int DistortCMHits() {
       hCylindricalForward[1]->Fill(positionT->X(),positionT->Y(),deltaPhi);
     }
     
- 
+    input->Close();
     
     canvas->cd(1);
     hCartesianForward[0]->Draw("colz");
@@ -273,8 +272,5 @@ int DistortCMHits() {
       canvas->Print("DistortCMHitsTest.pdf","pdf");
     }
   }
-  //end of test code here
-
-
-  return 0;
+  
 }
