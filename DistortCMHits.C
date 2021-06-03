@@ -199,7 +199,11 @@ int DistortCMHits() {
 
   TCanvas *canvas=new TCanvas("canvas","DistortCMHitsTest",1200,800);
 
+  TVector3 *positionT, *newpositionT;
 
+  positionT = new TVector3(1.,1.,1.);
+  newpositionT = new TVector3(1.,1.,1.);
+  
   for (int ifile=0;ifile < nEvents;ifile++){ 
     //from here to "end of test code" comment is just to test the trees but should be put into step 2 code later
     hStripesPerBin->Reset();
@@ -210,13 +214,9 @@ int DistortCMHits() {
     hCylindricalForward[1]->Reset();
     
     //Get data from TTree
-    TVector3 *positionT, *newpositionT;
-
-    positionT = new TVector3(1.,1.,1.);
-    newpositionT = new TVector3(1.,1.,1.);
-  
+    
     char const *treename="cmDistHitsTree";
-    TFile *input=TFile::Open(Form("cmDistHitsTree_Event%d.root", ifile));
+    TFile *input=TFile::Open(Form("cmDistHitsTree_Event%d.root", ifile),"READ");
     TTree *inTree=(TTree*)input->Get("tree");
     
     inTree->SetBranchAddress("position",&positionT);
