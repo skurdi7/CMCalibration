@@ -236,7 +236,7 @@ int DistortCMHits() {
       deltaZ = (newpositionT->Z() - positionT->Z())*(1e4);
 
       deltaR = (newpositionT->Perp() - positionT->Perp())*(1e4);
-      deltaPhi = newpositionT->DeltaPhi(positionT);
+      deltaPhi = newpositionT->DeltaPhi(*positionT);
 
       hCartesianForward[0]->Fill(positionT->X(),positionT->Y(),deltaX);
       hCartesianForward[1]->Fill(positionT->X(),positionT->Y(),deltaY);
