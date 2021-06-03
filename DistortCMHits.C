@@ -198,7 +198,8 @@ int DistortCMHits() {
   hCylindricalForward[1] = new TH2F("hForwardPhi","Phi Shift Forward of Stripe Centers (rad); x (cm); y (cm)",nbins,low,high,nbins,low,high);
 
   TCanvas *canvas=new TCanvas("canvas","DistortCMHitsTest",1200,800);
-
+  canvas->Divide(3,2);
+  
   TVector3 *positionT, *newpositionT;
 
   positionT = new TVector3(1.,1.,1.);
@@ -248,8 +249,9 @@ int DistortCMHits() {
       hCylindricalForward[0]->Fill(positionT->X(),positionT->Y(),deltaR);
       hCylindricalForward[1]->Fill(positionT->X(),positionT->Y(),deltaPhi);
     }
+    
  
-    canvas->Divide(3,2);
+    
     canvas->cd(1);
     hCartesianForward[0]->Draw("colz");
     canvas->cd(2);
