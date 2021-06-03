@@ -1,4 +1,4 @@
-// "step 1"
+// step 1
 #include <iostream>
 #include <cmath>
 #include <vector>
@@ -174,7 +174,8 @@ int DistortCMHits() {
     output->Close();
   }
 
-  TestPlots(nEvents);
+  //use test function to check if data opens properly
+  //TestPlots(nEvents); 
 
   return 0;
 }
