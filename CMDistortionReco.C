@@ -90,8 +90,8 @@ int CMDistortionReco() {
     TH1F *hTrueStdDevPhi = new TH1F("hTrueStdDevPhi", "Std Dev of True Phi Distortion Model of All Events (R > 30); #Delta Phi (#mum)", nsumbins, minsum, maxsum);
 
     TVector3 *position, *newposition;
-     position = new TVector3(1.,1.,1.);
-     newposition = new TVector3(1.,1.,1.);
+    position = new TVector3(1.,1.,1.);
+    newposition = new TVector3(1.,1.,1.);
  
   for (int ifile=0;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file
@@ -102,7 +102,7 @@ int CMDistortionReco() {
     
     //get data from ttree
     char const *treename="cmDistHitsTree";
-    TFile *input=TFile::Open(Form("cmDistHitsTree_Event%d.root", ifile));
+    TFile *input=TFile::Open(Form("cmDistHitsTree_Event%d.root", ifile), "READ");
     TTree *inTree=(TTree*)input->Get("tree");
     
     inTree->SetBranchAddress("position",&position);
