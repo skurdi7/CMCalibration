@@ -136,8 +136,7 @@ int DistortCMHits() {
   double high = 80.0;
   double deltaX, deltaY, deltaZ, deltaR, deltaPhi; 
 
-  TCanvas *canvas=new TCanvas("canvas","DistortCMHitsTest",1200,800);
-
+  
     
   //end of test code here
 
@@ -154,7 +153,7 @@ int DistortCMHits() {
     
   for (int ifile=0;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file
-    sourcefilename=((TFileInfo*)(filelist->GetList()->At(ifile+1)))->GetCurrentUrl()->GetFile();
+    sourcefilename=((TFileInfo*)(filelist->GetList()->At(ifile)))->GetCurrentUrl()->GetFile();
 
     //create shifter
     shifter = new Shifter(sourcefilename);
@@ -197,7 +196,9 @@ int DistortCMHits() {
   TH2F *hCylindricalForward[2];
   hCylindricalForward[0] = new TH2F("hForwardR","Radial Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
   hCylindricalForward[1] = new TH2F("hForwardPhi","Phi Shift Forward of Stripe Centers (rad); x (cm); y (cm)",nbins,low,high,nbins,low,high);
-    
+
+  TCanvas *canvas=new TCanvas("canvas","DistortCMHitsTest",1200,800);
+
 
   for (int ifile=0;ifile < nEvents;ifile++){ 
     //from here to "end of test code" comment is just to test the trees but should be put into step 2 code later
