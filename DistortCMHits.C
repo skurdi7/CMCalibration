@@ -123,7 +123,10 @@ int DistortCMHits() {
   PHG4TpcCentralMembrane stripes;
   vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
   double x, y, z;
-  TVector3 position, newposition;
+  TVector3 *position, *newposition;
+
+  position = new TVector3(1.,1.,1.);
+  newposition = new TVector3(1.,1.,1.);
   
   //take in events
   const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*h_Charge_*.root"; 
