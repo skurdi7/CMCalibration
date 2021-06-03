@@ -149,7 +149,7 @@ int DistortCMHits() {
   TFileCollection *filelist=new TFileCollection();
   filelist->Add(inputpattern);
   TString sourcefilename;
-  int nEvents = 4; //change based on number of event files available in source directory
+  int nEvents = 3; //change based on number of event files available in source directory
 
     
   for (int ifile=0;ifile < nEvents;ifile++){
@@ -184,11 +184,11 @@ int DistortCMHits() {
     //save tree
     cmHitsTree->Write();
     output->Close();
-  
+  }
 
 
 
-    
+  for (int ifile=0;ifile < nEvents;ifile++){ 
     //from here to "end of test code" comment is just to test the trees but should be put into step 2 code later
     //setup for models
     TH2F *hStripesPerBin = new TH2F("hStripesPerBin","CM Stripes Per Bin (z in stripes); x (cm); y (cm)",nbins,low,high,nbins,low,high);
