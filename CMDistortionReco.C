@@ -67,8 +67,8 @@ int CMDistortionReco() {
   filelist->Add(inputpattern);
   TString sourcefilename;
   
-  TCanvas *canvas=new TCanvas("canvas","CMDistortionReco1",1200,800);
-  canvas->Divide(3,2);
+  /*TCanvas *canvas=new TCanvas("canvas","CMDistortionReco1",1200,800);
+    canvas->Divide(3,2);*/
 
   TVector3 *position, *newposition;
   position = new TVector3(1.,1.,1.);
@@ -167,12 +167,6 @@ int CMDistortionReco() {
       }
     }
  
-    for (int i = 0; i < 3; i++){
-      //hCartesianForward[i]->SetStats(0);
-      hCartesianAveShift[i]->SetStats(0);
-    }
-
-    hStripesPerBin->SetStats(0);
    
     TFile *plots;
 
@@ -185,25 +179,32 @@ int CMDistortionReco() {
     
     plots->Close();
 
+    /*
+      for (int i = 0; i < 3; i++){
+      hCartesianForward[i]->SetStats(0);
+      hCartesianAveShift[i]->SetStats(0);
+      }
 
-    canvas->cd(1);
-    hCartesianForward[0]->Draw("colz");
-    canvas->cd(2);
-    hCartesianForward[1]->Draw("colz");
-    canvas->cd(3);
-    hCartesianForward[2]->Draw("colz");
-    canvas->cd(4)->Clear();
-    canvas->cd(5)->Clear();
-    canvas->cd(6)->Clear();
+      hStripesPerBin->SetStats(0);
+      canvas->cd(1);
+      hCartesianForward[0]->Draw("colz");
+      canvas->cd(2);
+      hCartesianForward[1]->Draw("colz");
+      canvas->cd(3);
+      hCartesianForward[2]->Draw("colz");
+      canvas->cd(4)->Clear();
+      canvas->cd(5)->Clear();
+      canvas->cd(6)->Clear();
     
   
-    if(ifile == 0){ 
+      if(ifile == 0){ 
       canvas->Print("CMDistortionReco1.pdf(","pdf");
-    } else if (ifile == nEvents - 1){
+      } else if (ifile == nEvents - 1){
       canvas->Print("CMDistortionReco1.pdf)","pdf");
-    } else{
+      } else{
       canvas->Print("CMDistortionReco1.pdf","pdf");
-    }
+      }
+    */
   }
 
   return 0;
