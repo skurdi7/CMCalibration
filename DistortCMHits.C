@@ -174,10 +174,10 @@ int DistortCMHits() {
       x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; 
       y = (Hits[i]->get_y(0) + Hits[i]->get_y(1))/2;
       z = 5.0;
-      position.SetXYZ(x,y,z);
+      position->SetXYZ(x,y,z);
       
       //shift pos
-      newposition = shifter->ShiftForward(position);
+      *newposition = shifter->ShiftForward(*position);
 
       //store pos and newpos in tree
       cmHitsTree->Fill();  
@@ -207,42 +207,43 @@ int DistortCMHits() {
     
     
     //Get data from TTree
-    TVector3 positionT, newpositionT;
+    TVector3 *positionT, *newpositionT;
+
+     positionT = new TVector3(1.,1.,1.);
+     newpositionT = new TVector3(1.,1.,1.);
   
     char const *treename="cmDistHitsTree";
     TFile *input=TFile::Open(Form("cmDistHitsTree_Event%d.root", ifile));
     TTree *inTree=(TTree*)input->Get("tree");
     
-    inTree->SetBranchAddress("position",&position);
-    inTree->SetBranchAddress("newposition",&newposition);
+    inTree->SetBranchAddress("position",&positionT);
+    inTree->SetBranchAddress("newposition",&newpositionT);
     
     for (int i=0;i<inTree->GetEntries();i++){
       inTree->GetEntry(i);
-      positionT = position;
-      newpositionT = newposition;
 
-      double r = positionT.Perp();
+      double r = positionT->Perp();
     
-      double phi = positionT.Phi();
-      if(positionT.Phi() < 0.0){
-	phi = positionT.Phi() + TMath::TwoPi(); 
+      double phi = positionT->Phi();
+      if(positionT->Phi() < 0.0){
+	phi = positionT->Phi() + TMath::TwoPi(); 
       }
 
-      hStripesPerBin->Fill(positionT.X(),positionT.X(),1);
+      hStripesPerBin->Fill(positionT->X(),positionT->X(),1);
       
-      deltaX = (newpositionT.X() - positionT.X())*(1e4); //convert from cm to micron 
-      deltaY = (newpositionT.Y() - positionT.Y())*(1e4);
-      deltaZ = (newpositionT.Z() - positionT.Z())*(1e4);
+      deltaX = (newpositionT->X() - positionT->X())*(1e4); //convert from cm to micron 
+      deltaY = (newpositionT->Y() - positionT->Y())*(1e4);
+      deltaZ = (newpositionT->Z() - positionT->Z())*(1e4);
 
-      deltaR = (newpositionT.Perp() - positionT.Perp())*(1e4);
-      deltaPhi = newpositionT.DeltaPhi(positionT);
+      deltaR = (newpositionT->Perp() - positionT->Perp())*(1e4);
+      deltaPhi = newpositionT->DeltaPhi(positionT);
 
-      hCartesianForward[0]->Fill(positionT.X(),positionT.Y(),deltaX);
-      hCartesianForward[1]->Fill(positionT.X(),positionT.Y(),deltaY);
-      hCartesianForward[2]->Fill(positionT.X(),positionT.Y(),deltaZ);
+      hCartesianForward[0]->Fill(positionT->X(),positionT->Y(),deltaX);
+      hCartesianForward[1]->Fill(positionT->X(),positionT->Y(),deltaY);
+      hCartesianForward[2]->Fill(positionT->X(),positionT->Y(),deltaZ);
 
-      hCylindricalForward[0]->Fill(positionT.X(),positionT.Y(),deltaR);
-      hCylindricalForward[1]->Fill(positionT.X(),positionT.Y(),deltaPhi);
+      hCylindricalForward[0]->Fill(positionT->X(),positionT->Y(),deltaR);
+      hCylindricalForward[1]->Fill(positionT->X(),positionT->Y(),deltaPhi);
     }
     
     input->Close();
