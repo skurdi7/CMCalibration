@@ -67,7 +67,7 @@ int CMDistortionReco() {
   filelist->Add(inputpattern);
   TString sourcefilename;
   
-  TCanvas *canvas=new TCanvas("canvas","CMDistortionReco1",2000,3000);
+  TCanvas *canvas=new TCanvas("canvas","CMDistortionReco1",1200,800);
   canvas->Divide(3,2);
 
   TVector3 *position, *newposition;
