@@ -163,8 +163,8 @@ int DistortCMHits() {
     
     //set up TTree to store position and newposition
     TTree *cmHitsTree = new TTree("tree","cmDistHitsTree");
-    cmHitsTree->Branch("position",&position,"TVector3/E");
-    cmHitsTree->Branch("newposition",&newposition,"TVector3/E");
+    cmHitsTree->Branch("position",&position,"TVector3");
+    cmHitsTree->Branch("newposition",&newposition,"TVector3");
   
     for (int i = 0; i < Hits.size(); i++){
       //store each stripe center's coordinates in position vector
@@ -192,8 +192,6 @@ int DistortCMHits() {
     //from here to "end of test code" comment is just to test the trees but should be put into step 2 code later
     //setup for models
     TH2F *hStripesPerBin = new TH2F("hStripesPerBin","CM Stripes Per Bin (z in stripes); x (cm); y (cm)",nbins,low,high,nbins,low,high);
-
-    TH2F *hStripesPerBinRPhi = new TH2F("hStripesPerBinRPhi","CM Stripes Per Bin (z in stripes); phi (rad); r (cm)",nbins,low,high,nbins,low,high); // min n max just beyond extent of CM so it's easier to see
     
     TH2F *hCartesianForward[3];
     hCartesianForward[0] = new TH2F("hForwardX","X Shift Forward of Stripe Centers (#mum); x (cm); y (cm)",nbins,low,high,nbins,low,high);
@@ -207,7 +205,7 @@ int DistortCMHits() {
     
     //Get data from TTree
     TVector3 positionT, newpositionT;
-    
+  
     char const *treename="cmDistHitsTree";
     TFile *input=TFile::Open(Form("cmDistHitsTree_Event%d.root", ifile));
     TTree *inTree=(TTree*)input->Get("tree");
@@ -218,7 +216,16 @@ int DistortCMHits() {
     for (int i=0;i<inTree->GetEntries();i++){
       inTree->GetEntry(i);
       positionT = position;
-      newpositionT = newposition;      
+      newpositionT = newposition;
+
+      double r = positionT.Perp();
+    
+      double phi = positionT.Phi();
+      if(positionT.Phi() < 0.0){
+	phi = positionT.Phi() + TMath::TwoPi(); 
+      }
+
+      hStripesPerBin->Fill(positionT.X(),positionT.X(),1);
       
       deltaX = (newpositionT.X() - positionT.X())*(1e4); //convert from cm to micron 
       deltaY = (newpositionT.Y() - positionT.Y())*(1e4);
@@ -227,13 +234,12 @@ int DistortCMHits() {
       deltaR = (newpositionT.Perp() - positionT.Perp())*(1e4);
       deltaPhi = newpositionT.DeltaPhi(positionT);
 
-      hCartesianForward[0]->Fill(x,y,deltaX);
-      hCartesianForward[1]->Fill(x,y,deltaY);
-      hCartesianForward[2]->Fill(x,y,deltaZ);
+      hCartesianForward[0]->Fill(positionT.X(),positionT.Y(),deltaX);
+      hCartesianForward[1]->Fill(positionT.X(),positionT.Y(),deltaY);
+      hCartesianForward[2]->Fill(positionT.X(),positionT.Y(),deltaZ);
 
-      hCylindricalForward[0]->Fill(x,y,deltaR);
-      hCylindricalForward[1]->Fill(x,y,deltaPhi);
-
+      hCylindricalForward[0]->Fill(positionT.X(),positionT.Y(),deltaR);
+      hCylindricalForward[1]->Fill(positionT.X(),positionT.Y(),deltaPhi);
     }
     
     input->Close();
@@ -249,7 +255,7 @@ int DistortCMHits() {
     canvas->cd(5);
     hCylindricalForward[1]->Draw("colz");
     
-    
+  
     if(ifile == 0){ 
       canvas->Print("DistortCMHitsTest.pdf(","pdf");
     } else if (ifile == nEvents - 1){
