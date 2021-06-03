@@ -174,6 +174,8 @@ int DistortCMHits() {
     output->Close();
   }
 
+  TestPlots(nEvents);
+
   return 0;
 }
 
