@@ -168,7 +168,7 @@ int CMDistortionReco() {
     }
  
     for (int i = 0; i < 3; i++){
-      hCartesianForward[i]->SetStats(0);
+      //hCartesianForward[i]->SetStats(0);
       hCartesianAveShift[i]->SetStats(0);
     }
 
