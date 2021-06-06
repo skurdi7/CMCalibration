@@ -137,7 +137,7 @@ int DistortCMHits() {
   TFileCollection *filelist=new TFileCollection(); //look up how to get # of entries for nEvents
   filelist->Add(inputpattern);
   TString sourcefilename;
-  int nEvents = 30; //change based on number of event files available in source directory
+  int nEvents = 3; //change based on number of event files available in source directory
 
     
   for (int ifile=0;ifile < nEvents;ifile++){
