@@ -20,7 +20,7 @@ class Shifter {
 public:
 Shifter(TString sourcefilename);
   TFile *forward, *average;
-  TH3F *hX, *hY, *hZ, *hR, *hXave, *hYave, *hZave, *hRave;  
+  TH3F *hX, *hY, *hZ, *hR, *hPhi, *hXave, *hYave, *hZave, *hRave, *hPhiave;  
 };
 
 Shifter::Shifter(TString sourcefilename){
@@ -230,10 +230,6 @@ int CMDistortionAnalysis() {
 
 	    hRShiftTrue->Fill(shifttrueCyl[0]);
 	    hPhiShiftTrue->Fill(shifttrueCyl[1]);
-	
-	    if (k == 1){
-	      hCMmodelSliceRvTrue->Fill(r,phi,differenceCyl[0]);
- 	    }
 	
 	    double x = r*cos(phi);
 	    double y = r*sin(phi);
