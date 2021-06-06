@@ -55,7 +55,7 @@ int CMDistortionReco() {
   int nbins = 35; 
   double low = -80.0;
   double high = 80.0;
-  double deltaX, deltaY, deltaZ;
+  double deltaX, deltaY, deltaZ, deltaR, deltaPhi;
 
   int nEvents = 3; //change based on number of tree files available in source directory
     
@@ -120,8 +120,8 @@ int CMDistortionReco() {
       hCartesianForward[1]->Fill(position->X(),position->Y(),deltaY);
       hCartesianForward[2]->Fill(position->X(),position->Y(),deltaZ);
 
-      hCylindricalForward[0]->Fill(positionT->X(),positionT->Y(),deltaR);
-      hCylindricalForward[1]->Fill(positionT->X(),positionT->Y(),deltaPhi);
+      hCylindricalForward[0]->Fill(position->X(),position->Y(),deltaR);
+      hCylindricalForward[1]->Fill(position->X(),position->Y(),deltaPhi);
     }
 
     TH2F *hCartesianAveShift[3];
