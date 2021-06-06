@@ -386,6 +386,7 @@ int CMDistortionAnalysis() {
     c1->cd(4);
     //hCMmodelSliceRvTrue->Draw("colz");
     hSamplePerBinRZ->Draw("colz");
+    
     //y plots
     c2->Divide(4,1);
     c2->cd(1);
@@ -402,22 +403,22 @@ int CMDistortionAnalysis() {
     //r cart
     c3->Divide(4,1);
     c3->cd(1);
-    hCylindricalAveDiff[4]->Draw("colz");
+    hCylindricalAveDiff[0]->Draw("colz");
     c3->cd(2);
-    hCylindricalAveDiff[5]->Draw("colz");
+    hCylindricalAveDiff[1]->Draw("colz");
     c3->cd(3);
-    hCylindricalShiftDifference[2]->Draw();
+    hCylindricalShiftDifference[0]->Draw();
     c3->cd(4);
     hRShiftTrue->Draw();
     
     //phi cart
     c4->Divide(4,1);
     c4->cd(1);
-    hCylindricalAveDiff[6]->Draw("colz");
+    hCylindricalAveDiff[2]->Draw("colz");
     c4->cd(2);
-    hCylindricalAveDiff[7]->Draw("colz");
+    hCylindricalAveDiff[3]->Draw("colz");
     c4->cd(3);
-    hCylindricalShiftDifference[3]->Draw();
+    hCylindricalShiftDifference[1]->Draw();
     c4->cd(4);
     hPhiShiftTrue->Draw();
 
