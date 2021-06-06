@@ -60,7 +60,7 @@ int CMDistortionAnalysis() {
   double low = -80.0;
   double high = 80.0;
   double deltaX, deltaY, deltaZ, deltaR, deltaPhi;
-  int nEvents = 30;
+  int nEvents = 3;
   
   TCanvas *canvas=new TCanvas("canvas","CMDistortionAnalysis",2000,3000);
 
