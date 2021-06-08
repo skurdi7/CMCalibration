@@ -175,7 +175,7 @@ int DistortCMHits() {
   }
 
   //use test function to check if data opens properly
-  TestPlots(nEvents); 
+  //TestPlots(nEvents); 
 
   return 0;
 }
