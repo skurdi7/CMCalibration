@@ -84,10 +84,11 @@ int CMDistortionReco() {
     shifter = new Shifter(sourcefilename);
 
     //call to TTime before opening ttree
-    TTime before;
-    before=gSystem->Now();
+    TTime now;
+    now=gSystem->Now();
     //printf("the time is %lu\n",(unsigned long)before);
-
+    unsigned long before = now;
+    
     //histogram to compare times
     TH1F *hTimePerEvent = new TH1F("hTimePerEvent","Time Per Event; time (ms)",20,0,10000);
     
@@ -247,11 +248,12 @@ int CMDistortionReco() {
     
     plots->Close();
 
-     //call to TTime after outputting TH3Fs
-    TTime after;
-    after=gSystem->Now();
+    //call to TTime after outputting TH3Fs
+    //TTime after;
+    now=gSystem->Now();
     //printf("the time is %lu\n",(unsigned long)after);
-
+    unsigned long after = now;
+    
     hTimePerEvent->Fill(after-before);
     
     /*
