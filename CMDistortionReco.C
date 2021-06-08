@@ -252,7 +252,7 @@ int CMDistortionReco() {
     after=gSystem->Now();
     //printf("the time is %lu\n",(unsigned long)after);
 
-    hTimePerEvent->Fill(after-below);
+    hTimePerEvent->Fill(after-before);
     
     /*
       for (int i = 0; i < 3; i++){
