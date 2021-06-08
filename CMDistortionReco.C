@@ -71,11 +71,16 @@ int CMDistortionReco() {
   /*TCanvas *canvas=new TCanvas("canvas","CMDistortionReco1",1200,800);
     canvas->Divide(3,2);*/
 
+  //canvas for time plot
   TCanvas *canvas=new TCanvas("canvas","CMDistortionReco2",400,400);
+  
   TVector3 *position, *newposition;
   position = new TVector3(1.,1.,1.);
   newposition = new TVector3(1.,1.,1.);
- 
+
+  //histogram to compare times
+    TH1F *hTimePerEvent = new TH1F("hTimePerEvent","Time Per Event; time (ms)",20,0,10000);
+    
   for (int ifile=0;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file
     sourcefilename=((TFileInfo*)(filelist->GetList()->At(ifile)))->GetCurrentUrl()->GetFile();
@@ -88,9 +93,6 @@ int CMDistortionReco() {
     now=gSystem->Now();
     //printf("the time is %lu\n",(unsigned long)before);
     unsigned long before = now;
-    
-    //histogram to compare times
-    TH1F *hTimePerEvent = new TH1F("hTimePerEvent","Time Per Event; time (ms)",20,0,10000);
     
     //get data from ttree
     char const *treename="cmDistHitsTree";
