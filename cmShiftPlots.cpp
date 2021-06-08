@@ -900,7 +900,7 @@ int cmShiftPlots() {
     //else if (ifile == nEvents - 1){
     //canvas->Print("ShiftPlotsAllEvents.pdf)","pdf");
     //}
-    else{
+    else if((ifile == 1) || (ifile == nEvents - 1)){
       canvas->Print("ShiftPlotsAllEvents.pdf","pdf");
     }
   }
