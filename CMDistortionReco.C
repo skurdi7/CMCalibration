@@ -5,6 +5,7 @@
 #include "TMath.h"
 #include "TVector3.h"
 #include "TTree.h"
+#include <TTime.h>
 #include "/sphenix/u/skurdi/CMCalibration/PHG4TpcCentralMembrane.h"
 R__LOAD_LIBRARY(build/.libs/libg4tpccentralmembrane)
 
@@ -80,6 +81,14 @@ int CMDistortionReco() {
 
     //create shifter
     shifter = new Shifter(sourcefilename);
+
+    //call to TTime before opening ttree
+    TTime before;
+    before=gSystem->Now();
+    printf("the time is %lu\n",(unsigned long)before);
+
+    //histogram to compare times
+    // TH1F *hTimePerEvent = new TH1F("hTimePerEvent", "Time Per Event"
     
     //get data from ttree
     char const *treename="cmDistHitsTree";
@@ -237,6 +246,11 @@ int CMDistortionReco() {
     
     plots->Close();
 
+     //call to TTime after outputting TH3Fs
+    TTime after;
+    after=gSystem->Now();
+    printf("the time is %lu\n",(unsigned long)after);
+    
     /*
       for (int i = 0; i < 3; i++){
       hCartesianForward[i]->SetStats(0);
