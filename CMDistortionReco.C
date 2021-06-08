@@ -17,48 +17,13 @@ R__LOAD_LIBRARY(libphg4hit.so)
 
 using namespace std;
 
-class Shifter {
-public:
-Shifter(TString sourcefilename);
-  TFile *forward, *average;
-  TH3F *hX, *hY, *hZ, *hR, *hXave, *hYave, *hZave, *hRave;  
-};
-
-Shifter::Shifter(TString sourcefilename){
-  //single event distortion file
-  forward=TFile::Open(sourcefilename,"READ"); 
-
-  hX=(TH3F*)forward->Get("hIntDistortionPosX");
-  hY=(TH3F*)forward->Get("hIntDistortionPosY");
-  hZ=(TH3F*)forward->Get("hIntDistortionPosZ");
-
-  hR=(TH3F*)forward->Get("hIntDistortionPosR");
-
-  //average distortion file
-  average=TFile::Open("/sphenix/user/rcorliss/distortion_maps/2021.04/apr07.average.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); 
-  
-  hXave=(TH3F*)average->Get("hIntDistortionX");
-  hYave=(TH3F*)average->Get("hIntDistortionY");
-  hZave=(TH3F*)average->Get("hIntDistortionZ");
-  
-  hRave=(TH3F*)average->Get("hIntDistortionR");
-
-  //subtract average from total distortions to study fluctuations
-  hX->Add(hXave,-1);
-  hY->Add(hYave,-1);
-  hZ->Add(hZave,-1);
-  
-  hR->Add(hRave,-1);
-}
-
-int CMDistortionReco() {
-  Shifter *shifter;
+int CMDistortionReco(int nMaxEvents = -1) {
   int nbins = 35; 
   double low = -80.0;
   double high = 80.0;
   double deltaX, deltaY, deltaZ, deltaR, deltaPhi;
 
-  int nEvents = 3; //change based on number of tree files available in source directory
+  //int nEvents = 3; //change based on number of tree files available in source directory
     
   //take in events
   const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*h_Charge_*.root"; 
@@ -66,6 +31,15 @@ int CMDistortionReco() {
   //find all files that match the input string (includes wildcards)
   TFileCollection *filelist=new TFileCollection();
   filelist->Add(inputpattern);
+
+  if (nMaxEvents<0){
+    nEvents=filelist->GetNFiles();
+  } else if(nMaxEvents<filelist->GetNFiles()){
+    nEvents=nMaxEvents;
+  } else {
+    nEvents= filelist->GetNFiles();
+  }
+
   TString sourcefilename;
   
   /*TCanvas *canvas=new TCanvas("canvas","CMDistortionReco1",1200,800);
@@ -85,8 +59,7 @@ int CMDistortionReco() {
     //for each file, find all histograms in that file
     sourcefilename=((TFileInfo*)(filelist->GetList()->At(ifile)))->GetCurrentUrl()->GetFile();
 
-    //create shifter
-    shifter = new Shifter(sourcefilename);
+
 
     //call to TTime before opening ttree
     TTime now;
