@@ -71,6 +71,7 @@ int CMDistortionReco() {
   /*TCanvas *canvas=new TCanvas("canvas","CMDistortionReco1",1200,800);
     canvas->Divide(3,2);*/
 
+  TCanvas *canvas=new TCanvas("canvas","CMDistortionReco2",400,400);
   TVector3 *position, *newposition;
   position = new TVector3(1.,1.,1.);
   newposition = new TVector3(1.,1.,1.);
@@ -85,10 +86,10 @@ int CMDistortionReco() {
     //call to TTime before opening ttree
     TTime before;
     before=gSystem->Now();
-    printf("the time is %lu\n",(unsigned long)before);
+    //printf("the time is %lu\n",(unsigned long)before);
 
     //histogram to compare times
-    // TH1F *hTimePerEvent = new TH1F("hTimePerEvent", "Time Per Event"
+    TH1F *hTimePerEvent = new TH1F("hTimePerEvent","Time Per Event; time (ms)",20,0,10000);
     
     //get data from ttree
     char const *treename="cmDistHitsTree";
@@ -249,7 +250,9 @@ int CMDistortionReco() {
      //call to TTime after outputting TH3Fs
     TTime after;
     after=gSystem->Now();
-    printf("the time is %lu\n",(unsigned long)after);
+    //printf("the time is %lu\n",(unsigned long)after);
+
+    hTimePerEvent->Fill(after-below);
     
     /*
       for (int i = 0; i < 3; i++){
@@ -278,6 +281,9 @@ int CMDistortionReco() {
       }
     */
   }
+
+  canvas->cd();
+  hTimePerEvent->Draw();
 
   return 0;
 }
