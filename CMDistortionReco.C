@@ -288,6 +288,7 @@ int CMDistortionReco() {
 
   canvas->cd();
   hTimePerEvent->Draw();
+  canvas->Print("CMDistortionReco2.pdf","pdf");
 
   return 0;
 }
