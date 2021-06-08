@@ -150,7 +150,7 @@ int CMDistortionReco() {
       hCartesianAveShift[i]->Divide(hCartesianForward[i],hStripesPerBin);
     }
 
-      for(int i = 0; i < nbins; i++){
+    for(int i = 0; i < nbins; i++){
       double x = low + ((high - low)/(1.0*nbins))*(i+0.5); //center of bin
       for(int j = 0; j < nbins; j++){
 	double y = low + ((high - low)/(1.0*nbins))*(j+0.5); //center of bin
@@ -176,20 +176,20 @@ int CMDistortionReco() {
 	hCylindricalAveShift[1]->Fill(x,y,phiaveshift);
       } 
     } 
+  
+    //same range and bins for each coordinate, binned in cm
+    int nphi = 82;
+    int nr = 54;
+    int nz = 82;
     
-    //same range and bins for each coordinate, can use hR for all, binned in cm
-    int nphi = shifter->hR->GetXaxis()->GetNbins();
-    int nr = shifter->hR->GetYaxis()->GetNbins();
-    int nz = (shifter->hR->GetZaxis()->GetNbins())/2;
+    double minphi = -0.078539819;
+    double minr = 18.884615;
+    double minz = -1.3187500;
     
-    double minphi = shifter->hR->GetXaxis()->GetXmin();
-    double minr = shifter->hR->GetYaxis()->GetXmin();
-    double minz = 5.0;
-    
-    double maxphi = shifter->hR->GetXaxis()->GetXmax();
-    double maxr = shifter->hR->GetYaxis()->GetXmax();
-    double maxz = shifter->hR->GetZaxis()->GetXmax();
-    
+    double maxphi = 6.3617253;
+    double maxr = 79.115387;
+    double maxz = 106.81875;
+
     TH3F *hCartesianCMModel[3];
     hCartesianCMModel[0]=new TH3F("hCMModelX", "CM Model: X Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz); //rad, cm, cm
     hCartesianCMModel[1]=new TH3F("hCMModelY", "CM Model: Y Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz);
