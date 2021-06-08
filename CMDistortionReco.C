@@ -79,7 +79,7 @@ int CMDistortionReco() {
   newposition = new TVector3(1.,1.,1.);
 
   //histogram to compare times
-    TH1F *hTimePerEvent = new TH1F("hTimePerEvent","Time Per Event; time (ms)",15,0,1500);
+    TH1F *hTimePerEvent = new TH1F("hTimePerEvent","Time Per Event; time (ms)",20,800,1200);
     
   for (int ifile=0;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file
