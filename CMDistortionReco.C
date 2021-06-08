@@ -58,7 +58,7 @@ int CMDistortionReco() {
   double high = 80.0;
   double deltaX, deltaY, deltaZ, deltaR, deltaPhi;
 
-  int nEvents = 3; //change based on number of tree files available in source directory
+  int nEvents = 30; //change based on number of tree files available in source directory
     
   //take in events
   const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*h_Charge_*.root"; 
