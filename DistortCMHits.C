@@ -120,7 +120,7 @@ TVector3 Shifter::Shift(TVector3 position){
 
 void TestPlots(int nEvents);
 
-int DistortCMHits() {
+int DistortCMHits(int nMaxEvents = -1) {
   Shifter *shifter;
   PHG4TpcCentralMembrane stripes;
   vector<PHG4Hitv1*> Hits = stripes.PHG4Hits;
