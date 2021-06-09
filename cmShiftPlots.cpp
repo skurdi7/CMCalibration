@@ -360,7 +360,7 @@ int cmShiftPlots() {
     /*
     //same range and bins for each coordinate, binned in cm
     //hardcoded numbers from average distortion file's hIntDistortionPosX
-    int nphi = 82;
+    int nphi = 82; 
     int nr = 54;
     int nz = 82;
     
