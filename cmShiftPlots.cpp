@@ -346,7 +346,7 @@ int cmShiftPlots() {
     int nphi = shifter->hR->GetXaxis()->GetNbins();
     int nr = shifter->hR->GetYaxis()->GetNbins();
     //int nz = shifter->hR->GetZaxis()->GetNbins();
-    int nz = (shifter->hR->GetZaxis()->GetNbins())/2;
+    int nz = (shifter->hR->GetZaxis()->GetNbins());
     
     double minphi = shifter->hR->GetXaxis()->GetXmin();
     double minr = shifter->hR->GetYaxis()->GetXmin();
