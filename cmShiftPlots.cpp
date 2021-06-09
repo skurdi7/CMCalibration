@@ -342,6 +342,7 @@ int cmShiftPlots() {
   
     hPhiCheck2d->Divide(hStripesPerBin);
 
+    /*
     //same range and bins for each coordinate, can use hR for all, binned in cm
     int nphi = shifter->hR->GetXaxis()->GetNbins();
     int nr = shifter->hR->GetYaxis()->GetNbins();
@@ -356,6 +357,21 @@ int cmShiftPlots() {
     double maxphi = shifter->hR->GetXaxis()->GetXmax();
     double maxr = shifter->hR->GetYaxis()->GetXmax();
     double maxz = shifter->hR->GetZaxis()->GetXmax();
+    */
+
+    //same range and bins for each coordinate, binned in cm
+    //hardcoded numbers from average distortion file's hIntDistortionPosX
+    int nphi = 82;
+    int nr = 54;
+    int nz = 82;
+    
+    double minphi = -0.078539819;
+    double minr = 18.884615;
+    double minz = -1.3187500;
+    
+    double maxphi = 6.3617253;
+    double maxr = 79.115387;
+    double maxz = 106.81875;
     
     TH3F *hCartesianCMModel[3];
     hCartesianCMModel[0]=new TH3F("hCMModelX", "CM Model: X Shift Forward of Stripe Centers", nphi,minphi,maxphi, nr,minr,maxr, nz,minz,maxz); //rad, cm, cm
