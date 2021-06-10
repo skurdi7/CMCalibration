@@ -169,7 +169,7 @@ int DistortCMHits(int nMaxEvents = -1) {
       //store each stripe center's coordinates in position vector
       x = (Hits[i]->get_x(0) + Hits[i]->get_x(1))/2; 
       y = (Hits[i]->get_y(0) + Hits[i]->get_y(1))/2;
-      z = 5.0;
+      z = 0.0;
       position->SetXYZ(x,y,z);
       
       //shift pos
