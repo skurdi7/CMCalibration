@@ -139,7 +139,7 @@ int DistortCMHits(int nMaxEvents = -1) {
   TString sourcefilename;
   int nEvents; //change based on number of event files available in source directory
 
-  /*
+  
     //how many events
   if (nMaxEvents<0){
     nEvents=filelist->GetNFiles();
@@ -149,9 +149,9 @@ int DistortCMHits(int nMaxEvents = -1) {
     nEvents= filelist->GetNFiles();
   }
 
-  cout << nEvents << endl;*/
+  //cout << nEvents << endl;
 
-  nEvents = 2;
+  // nEvents = 2;
     
   for (int ifile=0;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file
