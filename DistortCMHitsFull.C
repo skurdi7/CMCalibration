@@ -24,7 +24,9 @@ public:
   TVector3 ShiftForwardNeg(TVector3 position); 
   TVector3 ShiftBack(TVector3 position); //
   TFile *forward, *back, *average;
-  TH3F *hX, *hY, *hZ, *hR, *hPhi, *hXave, *hYave, *hZave, *hRave, *hPhiave, *hXBack, *hYBack, *hZBack;  
+  TH3F *hPosX, *hPosY, *hPosZ, *hPosR, *hPosPhi, *hPosXave, *hPosYave, *hPosZave, *hPosRave, *hPosPhiave;
+  TH3F *hNegX, *hNegY, *hNegZ, *hNegR, *hNegPhi, *hNegXave, *hNegYave, *hNegZave, *hNegRave, *hNegPhiave;
+  TH3F *hXBack, *hYBack, *hZBack;  
 };
 
 Shifter::Shifter(TString sourcefilename){
