@@ -252,7 +252,7 @@ int DistortCMHitsFull(int nMaxEvents = -1) {
   }
 
   //use test function to check if data opens properly
-  //TestPlots(nEvents); 
+  TestPlots(nEvents); 
 
   return 0;
 }
@@ -300,7 +300,7 @@ void TestPlots(int nEvents){
     TTree *inTree=(TTree*)input->Get("tree");
     
     inTree->SetBranchAddress("position",&positionT);
-    inTree->SetBranchAddress("newpositionPos",&newpositionT);
+    inTree->SetBranchAddress("newpositionNeg",&newpositionT);
     
     for (int i=0;i<inTree->GetEntries();i++){
       inTree->GetEntry(i);
