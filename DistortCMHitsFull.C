@@ -81,7 +81,7 @@ Shifter::Shifter(TString sourcefilename){
   hNegPhiave=(TH3F*)average->Get("hIntDistortionNegP");
 
   //subtract average from total distortions to study fluctuations
-  hPosX->Add(hPosXave,-1);
+  /*hPosX->Add(hPosXave,-1);
   hPosY->Add(hPosYave,-1);
   hPosZ->Add(hPosZave,-1);
   
@@ -93,7 +93,7 @@ Shifter::Shifter(TString sourcefilename){
   hNegZ->Add(hNegZave,-1);
   
   hNegR->Add(hNegRave,-1);
-  hNegPhi->Add(hNegPhiave,-1);
+  hNegPhi->Add(hNegPhiave,-1);*/
   
   back=TFile::Open("/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); 
    
@@ -103,7 +103,8 @@ Shifter::Shifter(TString sourcefilename){
 }
 
 TVector3 Shifter::ShiftForwardPos(TVector3 position){
-  double x, y, z, xshift, yshift, zshift;
+  double x, y, z, xshift, yshift, zshift, raveshift, phiaveshift;
+  double cosphi, sinphi;
   const double mm = 1.0;
   const double cm = 10.0;
   TVector3 shiftposition;
@@ -118,10 +119,19 @@ TVector3 Shifter::ShiftForwardPos(TVector3 position){
     phi = position.Phi() + 2.0*TMath::Pi(); 
   }
 
-  //distort coordinate of stripe
+  //distort coordinate of stripe 
   xshift=hPosX->Interpolate(phi,r,z);
   yshift=hPosY->Interpolate(phi,r,z);
   zshift=hPosZ->Interpolate(phi,r,z);
+  
+  //subtract average from total distortions
+  raveshift=hPosRave->Interpolate(phi,r,z);
+  phiaveshift=hPosPhiave->Interpolate(phi,r,z);
+  cosphi = cos(phi);
+  sinphi = sin(phi);
+  xshift = (raveshift*cosphi - phiaveshift*sinphi); 
+  yshift = (raveshift*sinphi + phiaveshift*cosphi); 
+  zshift -= hPosZave->Interpolate(phi,r,z);
   
   TVector3 forwardshiftpos(x+xshift,y+yshift,z+zshift);
 
@@ -129,7 +139,8 @@ TVector3 Shifter::ShiftForwardPos(TVector3 position){
 }
 
 TVector3 Shifter::ShiftForwardNeg(TVector3 position){
-  double x, y, z, xshift, yshift, zshift;
+  double x, y, z, xshift, yshift, zshift, raveshift, phiaveshift;
+  double cosphi, sinphi;
   const double mm = 1.0;
   const double cm = 10.0;
   TVector3 shiftposition;
@@ -144,10 +155,19 @@ TVector3 Shifter::ShiftForwardNeg(TVector3 position){
     phi = position.Phi() + 2.0*TMath::Pi(); 
   }
 
-  //distort coordinate of stripe
+  //distort coordinate of stripe 
   xshift=hNegX->Interpolate(phi,r,z);
   yshift=hNegY->Interpolate(phi,r,z);
   zshift=hNegZ->Interpolate(phi,r,z);
+  
+  //subtract average from total distortions
+  raveshift=hNegRave->Interpolate(phi,r,z);
+  phiaveshift=hNegPhiave->Interpolate(phi,r,z);
+  cosphi = cos(phi);
+  sinphi = sin(phi);
+  xshift = (raveshift*cosphi - phiaveshift*sinphi); 
+  yshift = (raveshift*sinphi + phiaveshift*cosphi); 
+  zshift -= hNegZave->Interpolate(phi,r,z);
   
   TVector3 forwardshiftneg(x+xshift,y+yshift,z+zshift);
 
