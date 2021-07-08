@@ -125,12 +125,14 @@ TVector3 Shifter::ShiftForwardPos(TVector3 position){
   zshift=hPosZ->Interpolate(phi,r,z);
   
   //subtract average from total distortions
-  raveshift=hPosRave->Interpolate(phi,r,z);
+  /*raveshift=hPosRave->Interpolate(phi,r,z);
   phiaveshift=hPosPhiave->Interpolate(phi,r,z);
   cosphi = cos(phi);
   sinphi = sin(phi);
   xshift = (raveshift*cosphi - phiaveshift*sinphi); 
-  yshift = (raveshift*sinphi + phiaveshift*cosphi); 
+  yshift = (raveshift*sinphi + phiaveshift*cosphi); */
+  xshift -= hPosXave->Interpolate(phi,r,z);
+  yshift -= hPosYave->Interpolate(phi,r,z);
   zshift -= hPosZave->Interpolate(phi,r,z);
   
   TVector3 forwardshiftpos(x+xshift,y+yshift,z+zshift);
@@ -161,12 +163,14 @@ TVector3 Shifter::ShiftForwardNeg(TVector3 position){
   zshift=hNegZ->Interpolate(phi,r,z);
   
   //subtract average from total distortions
-  raveshift=hNegRave->Interpolate(phi,r,z);
+  /*raveshift=hNegRave->Interpolate(phi,r,z);
   phiaveshift=hNegPhiave->Interpolate(phi,r,z);
   cosphi = cos(phi);
   sinphi = sin(phi);
   xshift = (raveshift*cosphi - phiaveshift*sinphi); 
-  yshift = (raveshift*sinphi + phiaveshift*cosphi); 
+  yshift = (raveshift*sinphi + phiaveshift*cosphi); */
+  xshift -= hNegXave->Interpolate(phi,r,z);
+  yshift -= hNegYave->Interpolate(phi,r,z);
   zshift -= hNegZave->Interpolate(phi,r,z);
   
   TVector3 forwardshiftneg(x+xshift,y+yshift,z+zshift);
