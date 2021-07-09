@@ -64,7 +64,7 @@ Shifter::Shifter(TString truefilename, TString averagefilename){
   hNegPhi=(TH3F*)forward->Get("hIntDistortionNegP");
 
   //average distortion file
-  average=TFile::Open("averagefilename","READ"); 
+  average=TFile::Open(averagefilename,"READ"); 
   
   hPosXave=(TH3F*)average->Get("hIntDistortionPosX");
   hPosYave=(TH3F*)average->Get("hIntDistortionPosY");
