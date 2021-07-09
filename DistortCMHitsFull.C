@@ -18,7 +18,7 @@ using namespace std;
 
 class Shifter {
 public:
-  Shifter(TString sourcefilename);
+  Shifter(TString truefilename, TString averagefilename);
   TVector3 Shift(TVector3 position);
   TVector3 ShiftForwardPos(TVector3 position); //only shift with forward histogram
   TVector3 ShiftForwardNeg(TVector3 position); 
@@ -29,9 +29,9 @@ public:
   TH3F *hXBack, *hYBack, *hZBack;  
 };
 
-Shifter::Shifter(TString sourcefilename){
+Shifter::Shifter(TString truefilename, TString averagefilename){
   //single event distortion file
-  forward=TFile::Open(sourcefilename,"READ"); 
+  forward=TFile::Open(truefilename,"READ"); 
 
   //positive side (z = 0 to 105.5)
   hPosX=(TH3F*)forward->Get("hIntDistortionPosX");
@@ -64,7 +64,7 @@ Shifter::Shifter(TString sourcefilename){
   hNegPhi=(TH3F*)forward->Get("hIntDistortionNegP");
 
   //average distortion file
-  average=TFile::Open("/sphenix/user/rcorliss/distortion_maps/2021.04/apr07.average.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); 
+  average=TFile::Open("averagefilename","READ"); 
   
   hPosXave=(TH3F*)average->Get("hIntDistortionPosX");
   hPosYave=(TH3F*)average->Get("hIntDistortionPosY");
@@ -80,20 +80,6 @@ Shifter::Shifter(TString sourcefilename){
   hNegRave=(TH3F*)average->Get("hIntDistortionNegR");
   hNegPhiave=(TH3F*)average->Get("hIntDistortionNegP");
 
-  //subtract average from total distortions to study fluctuations
-  /*hPosX->Add(hPosXave,-1);
-  hPosY->Add(hPosYave,-1);
-  hPosZ->Add(hPosZave,-1);
-  
-  hPosR->Add(hPosRave,-1);
-  hPosPhi->Add(hPosPhiave,-1);
-
-  hNegX->Add(hNegXave,-1);
-  hNegY->Add(hNegYave,-1);
-  hNegZ->Add(hNegZave,-1);
-  
-  hNegR->Add(hNegRave,-1);
-  hNegPhi->Add(hNegPhiave,-1);*/
   
   back=TFile::Open("/sphenix/user/rcorliss/distortion_maps/averages/empty.2sides.3d.file0.h_Charge_0.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root","READ"); 
    
@@ -125,12 +111,6 @@ TVector3 Shifter::ShiftForwardPos(TVector3 position){
   zshift=hPosZ->Interpolate(phi,r,z);
   
   //subtract average from total distortions
-  /*raveshift=hPosRave->Interpolate(phi,r,z);
-  phiaveshift=hPosPhiave->Interpolate(phi,r,z);
-  cosphi = cos(phi);
-  sinphi = sin(phi);
-  xshift = (raveshift*cosphi - phiaveshift*sinphi); 
-  yshift = (raveshift*sinphi + phiaveshift*cosphi); */
   xshift -= hPosXave->Interpolate(phi,r,z);
   yshift -= hPosYave->Interpolate(phi,r,z);
   zshift -= hPosZave->Interpolate(phi,r,z);
@@ -163,12 +143,6 @@ TVector3 Shifter::ShiftForwardNeg(TVector3 position){
   zshift=hNegZ->Interpolate(phi,r,z);
   
   //subtract average from total distortions
-  /*raveshift=hNegRave->Interpolate(phi,r,z);
-  phiaveshift=hNegPhiave->Interpolate(phi,r,z);
-  cosphi = cos(phi);
-  sinphi = sin(phi);
-  xshift = (raveshift*cosphi - phiaveshift*sinphi); 
-  yshift = (raveshift*sinphi + phiaveshift*cosphi); */
   xshift -= hNegXave->Interpolate(phi,r,z);
   yshift -= hNegYave->Interpolate(phi,r,z);
   zshift -= hNegZave->Interpolate(phi,r,z);
@@ -227,7 +201,8 @@ int DistortCMHitsFull(int nMaxEvents = -1) {
   //find all files that match the input string (includes wildcards)
   TFileCollection *filelist=new TFileCollection(); //look up how to get # of entries for nEvents
   filelist->Add(inputpattern);
-  TString sourcefilename;
+  TString truefilename;
+  TString averagefilename = "/sphenix/user/rcorliss/distortion_maps/2021.04/apr07.average.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root";
   int nEvents; 
 
   //how many events
@@ -241,10 +216,10 @@ int DistortCMHitsFull(int nMaxEvents = -1) {
     
   for (int ifile=0;ifile < nEvents;ifile++){
     //for each file, find all histograms in that file
-    sourcefilename=((TFileInfo*)(filelist->GetList()->At(ifile)))->GetCurrentUrl()->GetFile();
+    truefilename=((TFileInfo*)(filelist->GetList()->At(ifile)))->GetCurrentUrl()->GetFile();
 
     //create shifter
-    shifter = new Shifter(sourcefilename);
+    shifter = new Shifter(truefilename, averagefilename);
 
     //set up TFile for TTree
     TFile *output = TFile::Open(Form("cmDistHitsFullTree_Event%d.root", ifile),"RECREATE");
