@@ -199,12 +199,13 @@ int DistortCMHitsFull(int nMaxEvents = -1) {
   const char * inputpattern="/sphenix/user/rcorliss/distortion_maps/2021.04/*h_Charge_*.root"; 
   
   //find all files that match the input string (includes wildcards)
-  TFileCollection *filelist=new TFileCollection(); //look up how to get # of entries for nEvents
+  TFileCollection *filelist=new TFileCollection(); 
   filelist->Add(inputpattern);
   TString truefilename;
-  TString averagefilename = "/sphenix/user/rcorliss/distortion_maps/2021.04/apr07.average.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root";
-  int nEvents; 
 
+  TString averagefilename = "/sphenix/user/rcorliss/distortion_maps/2021.04/apr07.average.real_B1.4_E-400.0.ross_phi1_sphenix_phislice_lookup_r26xp40xz40.distortion_map.hist.root";
+
+  int nEvents; 
   //how many events
   if (nMaxEvents<0){
     nEvents=filelist->GetNFiles();
@@ -251,7 +252,7 @@ int DistortCMHitsFull(int nMaxEvents = -1) {
   }
 
   //use test function to check if data opens properly
-  TestPlots(nEvents); 
+  //TestPlots(nEvents); 
 
   return 0;
 }
